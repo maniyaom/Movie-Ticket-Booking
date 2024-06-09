@@ -128,8 +128,9 @@ export const FirebaseProvider = (props) => {
     const updateData = async (path, newValue) => {
         try {
             await set(ref(database, path), newValue);
+            return "Data Updated successfully";
         } catch (error) {
-            console.error("Error updating database value:", error);
+            console.error("Error updating database : ", error);
             throw error;
         }
     };

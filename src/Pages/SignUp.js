@@ -100,7 +100,7 @@ const SignUp = () => {
         .then((userCredential) => {
           console.log("User signed up successfully!");
           if (isAdmin == true) {
-            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress })
+            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
                 navigate("/Login");
@@ -116,7 +116,7 @@ const SignUp = () => {
               });
           }
           else {
-            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin })
+            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
                 navigate('/Login');

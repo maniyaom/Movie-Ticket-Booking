@@ -1,3 +1,6 @@
+:root {
+    --primary-color: rgba(248, 68, 100, 1.0);
+}
 .main-div {
     margin: 0;
     padding: 0;
@@ -36,13 +39,11 @@
 
 .text {
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
     margin-left: 0.65rem;
 }
 
 .rate {
     color: black;
-    font-family: Arial, Helvetica, sans-serif;
     width: 7rem;
     height: 2rem;
 }
@@ -57,16 +58,18 @@
 }
 
 .book {
-    background-color: rgb(255, 33, 85);
-    border-color: rgb(255, 33, 85);
-    border-radius: 8px;
-    font-family: Arial, Helvetica, sans-serif;  
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 8px;  
     color: white;
     font-weight: bolder;
     width: 60%;
     margin-top: 3rem;
     margin-left: 0.65rem;
     height: 3rem;
+    font-size: 1.1rem;
+    padding: 10px;
+    padding-left: 60px;
 }
 
 .language {

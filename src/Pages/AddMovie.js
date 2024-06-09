@@ -6,12 +6,31 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
 
+function convertTo12Hour(time) {
+    // Split the time into hours and minutes
+    let [hours, minutes] = time.split(':').map(Number);
+    
+    // Determine AM or PM suffix
+    let period = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert hours from 24-hour to 12-hour format
+    hours = hours % 12 || 12;
+    
+    // Format the hours and minutes to always be two digits
+    let formattedTime = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
+    
+    return formattedTime;
+}
+
 const AddMovie = () => {
     const firebase = useFirebase();
     const auth = getAuth();
     const navigate = useNavigate();
+    const theaterSeats = new Array(11).fill(null).map(() => new Array(8).fill(false));
 
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState("");
+    const [theaterName, setTheaterName] = useState("");
+    const [theaterAddress, setTheaterAddress] = useState("");
     const [creatorId, setCreatorId] = useState("");
 
     const [movieTitle, setMovieTitle] = useState("");
@@ -20,6 +39,7 @@ const AddMovie = () => {
     const [movieDuration, setMovieDuration] = useState("");
     const [movieGenre, setMovieGenre] = useState("");
     const [movieReleaseDate, setMovieReleaseDate] = useState("");
+    const [movieTiming, setMovieTiming] = useState("");
     const [aboutMovie, setAboutMovie] = useState("");
     const [movieCast, setMovieCast] = useState("");
     const [ticketPrice, setTicketPrice] = useState("");
@@ -38,7 +58,10 @@ const AddMovie = () => {
                     }
                     else {
                         setIsAdmin(true);
-                        setCreatorId(uid);
+                        setTheaterName(userDetails.theaterName);
+                        setTheaterAddress(userDetails.theaterAddress);
+                        setCreatorId(userDetails.uid);
+                        console.log(userDetails)
                     }
                 } catch (error) {
                     console.error("Error fetching user details:", error);
@@ -55,10 +78,13 @@ const AddMovie = () => {
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
-            if (isAdmin == true){
-                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration, movieGenre, movieReleaseDate, aboutMovie, movieCast, ticketPrice, creatorId }, moviePoster);
+            console.log(theaterName);
+            console.log(theaterAddress);
+            const movieTiming12hrs = convertTo12Hour(movieTiming);
+            if (isAdmin == true) {
+                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration, movieGenre, movieReleaseDate, aboutMovie, movieCast, ticketPrice, movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
             }
-            else{
+            else {
                 setError("Failed to add movie to the database");
             }
         } catch (error) {
@@ -135,6 +161,17 @@ const AddMovie = () => {
                         value={movieReleaseDate}
                         onChange={(e) => setMovieReleaseDate(e.target.value)}
                         placeholder="e.g. 6-10-2023"
+                        className="input-field"
+                    />
+
+                    <label className="label-text">
+                        Show Time (HH:MM)
+                    </label>
+                    <input
+                        type="time"
+                        value={movieTiming}
+                        onChange={(e) => setMovieTiming(e.target.value)}
+                        placeholder="e.g. 02:30"
                         className="input-field"
                     />
 

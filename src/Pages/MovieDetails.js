@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFirebase } from "../context/firebase";
 import "./MovieDetails.css";
 import Navbar from "../Components/Navbar";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const MovieDetails = () => {
   const movieId = useParams();
@@ -18,10 +18,9 @@ const MovieDetails = () => {
         const y = await firebase.fetchMoviePoster(movieId.movieId);
         setMovieDetails(x);
         setMoviePosterUrl(y);
-        console.log("Movide Details : ", x);
       }
       catch (error) {
-
+        console.log("Error : ", error);
       }
     }
     fetchMovie();
@@ -67,9 +66,7 @@ const MovieDetails = () => {
                 </div>
               </div>
 
-              <button type="button" className="book">
-                Book Tickets
-              </button>
+              <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
             </div>
           </div>
         </div>

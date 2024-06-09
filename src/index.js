@@ -9,7 +9,7 @@ import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import AddMovie from './Pages/AddMovie';
 import MovieDetails from './Pages/MovieDetails'
-import Seat from './Pages/Seat';
+import BookTicket from './Pages/BookTicket';
 import { FirebaseProvider } from './context/firebase';
 
 export default function App() {
@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/AddMovie" element={<AddMovie />} />
         <Route path="/MovieDetails/:movieId" element={<MovieDetails />} />
-        <Route path="/Seat" element={<Seat />} />
+        <Route path="/BookTicket/:movieId" element={<BookTicket />} />
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

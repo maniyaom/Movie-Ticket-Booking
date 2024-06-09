@@ -125,8 +125,17 @@ export const FirebaseProvider = (props) => {
         }
     }; 
 
+    const updateData = async (path, newValue) => {
+        try {
+            await set(ref(database, path), newValue);
+        } catch (error) {
+            console.error("Error updating database value:", error);
+            throw error;
+        }
+    };
+
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData }}>
             {props.children}
         </FirebaseContext.Provider>
     );

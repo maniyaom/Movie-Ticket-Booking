@@ -106,9 +106,27 @@ export const FirebaseProvider = (props) => {
             throw error;
         }
     };    
+    
+    const fetchMovieDetails = async (movieId) => {
+        try {
+            const snapshot = await get(ref(database, "movies"));
+            const movieData = snapshot.val();
+
+            if(movieData) {
+                const movieArray = Object.values(movieData);
+                const movie = movieArray.find(movie => movie.movieId === movieId);
+                return movie ? movie : "Movie not found";
+            } else {
+                return "No movie found";
+            }
+        }catch (error) {
+            console.log("Error fetching movie details : ", error);
+            throw error;
+        }
+    }; 
 
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails }}>
             {props.children}
         </FirebaseContext.Provider>
     );

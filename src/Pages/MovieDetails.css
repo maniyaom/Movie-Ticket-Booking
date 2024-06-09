@@ -1,0 +1,79 @@
+.main-div {
+    margin: 0;
+    padding: 0;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+}
+.container {
+    width: 70%;
+    height: 50vh;
+    background: linear-gradient(to right, black 50%, transparent 70%, black 100%), url('../assets/images/background.jpg') center/cover no-repeat;
+    display: flex;
+}
+
+.poster {
+    width: 14rem;
+    height: 80%;
+    margin: 2rem 2rem 2rem 0rem;
+    border-radius: 8px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+
+.text {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 0.65rem;
+}
+
+.rate {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 7rem;
+    height: 2rem;
+}
+
+.rating {
+    justify-content: space-around;
+    margin: 1rem 0rem 1rem 0.65rem;
+    background-color: rgb(82, 78, 78);
+    border-radius: 8px;
+    height: 3rem;
+    align-items: center;
+}
+
+.book {
+    background-color: rgb(255, 33, 85);
+    border-color: rgb(255, 33, 85);
+    border-radius: 8px;
+    font-family: Arial, Helvetica, sans-serif;  
+    color: white;
+    font-weight: bolder;
+    width: 60%;
+    margin-top: 3rem;
+    margin-left: 0.65rem;
+    height: 3rem;
+}
+
+.language {
+    color: black;
+    background-color:white; 
+    width: 5rem; 
+    display: flex;
+    justify-content: center;
+    margin-left: 0.65rem;
+}

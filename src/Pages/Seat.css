@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --primary-color: rgba(248, 68, 100, 1.0);
+    --light-primary-color: rgba(248, 68, 100, 0.3);
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    border: 3.5px solid var(--light-primary-color);
+    border-radius: 5px;
+    margin-left: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+}
+
+.not-available-seat {
+    background-color: var(--light-primary-color);
+}
+
+.your-seat {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}

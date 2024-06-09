@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        :root {
+            --primary-color: #2496ff
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .poster{
+            width: 222px;
+        }
+
+        .poster > img {
+            width: inherit;
+            border-radius: 8px;
+        }
+
+        .myt-10{
+            margin-top: 10px;
+        }
+
+        .myt-5{
+            margin-top: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="poster">
+        <img src="poster.png" alt="movie-poster">
+        <div class="timestamp myt-10" style="font-weight: 500;">Sat, 22 Jun 2024</div>
+
+        <div class="movie-name myt-5" style="font-weight: 600;">Jhamkudi</div>
+        <div class="movie-genre myt-5" style="opacity: 0.8; font-size: 15px;">Comedy/Horror/Mystery</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+body{
+    background-color: white;
+}
+.poster {
+    width: 222px;
+    margin-right: 40px;
+    margin-bottom: 30px;
+}
+
+img {
+    width: 222px;
+    height: 340px;
+    border-radius: 8px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.myt-10 {
+    margin-top: 10px;
+}
+
+.myt-5 {
+    margin-top: 3px;
+}
+
+.poster-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    width: 90vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.placeholder {
+    width: 222px;
+    height: 340px;
+  }
+  .faux-image-wrapper {
+    margin-bottom: 10px;
+    height: inherit;
+    position: relative;
+    padding-bottom: 100%;
+  }
+  .faux-image {
+    background: #dddddd;
+    border-radius: 4px;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+
+  .shimmer {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .shimmer::before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    animation: shimmer 1s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }

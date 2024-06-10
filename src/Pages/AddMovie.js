@@ -4,6 +4,7 @@ import { useFirebase } from "../context/firebase";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
+import '../components/Navbar.css';
 
 function convertTo12Hour(time) {
     // Split the time into hours and minutes

@@ -4,6 +4,7 @@ import { useFirebase } from '../context/firebase';
 import { useParams } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import '../components/Navbar.css';
 
 const BookTicket = () => {
     const firebase = useFirebase();

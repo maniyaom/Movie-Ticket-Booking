@@ -4,6 +4,7 @@ import loader_icon from "../assets/icons/loader_icon.gif";
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './utils.css'
+import '../components/Navbar.css';
 
 const SignUp = () => {
 

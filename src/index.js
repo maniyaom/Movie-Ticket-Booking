@@ -11,6 +11,7 @@ import AddMovie from './Pages/AddMovie';
 import MovieDetails from './Pages/MovieDetails';
 import BookTicket from './Pages/BookTicket';
 import Navbar from './components/Navbar';
+import './components/Navbar.css'
 import { FirebaseProvider } from './context/firebase';
 
 function App() {

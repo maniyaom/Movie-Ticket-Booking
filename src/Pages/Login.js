@@ -5,6 +5,7 @@ import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
+import '../components/Navbar.css';
 
 const Login = () => {
 

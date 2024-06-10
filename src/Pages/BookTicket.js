@@ -128,8 +128,8 @@ const BookTicket = () => {
     return (
         <>
             <div className='movie'>
-                <h2>Movie Name</h2>
-                <p>Address | Today | Date | Show Time</p>
+                <h2 style={{fontSize: '28px', margin: '2px 20px'}}>{movieDetails.movieTitle}</h2>
+                <p style={{fontWeight: '500', margin: '6px 20px'}}>{movieDetails.theaterName} : {movieDetails.theaterAddress} | {movieDetails.movieReleaseDate} | {movieDetails.movieTiming}</p>
             </div>
             <div className='allSeats'>
                 <div>
@@ -154,9 +154,12 @@ const BookTicket = () => {
 
             <div className='fixed-bottom'>
                 <div className='footer'>
-                    <button type='button' className='not-available-seat footer-button'></button>
-                    <button type='button' className='your-seat footer-button'></button>
-                    <button type='button' className=' footer-button'></button>
+                    <div className='not-available-seat footer-button'></div>
+                    <span style={{color: 'black'}}>Not Available</span>
+                    <div className='your-seat footer-button'></div>
+                    <span style={{color: 'black'}}>Selected</span>
+                    <div className=' footer-button'></div>
+                    <span style={{color: 'black'}}>Available</span>
                 </div>
             </div>
         </>

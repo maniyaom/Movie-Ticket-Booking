@@ -93,7 +93,7 @@ const AddMovie = () => {
 
             const movieTiming12hrs = convertTo12Hour(movieTiming);
             if (isAdmin == true) {
-                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate: releaseDate, aboutMovie, movieCast, ticketPrice, movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
+                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate: releaseDate, aboutMovie, movieCast, ticketPrice, movieTiming: movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
             }
             else {
                 setError("Failed to add movie to the database");

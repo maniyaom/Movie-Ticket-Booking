@@ -38,6 +38,7 @@
     background-color: var(--primary-color);
     display: flex;
     flex-direction: column;
+    color: white;
 }
 
 button {
@@ -47,6 +48,9 @@ button {
     background-color: var(--primary-color);
     cursor: pointer;
     color: white;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .fixed-bottom {
@@ -61,12 +65,15 @@ button {
 }
 
 .footer {
-    width: 500px;
+    width: 450px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .footer-button {
     height: 2rem;
     width: 2rem;
+    border: 3.5px solid var(--light-primary-color);
+    border-radius: 8px;
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useFirebase } from "../context/firebase";
-import Navbar from '../Components/Navbar';
 import './Home.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
@@ -43,13 +42,12 @@ const Home = () => {
       }
     };
 
+    document.title = 'Home - Book My Show';
     fetchMovies();
   }, []);
 
   return (
     <>
-      <Navbar />
-
       <div className="poster-container">
         {allMovies.map((movie, index) => {
           const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;
@@ -59,7 +57,7 @@ const Home = () => {
               <div className="poster">
                 <div class="placeholder shimmer" style={{ width: '222px', height: '340px' }}>
                   <style>
-                      {`
+                    {`
                       .shimmer::before {
                         content: "";
                         position: absolute;

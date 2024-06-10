@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import './index.css';
 import Home from './Pages/Home';
 import AboutUs from './Pages/AboutUs';
@@ -8,13 +8,20 @@ import ContactUs from './Pages/ContactUs';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import AddMovie from './Pages/AddMovie';
-import MovieDetails from './Pages/MovieDetails'
+import MovieDetails from './Pages/MovieDetails';
 import BookTicket from './Pages/BookTicket';
+import Navbar from './components/Navbar';
 import { FirebaseProvider } from './context/firebase';
 
-export default function App() {
+function App() {
+  const location = useLocation();
+  const hideNavbarRoutes = ['/BookTicket'];
+
+  const shouldHideNavbar = hideNavbarRoutes.some(route => location.pathname.startsWith(route));
+
   return (
-    <BrowserRouter>
+    <>
+      {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Home" element={<Home />} />
@@ -28,13 +35,15 @@ export default function App() {
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <FirebaseProvider>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </FirebaseProvider>
 );

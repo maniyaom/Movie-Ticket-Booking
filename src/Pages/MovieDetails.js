@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useFirebase } from "../context/firebase";
-import "./MovieDetails.css";
-import Navbar from "../Components/Navbar";
 import { useParams, Link } from "react-router-dom";
+import "./MovieDetails.css";
+import star from "../assets/icons/star.png"
 
 const MovieDetails = () => {
   const movieId = useParams();
@@ -24,16 +24,14 @@ const MovieDetails = () => {
       }
     }
     fetchMovie();
-  },[movieId.movieId]);
+  }, [movieId.movieId]);
 
-  if (!movieDetails && !moviePosterUrl) {
+  if (!movieDetails || !moviePosterUrl) {
     return <p>Loading movie details...</p>;
   }
 
   return (
     <>
-      <Navbar />
-
       <div className="main-div">
         <div className="container">
           <div className="row" style={{ width: "50rem" }}>
@@ -44,7 +42,10 @@ const MovieDetails = () => {
               </h2>
 
               <div className="row rating">
-                <p className="text">8.7/10</p>
+                <div className="flex align-center" style={{ marginLeft: '20px' }}>
+                  <img src={star} />
+                  <p className="text">8.7/10</p>
+                </div>
                 <button type="button" className="rate">
                   Rate Now
                 </button>
@@ -74,12 +75,12 @@ const MovieDetails = () => {
 
       <div className="column" style={{ backgroundColor: 'white' }}>
         <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
-          <h3>About the movie</h3>
+          <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
           <p>{movieDetails.aboutMovie}</p>
           <br></br>
           <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
           <br></br>
-          <h3>Cast</h3>
+          <h3 style={{ marginBottom: '5px' }}>Cast</h3>
           <p>{movieDetails.movieCast}</p>
         </div>
 

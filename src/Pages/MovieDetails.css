@@ -45,16 +45,27 @@
 .rate {
     color: black;
     width: 7rem;
-    height: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.96rem;
+    margin-right: 20px;
+    padding: 8px;
 }
 
 .rating {
-    justify-content: space-around;
+    justify-content: space-between;
     margin: 1rem 0rem 1rem 0.65rem;
     background-color: rgb(82, 78, 78);
     border-radius: 8px;
-    height: 3rem;
     align-items: center;
+    padding: 16px 0px;
+}
+
+.rating > div > img {
+    width: 30px;
+    height: 30px;
 }
 
 .book {
@@ -74,9 +85,11 @@
 
 .language {
     color: black;
-    background-color:white; 
-    width: 5rem; 
+    background-color: white;
+    width: 6rem;
     display: flex;
     justify-content: center;
     margin-left: 0.65rem;
+    padding: 4px 7px;
+    border-radius: 8px;
 }

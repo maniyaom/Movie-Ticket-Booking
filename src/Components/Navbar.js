@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import './Navbar.css'
-import { Link } from 'react-router-dom'
+import './Navbar.css';
 
 export default function Navbar() {
     const firebase = useFirebase();  
@@ -52,7 +52,7 @@ export default function Navbar() {
             <script src="NavbarScript.js" defer></script>
 
             <nav className="nav">
-                <a href="#" className="logo">Book My Show</a>
+                <a href="#" className="logo">Ticketify</a>
 
                 <ul className="nav-links">
                     <li><Link to="/">Home</Link></li>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Navbar from "../Components/Navbar";
 import loader_icon from "../assets/icons/loader_icon.gif";
 
 const ContactUs = () => {
@@ -16,26 +15,26 @@ const ContactUs = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    document.title = "Contact Us";
     const getUserData = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            const uid = user.uid;
-            try {
-                const userDetails = await firebase.fetchUserDetails(uid);
-                setName(userDetails.name);
-                setEmail(userDetails.email);
-                console.log(userDetails);
-            } catch (error) {
-                console.error("Error fetching user details:", error);
-            }
+      if (user) {
+        const uid = user.uid;
+        try {
+          const userDetails = await firebase.fetchUserDetails(uid);
+          setName(userDetails.name);
+          setEmail(userDetails.email);
+          console.log(userDetails);
+        } catch (error) {
+          console.error("Error fetching user details:", error);
         }
+      }
     });
 
     return () => getUserData();
-}, [auth]);
+  }, [auth]);
 
   return (
     <>
-      <Navbar />
       <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Contact Us</div>

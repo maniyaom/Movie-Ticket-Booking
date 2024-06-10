@@ -1,5 +1,4 @@
-import React from 'react'
-import Navbar from '../Components/Navbar'
+import React, { useEffect } from 'react'
 import './AboutUs.css'
 import facebook_icon from '../assets/icons/facebook.png'
 import instagram_icon from '../assets/icons/instagram.png'
@@ -10,9 +9,13 @@ import our_mission from '../assets/images/our-mission.jpg'
 import who_we_are from '../assets/images/who-we-are.jpg'
 
 const AboutUs = () => {
+
+  useEffect(() => {
+    document.title = 'About Us';
+  }, []);
+
   return (
     <>
-      <Navbar />
       <div>
         <h1 style={{ color: '#f84464', textAlign: 'center', marginTop: '30px', fontSize: '43px' }}>About Us</h1>
 

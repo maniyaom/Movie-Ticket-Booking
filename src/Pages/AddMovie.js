@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import './utils.css';
-import Navbar from "../Components/Navbar";
 import { useFirebase } from "../context/firebase";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -9,16 +8,16 @@ import loader_icon from "../assets/icons/loader_icon.gif";
 function convertTo12Hour(time) {
     // Split the time into hours and minutes
     let [hours, minutes] = time.split(':').map(Number);
-    
+
     // Determine AM or PM suffix
     let period = hours >= 12 ? 'PM' : 'AM';
-    
+
     // Convert hours from 24-hour to 12-hour format
     hours = hours % 12 || 12;
-    
+
     // Format the hours and minutes to always be two digits
     let formattedTime = `${hours}:${minutes.toString().padStart(2, '0')} ${period}`;
-    
+
     return formattedTime;
 }
 
@@ -80,9 +79,13 @@ const AddMovie = () => {
         try {
             console.log(theaterName);
             console.log(theaterAddress);
+
+            const [hours, minutes] = movieDuration.split(':');
+            const formattedMovieDuration = `${hours}h ${minutes}m`;
+
             const movieTiming12hrs = convertTo12Hour(movieTiming);
             if (isAdmin == true) {
-                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration, movieGenre, movieReleaseDate, aboutMovie, movieCast, ticketPrice, movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
+                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate, aboutMovie, movieCast, ticketPrice, movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
             }
             else {
                 setError("Failed to add movie to the database");
@@ -99,9 +102,11 @@ const AddMovie = () => {
         setMoviePoster(e.target.files[0]);
     };
 
+    if (!isAdmin)
+        return <p>Loading...</p>
+
     return (
         <>
-            <Navbar />
             <div className="flex justify-center align-center" style={{ marginTop: '70px' }}>
                 <div className="signup-card">
                     <div className="signup-heading text-center myb-20">List Movie</div>

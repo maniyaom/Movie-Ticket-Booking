@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './style.css';
 import './utils.css';
-import Navbar from "../Components/Navbar";
+import Navbar from "../components/Navbar";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";

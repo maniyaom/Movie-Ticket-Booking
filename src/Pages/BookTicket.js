@@ -90,17 +90,17 @@ const BookTicket = () => {
 
     const handlePayment = async () => {
         const subtotal = seatList.length * ticketPrice;
-        
+
         if (userData.wallet >= subtotal) {
             const confirmation = await showConfirmationDialog(`${seatList}\nYour subtotal is ${subtotal}\nDo you want to continue?`);
-            
+
             if (confirmation) {
                 await firebase.updateData(`movies/${movieDetails.movieId}/theaterSeats`, seats);
                 await firebase.updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
-                
+
                 const creatorData = await firebase.fetchUserDetails(movieDetails.creatorId);
                 await firebase.updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
-                
+
                 const updatedBalance = userData.wallet - subtotal;
                 alert(`Your tickets are booked successfully\nYour updated balance is ${updatedBalance}`);
             } else {
@@ -110,7 +110,7 @@ const BookTicket = () => {
             alert("Insufficient balance. Please recharge your wallet.");
         }
     };
-    
+
     const showConfirmationDialog = (message) => {
         return new Promise((resolve) => {
             // Replace this with your custom dialog implementation
@@ -118,8 +118,8 @@ const BookTicket = () => {
             resolve(confirmation);
         });
     };
-    
-    
+
+
 
     if (!seatsData || !userData) {
         return <p>Loading...</p>;
@@ -127,23 +127,38 @@ const BookTicket = () => {
 
     return (
         <>
-            <div className="col">
-                {seatsData.map((row, rowIndex) => (
-                    <div className="row" key={rowIndex}>
-                        {row.map((seat, seatIndex) => (
-                            <div
-                                className={getSeatClassName(rowIndex, seatIndex)}
-                                key={seatIndex}
-                                id={`${rowIndex}-${seatIndex}`}
-                                onClick={() => handleSeatClick(rowIndex, seatIndex)}
-                            ></div>
-                        ))}
-                    </div>
-                ))}
+            <div className='movie'>
+                <h2>Movie Name</h2>
+                <p>Address | Today | Date | Show Time</p>
+            </div>
+            <div className='allSeats'>
+                <div>
+                    {seatsData.map((row, rowIndex) => (
+                        <div className="row" key={rowIndex}>
+                            {row.map((seat, seatIndex) => (
+                                <div
+                                    className={getSeatClassName(rowIndex, seatIndex)}
+                                    key={seatIndex}
+                                    id={`${rowIndex}-${seatIndex}`}
+                                    onClick={() => handleSeatClick(rowIndex, seatIndex)}
+                                ></div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
             </div>
 
-            <button
-                onClick={handlePayment}>Make Payment</button>
+            <div className='allSeats'>
+                <button onClick={handlePayment}>Make Payment</button>
+            </div>
+
+            <div className='fixed-bottom'>
+                <div className='footer'>
+                    <button type='button' className='not-available-seat footer-button'></button>
+                    <button type='button' className='your-seat footer-button'></button>
+                    <button type='button' className=' footer-button'></button>
+                </div>
+            </div>
         </>
     );
 };

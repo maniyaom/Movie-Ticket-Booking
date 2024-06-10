@@ -5,6 +5,12 @@
     --light-primary-color: rgba(248, 68, 100, 0.3);
 }
 
+.allSeats {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
 .seat {
     width: 30px;
     height: 30px;
@@ -26,4 +32,41 @@
 .your-seat {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+}
+
+.movie {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    border-radius: 8px;
+    height: 3rem;
+    width: 10rem;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    color: white;
+}
+
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: aliceblue;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-button {
+    height: 2rem;
+    width: 2rem;
 }

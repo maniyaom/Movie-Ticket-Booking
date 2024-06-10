@@ -52,6 +52,7 @@
     font-size: 0.96rem;
     margin-right: 20px;
     padding: 8px;
+    cursor: pointer;
 }
 
 .rating {

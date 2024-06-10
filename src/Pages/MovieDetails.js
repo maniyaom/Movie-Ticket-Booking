@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/firebase";
 import { useParams, Link } from "react-router-dom";
 import "./MovieDetails.css";
 import star from "../assets/icons/star.png"
 
+
 const MovieDetails = () => {
   const movieId = useParams();
 
   const firebase = useFirebase();
-  const [movieDetails, setMovieDetails] = useState();
+  const auth = getAuth();
+  const navigate = useNavigate();
+
+  const [userDetails, setUserDetails] = useState(null);
+  const [movieDetails, setMovieDetails] = useState(null);
   const [moviePosterUrl, setMoviePosterUrl] = useState("");
+
+  const handleRateNowBtn = async () => {
+    const rating = 7.2;
+    await firebase.updateData(`movies/${movieDetails.movieId}/rating/${userDetails.uid}`,rating);
+  }
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -23,10 +35,20 @@ const MovieDetails = () => {
         console.log("Error : ", error);
       }
     }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDetails = await firebase.fetchUserDetails(user.uid);
+        setUserDetails(userDetails);
+      } else {
+        navigate("/Login");
+      }
+    });
+
     fetchMovie();
   }, [movieId.movieId]);
 
-  if (!movieDetails || !moviePosterUrl) {
+  if (!movieDetails || !moviePosterUrl || !userDetails) {
     return <p>Loading movie details...</p>;
   }
 
@@ -46,7 +68,7 @@ const MovieDetails = () => {
                   <img src={star} />
                   <p className="text">8.7/10</p>
                 </div>
-                <button type="button" className="rate">
+                <button type="button" className="rate" onClick={handleRateNowBtn}>
                   Rate Now
                 </button>
               </div>

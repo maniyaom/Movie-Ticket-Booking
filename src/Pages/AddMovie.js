@@ -47,6 +47,15 @@ const AddMovie = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
+    function convertDate(releaseDate) {
+        let date = releaseDate.split('-');
+        
+        let month = ['Jan', 'Feb', 'March', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+        releaseDate = date[2] + ' ' + month[date[1]-1] + ' ' + date[0]
+        return releaseDate;
+    }
+    
     useEffect(() => {
         const getUserData = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -61,7 +70,6 @@ const AddMovie = () => {
                         setTheaterName(userDetails.theaterName);
                         setTheaterAddress(userDetails.theaterAddress);
                         setCreatorId(userDetails.uid);
-                        console.log(userDetails)
                     }
                 } catch (error) {
                     console.error("Error fetching user details:", error);
@@ -78,15 +86,14 @@ const AddMovie = () => {
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
-            console.log(theaterName);
-            console.log(theaterAddress);
-
             const [hours, minutes] = movieDuration.split(':');
             const formattedMovieDuration = `${hours}h ${minutes}m`;
+            const releaseDate = convertDate(movieReleaseDate);
+            console.log(releaseDate)
 
             const movieTiming12hrs = convertTo12Hour(movieTiming);
             if (isAdmin == true) {
-                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate, aboutMovie, movieCast, ticketPrice, movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
+                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate: releaseDate, aboutMovie, movieCast, ticketPrice, movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
             }
             else {
                 setError("Failed to add movie to the database");

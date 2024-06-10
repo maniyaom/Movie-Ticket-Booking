@@ -55,7 +55,7 @@ const Home = () => {
           return (
             <Link to={"/MovieDetails/" + movieId} key={index}>
               <div className="poster">
-                <div class="placeholder shimmer" style={{ width: '222px', height: '340px' }}>
+                <div className="placeholder shimmer" style={{ width: '222px', height: '340px' }}>
                   <style>
                     {`
                       .shimmer::before {
@@ -74,8 +74,8 @@ const Home = () => {
                        }
                      `}
                   </style>
-                  <div class="faux-image-wrapper">
-                    <div class="faux-image">
+                  <div className="faux-image-wrapper">
+                    <div className="faux-image">
                       <img src={posterPath}
                         onLoad={handleImageLoad} />
                     </div>

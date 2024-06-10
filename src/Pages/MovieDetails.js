@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../context/firebase";
 import { useParams, Link } from "react-router-dom";
 import "./MovieDetails.css";
-import star from "../assets/icons/star.png"
+import star from "../assets/icons/star.png";
 import closeIcon from "../assets/icons/close-icon.png";
-
 
 const MovieDetails = () => {
   const movieId = useParams();
@@ -24,9 +23,12 @@ const MovieDetails = () => {
   const [moviePosterUrl, setMoviePosterUrl] = useState("");
 
   const submitRating = async () => {
-    await firebase.updateData(`movies/${movieDetails.movieId}/rating/${userDetails.uid}`, rating);
+    await firebase.updateData(
+      `movies/${movieDetails.movieId}/rating/${userDetails.uid}`,
+      rating
+    );
     setShowRatingPopup(false);
-  }
+  };
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -35,21 +37,24 @@ const MovieDetails = () => {
         const y = await firebase.fetchMoviePoster(movieId.movieId);
         setMovieDetails(x);
         setMoviePosterUrl(y);
-        if (x.rating){
+        if (x.rating) {
           let totalRating = 0;
           Object.entries(x.rating).forEach(([key, value]) => {
             totalRating += value;
-        });
-        setAverageRating(totalRating/Object.keys(x.rating).length + '/5.0 (' + Object.keys(x.rating).length + ' Votes)');
-        }
-        else{
+          });
+          setAverageRating(
+            totalRating / Object.keys(x.rating).length +
+              "/5.0 (" +
+              Object.keys(x.rating).length +
+              " Votes)"
+          );
+        } else {
           setAverageRating("0/5.0 (0 Votes)");
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.log("Error : ", error);
       }
-    }
+    };
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -81,11 +86,18 @@ const MovieDetails = () => {
               </h2>
 
               <div className="row rating">
-                <div className="flex align-center" style={{ marginLeft: '20px' }}>
+                <div
+                  className="flex align-center"
+                  style={{ marginLeft: "20px" }}
+                >
                   <img src={star} />
                   <p className="text">{averageRating}</p>
                 </div>
-                <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
+                <button
+                  type="button"
+                  className="rate"
+                  onClick={() => setShowRatingPopup(true)}
+                >
                   Rate Now
                 </button>
               </div>
@@ -106,27 +118,42 @@ const MovieDetails = () => {
                 </div>
               </div>
 
-              <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
+              <div className="book">
+                <Link to={"/BookTicket/" + movieId.movieId} className="book-link">
+                  Book Tickets
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="column" style={{ backgroundColor: 'white' }}>
-        <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
-          <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
+      <div className="column" style={{ backgroundColor: "white" }}>
+        <div
+          style={{
+            color: "black",
+            marginLeft: "13.5rem",
+            marginTop: "1.5rem",
+            marginRight: "13.5rem",
+          }}
+        >
+          <h3 style={{ marginBottom: "5px" }}>About the movie</h3>
           <p>{movieDetails.aboutMovie}</p>
           <br></br>
-          <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
+          <hr style={{ color: "skyblue", opacity: 0.3 }}></hr>
           <br></br>
-          <h3 style={{ marginBottom: '5px' }}>Cast</h3>
+          <h3 style={{ marginBottom: "5px" }}>Cast</h3>
           <p>{movieDetails.movieCast}</p>
         </div>
       </div>
 
-      <div className={showRatingPopup ? 'toggle-popup' : 'hide-div'}>
+      <div className={showRatingPopup ? "toggle-popup" : "hide-div"}>
         <div className="rating-container">
-          <img src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)}/>
+          <img
+            src={closeIcon}
+            className="close-icon"
+            onClick={() => setShowRatingPopup(false)}
+          />
           <span className="rate-popup-title">Rate Movie</span>
           <div className="rating-popup">
             <input
@@ -175,7 +202,13 @@ const MovieDetails = () => {
             />
             <label title="text" htmlFor="star1"></label>
           </div>
-          <button className="btn" style={{ width: '55%', margin: '30px 20%' }} onClick={submitRating}>Submit</button>
+          <button
+            className="btn"
+            style={{ width: "55%", margin: "30px 20%" }}
+            onClick={submitRating}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </>

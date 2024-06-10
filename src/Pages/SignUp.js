@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useFirebase } from "../context/firebase";
-import Navbar from "../components/Navbar";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -149,7 +148,6 @@ const SignUp = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Sign Up</div>

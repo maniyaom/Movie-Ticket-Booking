@@ -35,15 +35,15 @@ const MovieDetails = () => {
         const y = await firebase.fetchMoviePoster(movieId.movieId);
         setMovieDetails(x);
         setMoviePosterUrl(y);
-        if (x.rating){
+        if (x.rating) {
           let totalRating = 0;
           Object.entries(x.rating).forEach(([key, value]) => {
             totalRating += value;
-        });
-        setAverageRating(totalRating/Object.keys(x.rating).length + '/5.0 (' + Object.keys(x.rating).length + ' Votes)');
+          });
+          setAverageRating((totalRating / Object.keys(x.rating).length).toFixed(2) + '/5.0 (' + Object.keys(x.rating).length + ' Votes)');
         }
-        else{
-          setAverageRating("0/5.0 (0 Votes)");
+        else {
+          setAverageRating("0.0/5.0 (0 Votes)");
         }
       }
       catch (error) {
@@ -71,62 +71,64 @@ const MovieDetails = () => {
 
   return (
     <>
-      <div className="main-div">
-        <div className="container">
-          <div className="row" style={{ width: "50rem" }}>
-            <img src={moviePosterUrl} className="poster" />
-            <div className="column">
-              <h2 name="title" className="text">
-                {movieDetails.movieTitle}
-              </h2>
+      <div className={showRatingPopup ? 'dull-background' : ''}>
+        <div className="main-div">
+          <div className="container">
+            <div className="row" style={{ width: "50rem" }}>
+              <img src={moviePosterUrl} className="poster" />
+              <div className="column">
+                <h2 name="title" className="text">
+                  {movieDetails.movieTitle}
+                </h2>
 
-              <div className="row rating">
-                <div className="flex align-center" style={{ marginLeft: '20px' }}>
-                  <img src={star} />
-                  <p className="text">{averageRating}</p>
+                <div className="row rating">
+                  <div className="flex align-center" style={{ marginLeft: '20px' }}>
+                    <img src={star} />
+                    <p className="text">{averageRating}</p>
+                  </div>
+                  <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
+                    Rate Now
+                  </button>
                 </div>
-                <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
-                  Rate Now
-                </button>
-              </div>
-              <div className="language" style={{ marginBottom: '1rem' }}>
-                <span>{movieDetails.movieLanguage}</span>
-              </div>
-              <div className="row">
-                <div name="Duration" className="text">
-                  {movieDetails.movieDuration}
+                <div className="language" style={{ marginBottom: '1rem' }}>
+                  <span>{movieDetails.movieLanguage}</span>
                 </div>
-                <span className="text"> • </span>
-                <div name="Genre" className="text">
-                  {movieDetails.movieGenre}
+                <div className="row">
+                  <div name="Duration" className="text">
+                    {movieDetails.movieDuration}
+                  </div>
+                  <span className="text"> • </span>
+                  <div name="Genre" className="text">
+                    {movieDetails.movieGenre}
+                  </div>
+                  <span className="text"> • </span>
+                  <div name="Date" className="text">
+                    {movieDetails.movieReleaseDate}
+                  </div>
                 </div>
-                <span className="text"> • </span>
-                <div name="Date" className="text">
-                  {movieDetails.movieReleaseDate}
-                </div>
-              </div>
 
-              <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
+                <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="column" style={{ backgroundColor: 'white' }}>
-        <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
-          <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
-          <p>{movieDetails.aboutMovie}</p>
-          <br></br>
-          <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
-          <br></br>
-          <h3 style={{ marginBottom: '5px' }}>Cast</h3>
-          <p>{movieDetails.movieCast}</p>
+        <div className="column" style={{ backgroundColor: 'white' }}>
+          <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
+            <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
+            <p>{movieDetails.aboutMovie}</p>
+            <br></br>
+            <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
+            <br></br>
+            <h3 style={{ marginBottom: '5px' }}>Cast</h3>
+            <p>{movieDetails.movieCast}</p>
+          </div>
         </div>
       </div>
 
       <div className={showRatingPopup ? 'toggle-popup' : 'hide-div'}>
         <div className="rating-container">
-          <img src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)}/>
+          <img src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)} />
           <span className="rate-popup-title">Rate Movie</span>
           <div className="rating-popup">
             <input

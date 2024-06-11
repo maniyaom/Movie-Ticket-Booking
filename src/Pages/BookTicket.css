@@ -53,6 +53,10 @@ button {
     font-size: 15px;
 }
 
+button:hover{
+    background-color: rgba(248, 68, 100, 0.8);
+}
+
 .fixed-bottom {
     position: fixed;
     bottom: 0;

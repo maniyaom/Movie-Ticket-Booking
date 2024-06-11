@@ -135,8 +135,39 @@ export const FirebaseProvider = (props) => {
         }
     };
 
+    const makePayment = async (subtotal, updatedSeats, movieDetails, userData) => {
+        try{
+            const ticketRef = push(ref(database, 'tickets'));
+            const ticketId = ticketRef.key;
+            const data = {
+                ticketId : ticketId,
+                uid : userData.uid,
+                movieId : movieDetails.movieId,
+                creatorId : movieDetails.creatorId,
+                userEmail : userData.email,
+                userPhone : userData.phone,
+                theaterName : movieDetails.theaterName,
+                theaterAddress : movieDetails.theaterAddress,
+                movieDuration : movieDetails.movieDuration,
+                movieLanguage : movieDetails.movieLanguage,
+                movieTiming : movieDetails.movieTiming,
+                movieTitle : movieDetails.movieTitle,
+                subtotal : subtotal
+            }
+            await set(ref(database, `tickets/${ticketId}`), data);
+            await updateData(`movies/${movieDetails.movieId}/theaterSeats`, updatedSeats);
+            await updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
+            const creatorData = await fetchUserDetails(movieDetails.creatorId);
+            await updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
+        }
+        catch (error) {
+            console.error("Transaction Failed !!", error);
+            throw error;
+        }
+    }
+
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment }}>
             {props.children}
         </FirebaseContext.Provider>
     );

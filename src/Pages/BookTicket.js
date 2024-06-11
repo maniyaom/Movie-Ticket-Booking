@@ -102,35 +102,41 @@ const BookTicket = () => {
             alert("Insufficient Balance !! Please recharge your wallet.");
     }
 
+    // const handlePayment = async () => {
+    //     const subtotal = seatList.length * ticketPrice;
+
+    //     try {
+    //         setIsLoading(true);
+    //         await firebase.updateData(`movies/${movieDetails.movieId}/theaterSeats`, seats);
+    //         await firebase.updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
+
+    //         const creatorData = await firebase.fetchUserDetails(movieDetails.creatorId);
+    //         await firebase.updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
+
+    //         setIsLoading(false);
+    //         alert(`Your tickets are booked successfully\nYou will be redirected to Home page`);
+    //         navigate('/Home');
+    //     }
+    //     catch (error) {
+    //         alert("Transaction failed !! Error : ", error.message);
+    //     }
+    // };
+
     const handlePayment = async () => {
+        setIsLoading(true);
         const subtotal = seatList.length * ticketPrice;
-
-        try {
-            setIsLoading(true);
-            await firebase.updateData(`movies/${movieDetails.movieId}/theaterSeats`, seats);
-            await firebase.updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
-
-            const creatorData = await firebase.fetchUserDetails(movieDetails.creatorId);
-            await firebase.updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
-
-            setIsLoading(false);
-            alert(`Your tickets are booked successfully\nYou will be redirected to Home page`);
+        try{
+            await firebase.makePayment(subtotal, seats, movieDetails, userData);
+            alert('Your tickets are booked successfully\nYou will be redirected to Home page');
             navigate('/Home');
         }
-        catch (error) {
-            alert("Transaction failed !! Error : ", error.message);
+        catch(error){
+            alert("Transaction failed !!", error.message);
+        }
+        finally{
+            setIsLoading(false);
         }
     };
-
-    const showConfirmationDialog = (message) => {
-        return new Promise((resolve) => {
-            // Replace this with your custom dialog implementation
-            const confirmation = window.confirm(message);
-            resolve(confirmation);
-        });
-    };
-
-
 
     if (!seatsData || !userData) {
         return <p>Loading...</p>;
@@ -168,7 +174,7 @@ const BookTicket = () => {
             </div>
 
             <div className='allSeats'>
-                <button onClick={() => handleProceedToPay()}>Proceed to Pay</button>
+                <button onClick={() => handleProceedToPay()} style={{marginBottom: '100px'}}>Proceed to Pay</button>
             </div>
 
             <div className='fixed-bottom'>

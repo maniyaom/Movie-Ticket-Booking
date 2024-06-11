@@ -76,9 +76,9 @@ export default function Navbar() {
                             </li>
 
                             <li>
-                                <a href="#">
+                                <Link to={'/Account'}>
                                     <span className="material-symbols-outlined">account_circle</span> Account
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="#">

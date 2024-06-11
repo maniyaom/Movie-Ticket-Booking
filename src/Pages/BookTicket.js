@@ -96,8 +96,9 @@ const BookTicket = () => {
     const handleProceedToPay = () => {
         if (seatList.length == 0)
             alert("Please select atleast one seat");
-        else if (userData.wallet >= seatList.length * ticketPrice)
+        else if (userData.wallet >= seatList.length * ticketPrice){
             setShowPopUp(true);
+        }
         else
             alert("Insufficient Balance !! Please recharge your wallet.");
     }
@@ -106,7 +107,7 @@ const BookTicket = () => {
         setIsLoading(true);
         const subtotal = seatList.length * ticketPrice;
         try{
-            await firebase.makePayment(subtotal, seats, movieDetails, userData);
+            await firebase.makePayment(subtotal, seats, seatList, movieDetails, userData);
             alert('Your tickets are booked successfully\nYou will be redirected to Home page');
             navigate('/Home');
         }

@@ -1,0 +1,57 @@
+.account-title {
+    margin-left: 10vw; 
+    margin-top: 30px; 
+    color: var(--primary-color);
+}
+
+.transaction-title {
+    margin: 30px 0px 20px 10vw; 
+    font-weight: 600; 
+    font-size: 28px; 
+    color: var(--primary-color);
+}
+
+.transactions-block {
+    width: 80vw;
+    margin: auto;
+    border: 3px solid rgba(248, 68, 100, 0.4);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.transactions-block>div {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+}
+
+.ticket-details {
+    width: 50%;
+}
+
+.ticket-details > div:nth-child(1) {
+    font-weight: 600;
+}
+
+.ticket-details > div:nth-child(2), .ticket-details > div:nth-child(3) {
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.amount {
+    width: 30%;
+    font-weight: 600;
+}
+
+.date {
+    width: 20%;
+    font-weight: 600;
+}
+
+.color-red {
+    color: red;
+}
+
+.color-green {
+    color: green;
+}

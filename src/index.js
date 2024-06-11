@@ -12,6 +12,7 @@ import MovieDetails from './Pages/MovieDetails';
 import BookTicket from './Pages/BookTicket';
 import Navbar from './components/Navbar';
 import './components/Navbar.css'
+import Account from './Pages/Account';
 import { FirebaseProvider } from './context/firebase';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/AddMovie" element={<AddMovie />} />
         <Route path="/MovieDetails/:movieId" element={<MovieDetails />} />
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />
+        <Route path="/Account" element={<Account />} />
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>

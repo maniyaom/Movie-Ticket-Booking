@@ -2,90 +2,96 @@ import React, { useEffect, useState } from "react";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
-import '../components/Navbar.css';
+import "./utils.css";
+import "./AboutUs.css";
 
 const ContactUs = () => {
-
-  const firebase = useFirebase();
-  const auth = getAuth();
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [query, setQuery] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    document.title = "Contact Us";
-    const getUserData = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const uid = user.uid;
-        try {
-          const userDetails = await firebase.fetchUserDetails(uid);
-          setName(userDetails.name);
-          setEmail(userDetails.email);
-          console.log(userDetails);
-        } catch (error) {
-          console.error("Error fetching user details:", error);
-        }
-      }
-    });
-
-    return () => getUserData();
-  }, [auth]);
-
   return (
     <>
-      <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
-        <div className="signup-card">
-          <div className="signup-heading text-center myb-20">Contact Us</div>
-          <div className="signup-subheading myb-20">
-            Please provide your name, email address, and Issue.
+      <div className="flex justify-center">
+        <div>
+          <h1
+            style={{
+              color: "#f84464",
+              textAlign: "center",
+              marginTop: "30px",
+              fontSize: "43px",
+            }}
+          >
+            Contact US
+          </h1>
+          <p
+            style={{ opacity: "0.8", fontWeight: "600", margin: "10px 200px" }}
+          >
+            Thank you for choosing Ticketify! We're here to assist you with any
+            questions or concerns you may have. Here's how you can get in touch
+            with us:
+          </p>
+
+          <div className="card-image-div flex-col">
+            <h2 className="title">Customer Support:</h2>
+            <ul style={{ marginLeft: "2rem" }}>
+              <li>
+                For assistance with your bookings, refunds, or any other
+                inquiries, please reach out to our Customer Support team.
+              </li>
+              <ul style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                <li>
+                  <b>Email: </b>support@ticketify.com
+                </li>
+                <li>
+                  <b>Phone: </b>1-800-MOVIE-TIX (1-800-668-4384)
+                </li>
+                <li>
+                  <b>Live Chat: </b>Available on our website during business
+                  hours
+                </li>
+              </ul>
+            </ul>
           </div>
 
-          <label htmlFor="username" className="label-text">
-            Name
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="input-field"
-            placeholder="e.g. John Doe"
-          />
-
-          <label htmlFor="email" className="label-text">
-            Email
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input-field"
-            placeholder="e.g. example@gmail.com"
-          />
-
-          <label htmlFor="query" className="label-text">
-            Query
-          </label>
-          <textarea
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="input-text-area"
-            rows={6}
-            placeholder="Enter your query"
-          />
-
-          {/* <div className={isLoading ? 'show-loader' : 'loader-icon-div'}>
-            <img src={loader_icon} alt="Loader Icon" />
-          </div> */}
-
-          <span className="error">{error}</span>
-
-          <button className="btn">Submit</button>
-          <div className="terms-condition">
-            By clicking the button, you are agreeing to our Terms and Services
+          <div className="card-image-div flex-col">
+            <h2 className="title">Business Inquiries:</h2>
+            <ul style={{ marginLeft: "2rem" }}>
+              <li>
+                Interested in partnership opportunities or have a business
+                proposal? Contact our Business Development team.
+              </li>
+              <ul style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                <li>
+                  <b>Email: </b>partnership@ticketify.com
+                </li>
+                <li>
+                  <b>Phone: </b>1-888-555-PART (1-888-555-7278)
+                </li>
+              </ul>
+            </ul>
           </div>
+
+          <div className="card-image-div flex-col">
+            <ul style={{ marginLeft: "2rem" }}>
+              <li>
+                We value your feedback and suggestions. Let us know how we can
+                improve your experience.
+              </li>
+              <ul style={{ marginLeft: "2rem", marginTop: '1rem', marginBottom: '2rem' }}>
+                <li>
+                  <b>Email: </b>feedback@yourmovietickets.com
+                </li>
+              </ul>
+            </ul>
+
+            <h2 className="title" style={{fontSize: '22px', fontWeight: 500}}>Address</h2>
+            <p style={{ marginLeft: "2rem", fontWeight: 600, opacity: 0.8, marginBottom: '1rem' }}>
+              Ticketify private limited, 123 Movie Ave, Surat, Gujarat, 394107,
+              India
+            </p>
+          </div>
+          <p className="card-image-div flex-col" style={{backgroundColor: '#fdcad3', fontWeight: 600}}>
+              Feel free to reach out to us through any of the above channels. We
+              strive to respond to all inquiries within 24 hours during business
+              days. Thank you for choosing Ticketify!
+            </p>
         </div>
       </div>
     </>

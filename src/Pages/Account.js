@@ -4,10 +4,10 @@ import './Account.css';
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import MovieTicket from './MovieTicket';
+import Footer from '../components/Footer';
 
-const TransactionDetail = ({ title, transactionId, bookedSeats, amount, date, color }) => (
-    <div className="transaction-block" style={{cursor: 'pointer'}}>
+const TransactionDetail = ({ ticketId, title, transactionId, bookedSeats, amount, date, color }) => (
+    <Link to={`/MovieTicket/${ticketId}`} className="transaction-block" style={{ cursor: 'pointer', display: 'flex', marginBottom: '20px' }}>
         <div className="ticket-details">
             <div>{title}</div>
             <div>Seat No : {bookedSeats}</div>
@@ -15,7 +15,7 @@ const TransactionDetail = ({ title, transactionId, bookedSeats, amount, date, co
         </div>
         <div className={`amount ${color}`}>{amount}</div>
         <div className="date">{date}</div>
-    </div>
+    </Link>
 );
 
 const Account = () => {
@@ -50,16 +50,17 @@ const Account = () => {
         return <p>Loading...</p>
 
     return (
-        <div className="account-details">
-            <h2 className="account-title">Account Details</h2>
-            <div className="user-info" style={{ marginLeft: '10vw', marginTop: '5px' }}>
-                <div style={{ fontWeight: 600 }}>Name: {userData.name}</div>
-                <div style={{ fontWeight: 600 }}>Email: {userData.email}</div>
-                <div style={{ fontWeight: 600 }}>Phone Number: {userData.phone}</div>
-                <div style={{ fontWeight: 600 }}>Current Wallet Balance: {userData.wallet} ₹</div>
-            </div>
-            <div className="transaction-title">Transactions</div>
-            
+        <>
+            <div>
+                <h2 className="account-title">Account Details</h2>
+                <div className="user-info" style={{ marginLeft: '10vw', marginTop: '5px' }}>
+                    <div style={{ fontWeight: 600 }}>Name: {userData.name}</div>
+                    <div style={{ fontWeight: 600 }}>Email: {userData.email}</div>
+                    <div style={{ fontWeight: 600 }}>Phone Number: {userData.phone}</div>
+                    <div style={{ fontWeight: 600 }}>Current Wallet Balance: {userData.wallet} ₹</div>
+                </div>
+                <div className="transaction-title">Transactions</div>
+
                 <div className="transactions-block">
                     <div>
                         <div className="ticket-details" style={{ fontWeight: 600 }}>
@@ -79,11 +80,13 @@ const Account = () => {
                         let color = paidBy == userData.uid ? 'color-red' : 'color-green';
 
                         return (
-                            <TransactionDetail key={index} title={movieTitle} transactionId={ticketId} bookedSeats={bookedSeats.join(', ')} amount={amount} date={transactionTime} color={color}/>
+                            <TransactionDetail key={index} ticketId={ticketId} title={movieTitle} transactionId={ticketId} bookedSeats={bookedSeats.join(', ')} amount={amount} date={transactionTime} color={color} />
                         )
                     })}
                 </div>
-        </div>
+            </div>
+            <Footer />
+        </>
     );
 };
 

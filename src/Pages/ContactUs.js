@@ -4,6 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import "./utils.css";
 import "./AboutUs.css";
+import Footer from '../components/Footer';
 
 const ContactUs = () => {
   return (
@@ -94,6 +95,7 @@ const ContactUs = () => {
             </p>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

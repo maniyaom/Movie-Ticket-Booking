@@ -7,6 +7,7 @@ import twitter_icon from '../assets/icons/twitter.png'
 import join_our_community from '../assets/images/join-our-community.jpg'
 import our_mission from '../assets/images/our-mission.jpg'
 import who_we_are from '../assets/images/who-we-are.jpg'
+import Footer from '../components/Footer'
 
 const AboutUs = () => {
 
@@ -95,6 +96,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

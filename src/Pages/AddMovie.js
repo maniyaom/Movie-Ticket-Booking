@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import '../components/Navbar.css';
+import Footer from '../components/Footer';
 
 function convertTo12Hour(time) {
     // Split the time into hours and minutes
@@ -312,6 +313,7 @@ const AddMovie = () => {
                     <button className="btn" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

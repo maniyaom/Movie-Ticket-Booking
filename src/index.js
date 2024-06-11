@@ -37,7 +37,7 @@ function App() {
         <Route path="/MovieDetails/:movieId" element={<MovieDetails />} />
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />
         <Route path="/Account" element={<Account />} />
-        <Route path="/MovieTicket" element={<MovieTicket />} />
+        <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>

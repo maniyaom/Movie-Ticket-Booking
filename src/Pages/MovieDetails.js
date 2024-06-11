@@ -6,6 +6,7 @@ import { useParams, Link } from "react-router-dom";
 import "./MovieDetails.css";
 import star from "../assets/icons/star.png";
 import closeIcon from "../assets/icons/close-icon.png";
+import Footer from '../components/Footer';
 
 const MovieDetails = () => {
   const movieId = useParams();
@@ -183,6 +184,7 @@ const MovieDetails = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

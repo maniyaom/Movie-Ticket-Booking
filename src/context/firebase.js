@@ -165,14 +165,14 @@ export const FirebaseProvider = (props) => {
                 movieTiming: movieDetails.movieTiming,
                 movieTitle: movieDetails.movieTitle,
                 transactionTime: formattedTime,
-                bookedSeats : seatList,
+                bookedSeats: seatList,
                 subtotal: subtotal
             }
             await updateData(`movies/${movieDetails.movieId}/theaterSeats`, updatedSeats);
             await updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
             const creatorData = await fetchUserDetails(movieDetails.creatorId);
             await updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
-            
+
             await set(ref(database, `tickets/${ticketId}`), data);
         }
         catch (error) {
@@ -206,9 +206,27 @@ export const FirebaseProvider = (props) => {
         }
     }
 
+    const fetchTicketDetails = async (ticketId) => {
+        try {
+            const snapshot = await get(ref(database, "tickets"));
+            const ticketData = snapshot.val();
+
+            if (ticketData) {
+                const ticketArray = Object.values(ticketData);
+                const ticket = ticketArray.find(ticket => ticket.ticketId === ticketId);
+                return ticket ? ticket : "Ticket not found";
+            } else {
+                return "No tickets found";
+            }
+        } catch (error) {
+            console.error("Error fetching ticket data : ", error);
+            throw error;
+        }
+    }
+
 
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails }}>
             {props.children}
         </FirebaseContext.Provider>
     );

@@ -3,6 +3,7 @@ import { useFirebase } from "../context/firebase";
 import './Home.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import Footer from '../components/Footer';
 
 const Home = () => {
   const firebase = useFirebase();
@@ -89,6 +90,7 @@ const Home = () => {
           );
         })}
       </div>
+      <Footer />
     </>
   );
 };

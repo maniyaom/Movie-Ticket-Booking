@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import '../components/Navbar.css';
+import { clear } from "@testing-library/user-event/dist/clear";
 
 function convertTo12Hour(time) {
     // Split the time into hours and minutes
@@ -44,7 +45,19 @@ const AddMovie = () => {
     const [movieCast, setMovieCast] = useState("");
     const [ticketPrice, setTicketPrice] = useState("");
 
+    const [movieTitleError, setMovieTitleError] = useState("");
+    const [movieLanguageError, setMovieLanguageError] = useState("");
+    const [moviePosterError, setMoviePosterError] = useState(null);
+    const [movieDurationError, setMovieDurationError] = useState("");
+    const [movieGenreError, setMovieGenreError] = useState("");
+    const [movieReleaseDateError, setMovieReleaseDateError] = useState("");
+    const [movieTimingError, setMovieTimingError] = useState("");
+    const [aboutMovieError, setAboutMovieError] = useState("");
+    const [movieCastError, setMovieCastError] = useState("");
+    const [ticketPriceError, setTicketPriceError] = useState("");
+
     const [isLoading, setIsLoading] = useState(false);
+    
     const [error, setError] = useState("");
 
     function convertDate(releaseDate) {
@@ -85,23 +98,31 @@ const AddMovie = () => {
 
     const handleSubmit = async () => {
         setIsLoading(true);
-        try {
-            const [hours, minutes] = movieDuration.split(':');
-            const formattedMovieDuration = `${hours}h ${minutes}m`;
-            const releaseDate = convertDate(movieReleaseDate);
-            console.log(releaseDate)
+        if (validateForm() == true){
+            try {
+                const [hours, minutes] = movieDuration.split(':');
+                const formattedMovieDuration = `${hours}h ${minutes}m`;
+                const releaseDate = convertDate(movieReleaseDate);
+                console.log(releaseDate)
+    
+                const movieTiming12hrs = convertTo12Hour(movieTiming);
+                if (isAdmin == true) {
+                    await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate: releaseDate, aboutMovie, movieCast, ticketPrice, movieTiming: movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
 
-            const movieTiming12hrs = convertTo12Hour(movieTiming);
-            if (isAdmin == true) {
-                await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate: releaseDate, aboutMovie, movieCast, ticketPrice, movieTiming: movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
+                    clearForm();
+                    alert("Movie Added Successfully.");
+                }
+                else {
+                    setError("Failed to add movie to the database");
+                }
+            } catch (error) {
+                console.log("Failed to add movie data to the database:", error);
+                setError("Failed to add movie data to the database");
+            } finally {
+                setIsLoading(false);
             }
-            else {
-                setError("Failed to add movie to the database");
-            }
-        } catch (error) {
-            console.log("Failed to add movie data to the database:", error);
-            setError("Failed to add movie data to the database");
-        } finally {
+        }
+        else{
             setIsLoading(false);
         }
     }
@@ -109,6 +130,61 @@ const AddMovie = () => {
     const handlePosterChange = (e) => {
         setMoviePoster(e.target.files[0]);
     };
+
+    const validateForm = () => {
+        let isValid = true;
+        if (movieTitle == ""){
+            setMovieTitleError("(Required Field)");
+            isValid = false;
+        }
+        if (movieLanguage == ""){
+            setMovieLanguageError("(Required Field)");
+            isValid = false;
+        }
+        if (movieDuration == ""){
+            setMovieDurationError("(Required Field)");
+            isValid = false;
+        }
+        if (movieGenre == ""){
+            setMovieGenreError("(Required Field)");
+            isValid = false;
+        }
+        if (movieReleaseDate == ""){
+            setMovieReleaseDateError("(Required Field)");
+            isValid = false;
+        }
+        if (movieTiming == ""){
+            setMovieTimingError("(Required Field)");
+            isValid = false;
+        }
+        if (aboutMovie == ""){
+            setAboutMovieError("(Required Field)");
+            isValid = false;
+        }
+        if (movieCast == ""){
+            setMovieCastError("(Required Field)");
+            isValid = false;
+        }
+        if (ticketPrice == ""){
+            setTicketPriceError("(Required Field)");
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    const clearForm = () => {
+        setMovieTitle("");
+        setMovieLanguage("");
+        setMovieDuration("");
+        setMovieGenre("");
+        setMovieReleaseDate("");
+        setMovieTiming("");
+        setAboutMovie("");
+        setMovieCast("");
+        setTicketPrice("");
+        setError("");
+        setMoviePoster(null);
+    }
 
     if (!isAdmin)
         return <p>Loading...</p>
@@ -123,7 +199,7 @@ const AddMovie = () => {
                     </div>
 
                     <label className="label-text">
-                        Movie Title
+                        Movie Title <span className="error-inline mxl-10">{movieTitleError}</span>
                     </label>
                     <input
                         type="text"
@@ -134,7 +210,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Movie Languages
+                        Movie Languages <span className="error-inline mxl-10">{movieLanguageError}</span>
                     </label>
                     <input
                         type="text"
@@ -145,7 +221,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Movie Duration (HH:MM)
+                        Movie Duration (HH:MM) <span className="error-inline mxl-10">{movieDurationError}</span>
                     </label>
                     <input
                         type="time"
@@ -156,7 +232,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Movie Genre
+                        Movie Genre <span className="error-inline mxl-10">{movieGenreError}</span>
                     </label>
                     <input
                         type="text"
@@ -167,7 +243,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Movie Release Date
+                        Movie Release Date <span className="error-inline mxl-10">{movieReleaseDateError}</span>
                     </label>
                     <input
                         type="date"
@@ -178,7 +254,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Show Time (HH:MM)
+                        Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
                     </label>
                     <input
                         type="time"
@@ -189,7 +265,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        About Movie
+                        About Movie <span className="error-inline mxl-10">{aboutMovieError}</span>
                     </label>
                     <input
                         type="text"
@@ -200,7 +276,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Movie Cast
+                        Movie Cast <span className="error-inline mxl-10">{movieCastError}</span>
                     </label>
                     <input
                         type="text"
@@ -211,7 +287,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Ticket Price (In Rs.)
+                        Ticket Price (In Rs.) <span className="error-inline mxl-10">{ticketPriceError}</span>
                     </label>
                     <input
                         type="text"
@@ -222,7 +298,7 @@ const AddMovie = () => {
                     />
 
                     <label className="label-text">
-                        Poster
+                        Poster <span className="error-inline mxl-10">{moviePosterError}</span>
                     </label>
                     <input
                         type="file"

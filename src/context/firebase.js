@@ -5,14 +5,14 @@ import { getDatabase, set, ref, push, get } from "firebase/database";
 import { getDownloadURL as getStorageDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCk0BnFsJWBNRFpgVxD8D4yZb9cR9Ph698",
-    authDomain: "movie-ticket-booking-39080.firebaseapp.com",
-    projectId: "movie-ticket-booking-39080",
-    storageBucket: "movie-ticket-booking-39080.appspot.com",
-    messagingSenderId: "71799299976",
-    appId: "1:71799299976:web:8f815c03921b6e21c5243d",
-    measurementId: "G-STX5CT8CPN",
-    databaseUrl: "https://movie-ticket-booking-39080-default-rtdb.firebaseio.com"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+    databaseUrl: process.env.REACT_APP_DATABASE_URL
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -168,11 +168,12 @@ export const FirebaseProvider = (props) => {
                 bookedSeats : seatList,
                 subtotal: subtotal
             }
-            await set(ref(database, `tickets/${ticketId}`), data);
             await updateData(`movies/${movieDetails.movieId}/theaterSeats`, updatedSeats);
             await updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
             const creatorData = await fetchUserDetails(movieDetails.creatorId);
             await updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
+            
+            await set(ref(database, `tickets/${ticketId}`), data);
         }
         catch (error) {
             console.error("Transaction Failed !!", error);

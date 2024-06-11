@@ -52,7 +52,7 @@ export default function Navbar() {
             <script src="NavbarScript.js" defer></script>
 
             <nav className="nav">
-                <a href="#" className="logo">Ticketify</a>
+                <a href="/" className="logo">Ticketify</a>
 
                 <ul className="nav-links">
                     <li><Link to="/">Home</Link></li>

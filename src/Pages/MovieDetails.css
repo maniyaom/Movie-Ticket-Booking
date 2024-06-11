@@ -33,7 +33,6 @@
 .column {
     display: flex;
     flex-direction: column;
-    align-items: left;
     justify-content: center;
 }
 
@@ -59,6 +58,7 @@
 .rating {
     justify-content: space-between;
     height: 4rem;
+    width: 25rem;
     margin: 1rem 0rem 1rem 0.65rem;
     background-color: rgb(82, 78, 78);
     border-radius: 8px;

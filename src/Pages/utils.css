@@ -156,3 +156,7 @@ input[type="file"]::file-selector-button {
 .mxl-10{
     margin-left: 10px;
 }
+
+.justify-between {
+    justify-content: space-between;
+}

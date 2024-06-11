@@ -137,3 +137,53 @@ button {
     justify-content: center;
     height: 6rem;
 }
+
+.checkout-card {
+    border: 1px solid var(--primary-color);
+    background-color: white;
+    width: 450px;
+    border-radius: 8px;
+    padding: 20px;
+    position: fixed;
+    left: calc((100% - 400px)/2);
+    top: calc((100% - 400px)/2);
+}
+
+.checkout-card-title {
+    font-weight: 800;
+    font-size: 20px;
+    margin-left: 12px;
+    margin: 14px 14px;
+}
+
+.text-key-value {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.text-key-value>span:nth-child(1) {
+    margin-left: 12px;
+}
+
+.text-key-value>span:nth-child(2) {
+    margin-right: 12px;
+}
+
+.icon {
+    margin-top: 14px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.loader {
+    width: 64px;
+    height: 64px;
+    margin-left: calc((100% - 64px)/2);
+}
+
+.hide-element {
+    display: none;
+    visibility: hidden;
+}

@@ -3,10 +3,11 @@ import './AboutUs.css';
 import './Account.css';
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import MovieTicket from './MovieTicket';
 
 const TransactionDetail = ({ title, transactionId, bookedSeats, amount, date, color }) => (
-    <div className="transaction-details">
+    <div className="transaction-block" style={{cursor: 'pointer'}}>
         <div className="ticket-details">
             <div>{title}</div>
             <div>Seat No : {bookedSeats}</div>
@@ -58,29 +59,30 @@ const Account = () => {
                 <div style={{ fontWeight: 600 }}>Current Wallet Balance: {userData.wallet} ₹</div>
             </div>
             <div className="transaction-title">Transactions</div>
-            <div className="transactions-block">
-                <div>
-                    <div className="ticket-details" style={{ fontWeight: 600 }}>
-                        Payment Details
+            
+                <div className="transactions-block">
+                    <div>
+                        <div className="ticket-details" style={{ fontWeight: 600 }}>
+                            Payment Details
+                        </div>
+                        <div className="amount" style={{ fontWeight: 600 }}>
+                            Amount
+                        </div>
+                        <div className="date" style={{ fontWeight: 600 }}>
+                            Date
+                        </div>
                     </div>
-                    <div className="amount" style={{ fontWeight: 600 }}>
-                        Amount
-                    </div>
-                    <div className="date" style={{ fontWeight: 600 }}>
-                        Date
-                    </div>
+                    {transactionData.map((transaction, index) => {
+                        const { movieTitle, ticketId, bookedSeats, subtotal, paidBy, transactionTime } = transaction;
+
+                        let amount = paidBy == userData.uid ? `- ${subtotal}` : `+ ${subtotal}`;
+                        let color = paidBy == userData.uid ? 'color-red' : 'color-green';
+
+                        return (
+                            <TransactionDetail key={index} title={movieTitle} transactionId={ticketId} bookedSeats={bookedSeats.join(', ')} amount={amount} date={transactionTime} color={color}/>
+                        )
+                    })}
                 </div>
-                {transactionData.map((transaction, index) => {
-                    const { movieTitle, ticketId, bookedSeats, subtotal, paidBy, transactionTime } = transaction;
-
-                    let amount = paidBy == userData.uid ? `- ${subtotal}` : `+ ${subtotal}`;
-                    let color = paidBy == userData.uid ? 'color-red' : 'color-green';
-
-                    return (
-                        <TransactionDetail key={index} title={movieTitle} transactionId={ticketId} bookedSeats={bookedSeats.join(', ')} amount={amount} date={transactionTime} color={color} />
-                    )
-                })}
-            </div>
         </div>
     );
 };

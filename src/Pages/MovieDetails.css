@@ -140,10 +140,10 @@
 
 .rating-container {
     width: 252px;
+    height: 200px;
     background-color: white;
     border-radius: 8px;
     padding: 20px;
-    border: 4px solid var(--primary-color);
 }
 
 .rate-popup-title {
@@ -161,8 +161,8 @@
 }
 
 .close-icon {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     position: relative;
     left: 180px;
     cursor: pointer;
@@ -171,8 +171,4 @@
 .hide-div {
     display: none;
     visibility: hidden;
-}
-
-.dull-background {
-    opacity: 0.4;
 }

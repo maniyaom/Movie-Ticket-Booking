@@ -137,10 +137,6 @@ input[type="file"]::file-selector-button {
     justify-content: center;
 }
 
-.justify-between{
-    justify-content: space-between;
-}
-
 .align-center{
     align-items: center;
 }
@@ -159,8 +155,4 @@ input[type="file"]::file-selector-button {
 
 .mxl-10{
     margin-left: 10px;
-}
-
-.mxt-14{
-    margin-top: 14px;
 }

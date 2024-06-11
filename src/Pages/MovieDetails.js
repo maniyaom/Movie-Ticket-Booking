@@ -42,21 +42,10 @@ const MovieDetails = () => {
           Object.entries(x.rating).forEach(([key, value]) => {
             totalRating += value;
           });
-<<<<<<< HEAD
           setAverageRating((totalRating / Object.keys(x.rating).length).toFixed(2) + '/5.0 (' + Object.keys(x.rating).length + ' Votes)');
         }
         else {
           setAverageRating("0.0/5.0 (0 Votes)");
-=======
-          setAverageRating(
-            totalRating / Object.keys(x.rating).length +
-              "/5.0 (" +
-              Object.keys(x.rating).length +
-              " Votes)"
-          );
-        } else {
-          setAverageRating("0/5.0 (0 Votes)");
->>>>>>> 22f38d9e90e96e6523174262d0d5be248eb50a71
         }
       } catch (error) {
         console.log("Error : ", error);
@@ -83,42 +72,21 @@ const MovieDetails = () => {
 
   return (
     <>
-      <div className={showRatingPopup ? 'dull-background' : ''}>
-        <div className="main-div">
-          <div className="container">
-            <div className="row" style={{ width: "50rem" }}>
-              <img src={moviePosterUrl} className="poster" />
-              <div className="column">
-                <h2 name="title" className="text">
-                  {movieDetails.movieTitle}
-                </h2>
+      <div className="main-div">
+        <div className="container">
+          <div className="row" style={{ width: "50rem" }}>
+            <img src={moviePosterUrl} className="poster" />
+            <div className="column">
+              <h2 name="title" className="text">
+                {movieDetails.movieTitle}
+              </h2>
 
-<<<<<<< HEAD
-                <div className="row rating">
-                  <div className="flex align-center" style={{ marginLeft: '20px' }}>
-                    <img src={star} />
-                    <p className="text">{averageRating}</p>
-                  </div>
-                  <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
-                    Rate Now
-                  </button>
-                </div>
-                <div className="language" style={{ marginBottom: '1rem' }}>
-                  <span>{movieDetails.movieLanguage}</span>
-=======
               <div className="row rating">
-                <div
-                  className="flex align-center"
-                  style={{ marginLeft: "20px" }}
-                >
+                <div className="flex align-center" style={{ marginLeft: '20px' }}>
                   <img src={star} />
                   <p className="text">{averageRating}</p>
                 </div>
-                <button
-                  type="button"
-                  className="rate"
-                  onClick={() => setShowRatingPopup(true)}
-                >
+                <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
                   Rate Now
                 </button>
               </div>
@@ -128,78 +96,38 @@ const MovieDetails = () => {
               <div className="row">
                 <div name="Duration" className="text">
                   {movieDetails.movieDuration}
->>>>>>> 22f38d9e90e96e6523174262d0d5be248eb50a71
                 </div>
-                <div className="row">
-                  <div name="Duration" className="text">
-                    {movieDetails.movieDuration}
-                  </div>
-                  <span className="text"> • </span>
-                  <div name="Genre" className="text">
-                    {movieDetails.movieGenre}
-                  </div>
-                  <span className="text"> • </span>
-                  <div name="Date" className="text">
-                    {movieDetails.movieReleaseDate}
-                  </div>
+                <span className="text"> • </span>
+                <div name="Genre" className="text">
+                  {movieDetails.movieGenre}
                 </div>
-
-<<<<<<< HEAD
-                <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
-=======
-              <div className="book">
-                <Link to={"/BookTicket/" + movieId.movieId} className="book-link">
-                  Book Tickets
-                </Link>
->>>>>>> 22f38d9e90e96e6523174262d0d5be248eb50a71
+                <span className="text"> • </span>
+                <div name="Date" className="text">
+                  {movieDetails.movieReleaseDate}
+                </div>
               </div>
+
+              <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
             </div>
           </div>
         </div>
+      </div>
 
-<<<<<<< HEAD
-        <div className="column" style={{ backgroundColor: 'white' }}>
-          <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
-            <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
-            <p>{movieDetails.aboutMovie}</p>
-            <br></br>
-            <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
-            <br></br>
-            <h3 style={{ marginBottom: '5px' }}>Cast</h3>
-            <p>{movieDetails.movieCast}</p>
-          </div>
-=======
-      <div className="column" style={{ backgroundColor: "white" }}>
-        <div
-          style={{
-            color: "black",
-            marginLeft: "13.5rem",
-            marginTop: "1.5rem",
-            marginRight: "13.5rem",
-          }}
-        >
-          <h3 style={{ marginBottom: "5px" }}>About the movie</h3>
+      <div className="column" style={{ backgroundColor: 'white' }}>
+        <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
+          <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
           <p>{movieDetails.aboutMovie}</p>
           <br></br>
-          <hr style={{ color: "skyblue", opacity: 0.3 }}></hr>
+          <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
           <br></br>
-          <h3 style={{ marginBottom: "5px" }}>Cast</h3>
+          <h3 style={{ marginBottom: '5px' }}>Cast</h3>
           <p>{movieDetails.movieCast}</p>
->>>>>>> 22f38d9e90e96e6523174262d0d5be248eb50a71
         </div>
       </div>
 
       <div className={showRatingPopup ? "toggle-popup" : "hide-div"}>
         <div className="rating-container">
-<<<<<<< HEAD
           <img src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)} />
-=======
-          <img
-            src={closeIcon}
-            className="close-icon"
-            onClick={() => setShowRatingPopup(false)}
-          />
->>>>>>> 22f38d9e90e96e6523174262d0d5be248eb50a71
           <span className="rate-popup-title">Rate Movie</span>
           <div className="rating-popup">
             <input

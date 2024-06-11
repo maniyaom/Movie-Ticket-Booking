@@ -67,7 +67,7 @@ const BookTicket = () => {
 
     const handleSeatClick = (rowIndex, seatIndex) => {
         const tempSeats = deepCopy(seats);
-        const seatNumber = rowIndex * 11 + seatIndex + 1;
+        const seatNumber = rowIndex * 8 + seatIndex + 1;
         if (!seatsData[rowIndex][seatIndex]) {
             if (seats[rowIndex][seatIndex]) {
                 tempSeats[rowIndex][seatIndex] = !tempSeats[rowIndex][seatIndex];
@@ -137,41 +137,47 @@ const BookTicket = () => {
 
     return (
         <>
-            <div className={showPopUp ? 'opacity0-4' : ''}>
-                <div className='movie'>
-                    <h2 style={{ fontSize: '28px', margin: '2px 20px' }}>{movieDetails.movieTitle}</h2>
-                    <p style={{ fontWeight: '500', margin: '6px 20px' }}>{movieDetails.theaterName} : {movieDetails.theaterAddress} | {movieDetails.movieReleaseDate} | {movieDetails.movieTiming}</p>
+            <div className='movie'>
+                <h2 style={{fontSize: '28px', margin: '2px 20px'}}>{movieDetails.movieTitle}</h2>
+                <p style={{fontWeight: '500', margin: '6px 20px'}}>{movieDetails.theaterName} : {movieDetails.theaterAddress} | {movieDetails.movieReleaseDate} | {movieDetails.movieTiming}</p>
+            </div>
+            <div className='screen'>
+                <svg>
+                    <path d='M30 25 L25 30 L275 30 L270 25 Z' style={{fill: 'aliceblue', stroke: 'lightblue'}}/>
+                    <path d='M25 30 L35 55 L265 55 L275 30 Z' style={{fill: 'white', stroke: 'lightblue'}}/>
+                    <path d='M30 33 L37 52 L263 52 L270 33 Z' style={{fill: 'lightblue'}}/>
+                </svg>
+            </div>
+            <div className='allSeats'>
+                <div>
+                    {seatsData.map((row, rowIndex) => (
+                        <div className="row" key={rowIndex}>
+                            {row.map((seat, seatIndex) => (
+                                <div
+                                    className={getSeatClassName(rowIndex, seatIndex)}
+                                    key={seatIndex}
+                                    id={`${rowIndex}-${seatIndex}`}
+                                    onClick={() => handleSeatClick(rowIndex, seatIndex)}
+                                    style={{ display:'flex', justifyContent: 'center'}}
+                                >{(seatIndex+1)+(rowIndex*8)}</div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
-                <div className='allSeats'>
-                    <div>
-                        {seatsData.map((row, rowIndex) => (
-                            <div className="row" key={rowIndex}>
-                                {row.map((seat, seatIndex) => (
-                                    <div
-                                        className={getSeatClassName(rowIndex, seatIndex)}
-                                        key={seatIndex}
-                                        id={`${rowIndex}-${seatIndex}`}
-                                        onClick={() => handleSeatClick(rowIndex, seatIndex)}
-                                    ></div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            </div>
 
                 <div className='allSeats'>
                     <button onClick={() => handleProceedToPay()}>Proceed to Pay</button>
                 </div>
 
-                <div className='fixed-bottom'>
-                    <div className='footer'>
-                        <div className='not-available-seat footer-button'></div>
-                        <span style={{ color: 'black' }}>Not Available</span>
-                        <div className='your-seat footer-button'></div>
-                        <span style={{ color: 'black' }}>Selected</span>
-                        <div className=' footer-button'></div>
-                        <span style={{ color: 'black' }}>Available</span>
-                    </div>
+            <div className='fixed-bottom'>
+                <div className='footer'>
+                    <div className='not-available-seat footer-button'></div>
+                    <span style={{color: 'black'}}>Not Available</span>
+                    <div className='your-seat footer-button'></div>
+                    <span style={{color: 'black'}}>Selected</span>
+                    <div className=' footer-button'></div>
+                    <span style={{color: 'black'}}>Available</span>
                 </div>
             </div>
 

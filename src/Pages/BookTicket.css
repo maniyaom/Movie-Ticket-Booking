@@ -78,6 +78,7 @@ button {
     border-radius: 8px;
 }
 
+<<<<<<< HEAD
 .checkout-card {
     border: 1px solid var(--primary-color);
     background-color: white;
@@ -130,4 +131,10 @@ button {
 
 .opacity0-4{
     opacity: 0.4;
+=======
+.screen {
+    display: flex;
+    justify-content: center;
+    height: 6rem;
+>>>>>>> 22f38d9e90e96e6523174262d0d5be248eb50a71
 }

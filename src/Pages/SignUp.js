@@ -30,12 +30,15 @@ const SignUp = () => {
   const [theaterAddressError, setTheaterAddressError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      navigate("/Home")
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        navigate("/Home")
+      }
+    });
+    document.title = 'Sign Up';
+  },[auth])
 
   const resetErrors = () => {
     setNameError("");

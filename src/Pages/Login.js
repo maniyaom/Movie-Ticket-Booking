@@ -21,13 +21,14 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigate("/Home")
-      console.log(user.uid)
-      console.log("I am from login");
-    }
-  });
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/Home")
+      }
+    });
+    document.title = 'Login';
+  },[auth])
 
   const resetErrors = () => {
     setError("");

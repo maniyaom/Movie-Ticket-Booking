@@ -64,8 +64,6 @@ const MovieDetails = () => {
     fetchMovie();
   }, [auth, showRatingPopup]);
 
-  // Remove showRatingPopup to reduce page reload rate
-
   if (!movieDetails || !moviePosterUrl || !userDetails) {
     return <p>Loading movie details...</p>;
   }
@@ -114,7 +112,7 @@ const MovieDetails = () => {
       </div>
 
       <div className="column" style={{ backgroundColor: 'white' }}>
-        <div style={{ color: "black", marginLeft: '13.5rem', marginTop: '1.5rem', marginRight: '13.5rem' }}>
+        <div style={{ color: "black", margin: '1.5rem 13.5rem' }}>
           <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
           <p>{movieDetails.aboutMovie}</p>
           <br></br>

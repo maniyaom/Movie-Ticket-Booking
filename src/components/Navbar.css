@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
 
 :root{
-    --primary-color : #f84464
+    --primary-color : #f84464;
     --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     --light-gray: #f2f2f2;
     --text-color: #333;
@@ -22,7 +22,7 @@
     width: 100%;
     padding: 10px 200px;
     background: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     display: flex;
     justify-content: space-between;
     align-items: center;

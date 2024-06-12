@@ -17,9 +17,9 @@
 
 .row {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     flex-direction: row;
-    width: 40rem;
+    width: 28rem;
 }
 
 .wh {

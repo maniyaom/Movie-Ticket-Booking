@@ -139,7 +139,7 @@ const BookTicket = () => {
             <div className='allSeats'>
                 <div>
                     {seatsData.map((row, rowIndex) => (
-                        <div className="row" key={rowIndex}>
+                        <div className="row" key={rowIndex} style={{justifyContent: 'center'}}>
                             {row.map((seat, seatIndex) => (
                                 <div
                                     className={getSeatClassName(rowIndex, seatIndex)}
@@ -155,7 +155,7 @@ const BookTicket = () => {
             </div>
 
             <div className='allSeats'>
-                <button onClick={() => handleProceedToPay()} style={{marginBottom: '100px'}}>Proceed to Pay</button>
+                <button onClick={() => handleProceedToPay()} className='btn-primary' style={{marginBottom: '100px'}}>Proceed to Pay</button>
             </div>
 
             <div className='fixed-bottom'>
@@ -200,7 +200,7 @@ const BookTicket = () => {
                     <span className="values">{userData.wallet - seatList.length * ticketPrice} ₹</span>
                 </div>
                 <img src={loader_icon} className={isLoading ? 'loader' : 'hide-element'} />
-                <button style={{ fontSize: '15px', margin: '5px 0px 20px calc((100% - 10rem)/2)' }} onClick={handlePayment}>
+                <button style={{ fontSize: '15px', margin: '5px 0px 20px calc((100% - 10rem)/2)' }} onClick={handlePayment} className='btn-primary'>
                     Make Payment
                 </button>
             </div>

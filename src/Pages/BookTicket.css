@@ -41,7 +41,7 @@
     color: white;
 }
 
-button {
+.btn-primary {
     border-radius: 8px;
     height: 3rem;
     width: 10rem;
@@ -53,7 +53,7 @@ button {
     font-size: 15px;
 }
 
-button:hover {
+.btn-primary:hover {
     background-color: rgba(248, 68, 100, 0.8);
 }
 

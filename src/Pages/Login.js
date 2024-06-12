@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './style.css';
 import './utils.css';
 import loader_icon from "../assets/icons/loader_icon.gif";

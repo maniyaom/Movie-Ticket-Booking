@@ -29,7 +29,7 @@ function MovieTicket() {
   const navigate = useNavigate();
 
   const [ticketData, setTicketData] = useState(null);
-  const [userId, setUserId] = useState("");
+  const [userData, setUserData] = useState(null);
 
 
   useEffect(() => {
@@ -43,9 +43,15 @@ function MovieTicket() {
       }
     }
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserId(user.uid);
+        try {
+          const userDetails = await firebase.fetchUserDetails(user.uid);
+          setUserData(userDetails);
+        }
+        catch (error) {
+          console.log("Error fetching user data : ", error);
+        }
       } else {
         navigate('/Login');
       }
@@ -54,13 +60,9 @@ function MovieTicket() {
     fetchTicketDetails();
   }, [ticketId]);
 
-  if (!ticketData)
+  if (!ticketData || !userData)
       return (
         <p>Loading...</p>
-    )
-  else if (ticketData.paidBy != userId)
-      return (
-        <p>You cannot access this ticket</p>
     )
 
   return (
@@ -73,8 +75,9 @@ function MovieTicket() {
         ></img>
       </div>
 
-      <Component h1="Name" c1="xyz" h2="Tickets" c2={ticketData.bookedSeats.join(', ')} />
-      <Component h1="Date" c1={ticketData.transactionTime} h2="Cinema" c2={ticketData.theaterName} />
+      <Component h1="Name" c1={userData.name} h2="Email" c2={userData.email} />
+      <Component h1="Seat No." c1={ticketData.bookedSeats.join(', ')} h2="Date" c2={ticketData.transactionTime} />
+      <Component h1="Transaction Id" c1={ticketData.ticketId} h2="Cinema" c2={ticketData.theaterName} />
       <Component h1="Name" c1="rahul" h2="" c2="2" />
     </div>
   );

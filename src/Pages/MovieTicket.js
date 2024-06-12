@@ -74,7 +74,7 @@ function MovieTicket() {
           <div
             style={{
               width: "27rem",
-              height: "16rem",
+              height: "18rem",
               backgroundColor: "rgba(248, 68, 100, 1.0)",
               color: "white",
               borderRadius: "0.5rem",
@@ -88,19 +88,19 @@ function MovieTicket() {
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h3>Admin : </h3>
-                <p>{ticketData.subtotal * 0.70} ₹</p>
+                <p>{(ticketData.subtotal * 0.70).toFixed(2)} ₹</p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h3>Service Charge: </h3>
-                <p>{ticketData.subtotal * 0.12} ₹</p>
+                <p>{(ticketData.subtotal * 0.12).toFixed(2)} ₹</p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h3>CGST @9%: </h3>
-                <p>{ticketData.subtotal * 0.09} ₹</p>
+                <p>{(ticketData.subtotal * 0.09).toFixed(2)} ₹</p>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <h3>SGST @9%:</h3>
-                <p>{ticketData.subtotal * 0.09} ₹</p>
+                <p>{(ticketData.subtotal * 0.09).toFixed(2)} ₹</p>
               </div>
               <hr />
               <div style={{ display: "flex", justifyContent: "space-between" }}>

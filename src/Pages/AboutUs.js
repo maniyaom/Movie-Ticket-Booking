@@ -30,7 +30,7 @@ const AboutUs = () => {
           </div>
           <div>
             <div className="title">Who We Are</div>
-            <p>At MovieTicketsOnline, we are a team of dedicated movie enthusiasts and tech experts with a shared vision: to revolutionize the way you book movie tickets. Founded in 2024, our mission is to make movie ticket booking seamless, fast, and enjoyable for everyone.</p>
+            <p>At Ticketify, we are a team of dedicated movie enthusiasts and tech experts with a shared vision: to revolutionize the way you book movie tickets. Founded in 2024, our mission is to make movie ticket booking seamless, fast, and enjoyable for everyone.</p>
           </div>
         </div>
 

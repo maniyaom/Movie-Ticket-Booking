@@ -142,8 +142,9 @@
 
 .rating-container {
     width: 252px;
-    height: 200px;
+    height: 250px;
     background-color: white;
+    border: 2px solid var(--primary-color);
     border-radius: 8px;
     padding: 20px;
 }

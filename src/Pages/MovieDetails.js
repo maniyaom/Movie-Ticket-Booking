@@ -80,7 +80,7 @@ const MovieDetails = () => {
                 {movieDetails.movieTitle}
               </h2>
 
-              <div className="row rating">
+              <div className="row rating" style={{width: '28rem'}}>
                 <div className="flex align-center" style={{ marginLeft: '20px' }}>
                   <img src={star} />
                   <p className="text">{averageRating}</p>

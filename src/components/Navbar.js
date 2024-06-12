@@ -81,14 +81,9 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li>
-                                <a href="#">
-                                    <span className="material-symbols-outlined">settings</span> Settings
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <Link to={'/ContactUs'}>
                                     <span className="material-symbols-outlined">help</span> Help
-                                </a>
+                                </Link>
                             </li>
                             
                             <li className="divider"></li>

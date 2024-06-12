@@ -6,17 +6,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function Component({ h1, c1, h2, c2 }) {
+function Ticket({ seat }) {
   return (
-    <div className="row">
-      <div className="wh">
-        <h3>{h1}</h3>
-        <p>{c1}</p>
+    <div className="movieTicket" style={{ flexDirection: "row" }}>
+      <div className="" style={{ backgroundColor: "blue" }}>
+        <p>{seat}</p>
       </div>
-      <div className="wh">
-        <h3>{h2}</h3>
-        <p>{c2}</p>
-      </div>
+      <div>hh</div>
     </div>
   );
 }
@@ -56,31 +52,78 @@ function MovieTicket() {
         navigate('/Login');
       }
     });
-  
+
     fetchTicketDetails();
   }, [ticketId]);
 
   if (!ticketData || !userData)
-      return (
-        <p>Loading...</p>
+    return (
+      <p>Loading</p>
+    );
+
+  else if (ticketData.paidBy != userData.uid) {
+    return (
+      <p>You cannot access this ticket</p>
     )
+  }
 
-  return (
-    <div className="center">
-      <div className="movieTicket">
-        <h2>{ticketData.movieTitle}</h2>black
-        <img
-          src={qrCode}
-          style={{ width: "12rem", height: "10rem", marginBottom: "0.5rem" }}
-        ></img>
+  else if (ticketData && userData)
+    return (
+      <div className="center">
+        <div className="movieTicket" style={{ justifyContent: "space-around" }}>
+          <div
+            style={{
+              width: "27rem",
+              height: "16rem",
+              backgroundColor: "rgba(248, 68, 100, 1.0)",
+              color: "white",
+              borderRadius: "0.5rem",
+            }}
+          >
+            <h2 className="margin">{ticketData.movieTitle}</h2>
+            <p className="margin">{ticketData.theaterName} | {ticketData.theaterAddress}</p>
+            <div
+              className="cost margin"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h3>Admin : </h3>
+                <p>{ticketData.subtotal * 0.70} ₹</p>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h3>Service Charge: </h3>
+                <p>{ticketData.subtotal * 0.12} ₹</p>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h3>CGST @9%: </h3>
+                <p>{ticketData.subtotal * 0.09} ₹</p>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h3>SGST @9%:</h3>
+                <p>{ticketData.subtotal * 0.09} ₹</p>
+              </div>
+              <hr />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h3>subtotal: </h3>
+                <p>{ticketData.subtotal} ₹</p>
+              </div>
+            </div>
+          </div>
+          <div className="center" style={{ width: '30rem' }}>
+            <h3>Name : {userData.name}</h3>
+            <h4>Email: {userData.email}</h4>
+            <hr />
+            <h4>Seat: {ticketData.bookedSeats.join(', ')}</h4>
+            <hr />
+            <h4>TIme: {ticketData.movieTiming}</h4>
+            <img
+              src={qrCode}
+              style={{ width: "8rem", height: "6rem", marginBottom: "0.5rem" }}
+            ></img>
+          </div>
+        </div>
       </div>
-
-      <Component h1="Name" c1={userData.name} h2="Email" c2={userData.email} />
-      <Component h1="Seat No." c1={ticketData.bookedSeats.join(', ')} h2="Date" c2={ticketData.transactionTime} />
-      <Component h1="Transaction Id" c1={ticketData.ticketId} h2="Cinema" c2={ticketData.theaterName} />
-      <Component h1="Name" c1="rahul" h2="" c2="2" />
-    </div>
-  );
+    );
 }
 
 export default MovieTicket;

@@ -12,14 +12,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.cost {
+    border: 1px dotted #fff;
+    border-radius: 0.5rem;
+    width: 15rem;
+    display: flex;
+    justify-content: center ;
+    padding: 0.5rem;
+}
+
+.margin {
+    margin: 0.5rem 1rem
 }
 
 .row {
     display: flex;
     /* justify-content: center; */
     flex-direction: row;
-    width: 28rem;
+    width: 40rem;
 }
 
 .wh {

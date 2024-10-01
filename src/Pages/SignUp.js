@@ -86,7 +86,7 @@ const SignUp = () => {
         isValid = false;
       }
       else if (!createPassword.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!#%&*?])[A-Za-z\d@!#%&*?]{8,}$/)) {
-        setPasswordError('Please include lowercase, uppercase, special characters');
+        setPasswordError('(Please include lowercase, uppercase, special characters)');
         isValid = false;
       }
     }
@@ -160,7 +160,8 @@ const SignUp = () => {
           </div>
 
           <label htmlFor="username" className="label-text">
-            Name <span className="error-inline mxl-10">{nameError}</span>
+            Name
+            <span className="error-inline">{nameError}</span>
           </label>
           <input
             type="text"
@@ -171,7 +172,9 @@ const SignUp = () => {
           />
 
           <label htmlFor="email" className="label-text">
-            Email <span className="error-inline mxl-10">{emailError}</span>
+            Email 
+            <br/>
+            <span className="error-inline">{emailError}</span>
           </label>
           <input
             type="email"
@@ -182,7 +185,9 @@ const SignUp = () => {
           />
 
           <label htmlFor="phone" className="label-text">
-            Phone Number <span className="error-inline mxl-10">{phoneError}</span>
+            Phone Number 
+            <br/>
+            <span className="error-inline">{phoneError}</span>
           </label>
           <input
             type="text"
@@ -205,7 +210,9 @@ const SignUp = () => {
 
           <div name='theater' className={isAdmin ? '' : 'hide-div'}>
             <label className="label-text">
-              Theater Name <span className="error-inline mxl-10">{theaterNameError}</span>
+              Theater Name 
+              <br/>
+              <span className="error-inline">{theaterNameError}</span>
             </label>
             <input
               type="text"
@@ -216,7 +223,9 @@ const SignUp = () => {
             />
 
             <label className="label-text">
-              Theater Address <span className="error-inline mxl-10">{theaterAddressError}</span>
+              Theater Address
+              <br/>
+               <span className="error-inline">{theaterAddressError}</span>
             </label>
             <textarea
               value={theaterAddress}
@@ -229,7 +238,7 @@ const SignUp = () => {
           <label htmlFor="createPassword" className="label-text">
             Create Password 
             <br/>
-            <span className="error-inline mxl-10">{passwordError}</span>
+            <span className="error-inline">{passwordError}</span>
           </label>
           <input
             type="password"
@@ -242,7 +251,7 @@ const SignUp = () => {
           <label htmlFor="confirmPassword" className="label-text">
             Confirm Password
             <br/>
-             <span className="error-inline mxl-10">{passwordError}</span>
+             <span className="error-inline">{passwordError}</span>
           </label>
           <input
             type="password"

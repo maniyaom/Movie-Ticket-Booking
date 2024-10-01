@@ -227,7 +227,9 @@ const SignUp = () => {
           </div>
 
           <label htmlFor="createPassword" className="label-text">
-            Create Password <span className="error-inline mxl-10">{passwordError}</span>
+            Create Password 
+            <br/>
+            <span className="error-inline mxl-10">{passwordError}</span>
           </label>
           <input
             type="password"
@@ -238,7 +240,9 @@ const SignUp = () => {
           />
 
           <label htmlFor="confirmPassword" className="label-text">
-            Confirm Password <span className="error-inline mxl-10">{passwordError}</span>
+            Confirm Password
+            <br/>
+             <span className="error-inline mxl-10">{passwordError}</span>
           </label>
           <input
             type="password"

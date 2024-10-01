@@ -22,6 +22,9 @@
     width: 100%;
     padding: 10px 200px;
     background: var(--primary-color);
+    top: 0px;
+    position: sticky;
+    opacity: 30;
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     display: flex;
     justify-content: space-between;
@@ -45,12 +48,23 @@
     list-style: none;
 }
 
-.nav-links > li > a{
+/* .nav-links > li > a{
     text-decoration: none;
     color: #fff;
     font-weight: 600;
-}
+} */
 
+.nav-links li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 15px;
+  }
+
+  .active-link {
+    color: blue;
+    font-weight: bold; /* Optional, to highlight more */
+  }
+  
 .red {
     color: green;
 }

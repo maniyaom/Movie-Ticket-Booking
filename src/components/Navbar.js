@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -52,13 +52,60 @@ export default function Navbar() {
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
-                <ul className="nav-links">
+                {/* <ul className="nav-links">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/AboutUs">About Us</Link></li>
                     <li><Link to="/ContactUs">Contact Us</Link></li>
                     <li className={isLoggedIn ? 'hide-div' : ''}><Link to="/Login">Login</Link></li>
                     <li className={isAdmin ? '' : 'hide-div'}><Link to="/AddMovie">List Your Show</Link></li>
-                </ul>
+                </ul> */}
+             <ul className="nav-links">
+      <li>
+        <NavLink
+          exact
+          to="/"
+          className={({ isActive }) => (isActive ? 'active-link' : '')}
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/AboutUs"
+          className={({ isActive }) => (isActive ? 'active-link' : '')}
+        >
+          About Us
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/ContactUs"
+          className={({ isActive }) => (isActive ? 'active-link' : '')}
+        >
+          Contact Us
+        </NavLink>
+      </li>
+      {!isLoggedIn && (
+        <li>
+          <NavLink
+            to="/Login"
+            className={({ isActive }) => (isActive ? 'active-link' : '')}
+          >
+            Login
+          </NavLink>
+        </li>
+      )}
+      {isAdmin && (
+        <li>
+          <NavLink
+            to="/AddMovie"
+            className={({ isActive }) => (isActive ? 'active-link' : '')}
+          >
+            List Your Show
+          </NavLink>
+        </li>
+      )}
+    </ul>
 
                 <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
                     <details className="dropdown right">

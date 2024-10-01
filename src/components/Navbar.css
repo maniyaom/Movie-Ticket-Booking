@@ -130,7 +130,7 @@ summary.avatar img {
 .dropdown ul {
     padding: 0;
     margin: 0;
-    box-shadow: 0 0 10px #00000030;
+    box-shadow: 0 0 10px #F95673;
     min-width: max-content;
     position: absolute;
     top: 100%;
@@ -221,4 +221,74 @@ a{
 .hide-div {
     display: none;
     visibility: hidden;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #F95673;
+    /* Background color */
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.hamburger {
+    display: none;
+    /* Hide hamburger by default */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger .bar {
+    height: 3px;
+    width: 25px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        /* Adjust this based on your navbar height */
+        right: 0;
+        background-color: #F95673;
+        width: 100%;
+        display: none;
+        /* Hide by default */
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+        /* Show when open */
+    }
+
+    .nav-links li {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .hamburger {
+        display: flex;
+        /* Show hamburger on mobile */
+    }
 }

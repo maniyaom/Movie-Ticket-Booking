@@ -95,7 +95,6 @@ export const FirebaseProvider = (props) => {
 
             if (userData) {
                 const userArray = Object.values(userData);
-                console.log(userArray)
                 const user = userArray.find(user => user.uid === userId);
                 return user ? user : "User not found";
             } else {

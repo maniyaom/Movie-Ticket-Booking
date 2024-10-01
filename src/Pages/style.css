@@ -36,7 +36,7 @@ body{
     opacity: 0.4;
     font-size: 13px;
 }
-.signup-card {
+.signup-card.add-movie{
     display: flex;
     justify-content: space-between;
     width: 100%;

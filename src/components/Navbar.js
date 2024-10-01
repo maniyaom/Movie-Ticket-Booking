@@ -21,8 +21,6 @@ export default function Navbar() {
                     const userDetails = await firebase.fetchUserDetails(uid);
                     setName(userDetails.name);
                     setEmail(userDetails.email);
-                    console.log(userDetails);
-                    console.log(uid);
                     setIsLoggedIn(true);
                     
                     if(userDetails.isAdmin == false)

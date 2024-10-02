@@ -20,7 +20,7 @@ const AboutUs = () => {
       <div>
         <h1 style={{ color: '#f84464', textAlign: 'center', marginTop: '30px', fontSize: '43px' }}>About Us</h1>
 
-        <div style={{ opacity: '0.8', fontWeight: '600', margin: '10px 200px' }}>
+        <div style={{ fontWeight: '600', margin: '10px 200px' }}>
           Welcome to MovieTicketsOnline, your ultimate destination for booking movie tickets with ease and convenience. We are passionate about movies and committed to bringing you the best cinema experience from the comfort of your home.
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
@@ -7,6 +7,28 @@ import './Navbar.css';
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
+    const detailsRef = useRef(null); // Create a reference to the <details> element
+
+    // Function to close the dropdown when an item is clicked
+    const handleDropdownClose = () => {
+      if (detailsRef.current) {
+        detailsRef.current.removeAttribute('open'); // Close the <details> element
+      }
+    };
+    const handleClickOutside = (event) => {
+      if (detailsRef.current && !detailsRef.current.contains(event.target)) {
+        handleDropdownClose();
+      }
+    };
+    
+    useEffect(() => {
+      // Add event listener to detect clicks outside the dropdown
+      document.addEventListener('click', handleClickOutside);
+      return () => {
+        // Cleanup event listener when component unmounts
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }, []);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -108,7 +130,7 @@ export default function Navbar() {
     </ul>
 
                 <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
-                    <details className="dropdown right">
+                    <details className="dropdown right" ref={detailsRef}>
                         <summary className="avatar">
                             <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp" alt="Avatar" />
                         </summary>
@@ -121,19 +143,19 @@ export default function Navbar() {
                             </li>
 
                             <li>
-                                <Link to={'/Account'}>
+                                <Link to={'/Account'} onClick={handleDropdownClose}>
                                     <span className="material-symbols-outlined">account_circle</span> Account
                                 </Link>
                             </li>
                             <li>
-                                <Link to={'/ContactUs'}>
+                                <Link to={'/ContactUs'} onClick={handleDropdownClose}>
                                     <span className="material-symbols-outlined">help</span> Help
                                 </Link>
                             </li>
                             
                             <li className="divider"></li>
                             <li>
-                                <a onClick={handleLogout}>
+                                <a onClick={() => { handleLogout(); handleDropdownClose(); }}>
                                     <span className="material-symbols-outlined">logout</span> Logout
                                 </a>
                             </li>

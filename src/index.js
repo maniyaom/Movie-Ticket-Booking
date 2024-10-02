@@ -1,26 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import './index.css';
-import Home from './Pages/Home';
-import AboutUs from './Pages/AboutUs';
-import ContactUs from './Pages/ContactUs';
-import Login from './Pages/Login';
-import SignUp from './Pages/SignUp';
-import AddMovie from './Pages/AddMovie';
-import MovieDetails from './Pages/MovieDetails';
-import BookTicket from './Pages/BookTicket';
-import Navbar from './components/Navbar';
-import './components/Navbar.css'
-import Account from './Pages/Account';
-import { FirebaseProvider } from './context/firebase';
-import MovieTicket from './Pages/MovieTicket';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import "./index.css";
+import Home from "./Pages/Home";
+import AboutUs from "./Pages/AboutUs";
+import ContactUs from "./Pages/ContactUs";
+import Login from "./Pages/Login";
+import SignUp from "./Pages/SignUp";
+import AddMovie from "./Pages/AddMovie";
+import MovieDetails from "./Pages/MovieDetails";
+import BookTicket from "./Pages/BookTicket";
+import Navbar from "./components/Navbar";
+import "./components/Navbar.css";
+import Account from "./Pages/Account";
+import { FirebaseProvider } from "./context/firebase";
+import MovieTicket from "./Pages/MovieTicket";
 
 function App() {
   const location = useLocation();
-  const hideNavbarRoutes = ['/BookTicket'];
+  const hideNavbarRoutes = ["/BookTicket"];
 
-  const shouldHideNavbar = hideNavbarRoutes.some(route => location.pathname.startsWith(route));
+  const shouldHideNavbar = hideNavbarRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
 
   return (
     <>
@@ -38,13 +46,13 @@ function App() {
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />
         <Route path="/Account" element={<Account />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
-        <Route path='/*' element={<Navigate to="/" />} />
+        <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <FirebaseProvider>
     <BrowserRouter>

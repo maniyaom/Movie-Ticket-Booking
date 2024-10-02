@@ -63,12 +63,12 @@ const SignUp = () => {
 
   const validateForm = () => {
     let isValid = true;
-    if (name == "") {
+    if (name === "") {
       setNameError("(Required Field)");
       isValid = false;
     }
 
-    if (email == "") {
+    if (email === "") {
       setEmailError("(Required Field)");
       isValid = false;
     }
@@ -77,18 +77,18 @@ const SignUp = () => {
       isValid = false;
     }
 
-    if (isAdmin == true) {
-      if (theaterName == "") {
+    if (isAdmin === true) {
+      if (theaterName === "") {
         setTheaterNameError("(Invalid Theater name)");
         isValid = false;
       }
-      if (theaterAddress == "") {
+      if (theaterAddress === "") {
         setTheaterAddressError("(Invalid Theater address)");
         isValid = false;
       }
     }
 
-    if (createPassword != confirmPassword) {
+    if (createPassword !== confirmPassword) {
       setPasswordError("(Passwords are not matching)")
       isValid = false;
     } else {
@@ -107,13 +107,13 @@ const SignUp = () => {
   const handleSignUp = () => {
     resetErrors();
     let isValid = validateForm()
-    if (isValid == true) {
+    if (isValid === true) {
       setIsLoading(true);
       setError("")
       firebase.signupUserWithEmailAndPassword(email, createPassword)
         .then((userCredential) => {
           console.log("User signed up successfully!");
-          if (isAdmin == true) {
+          if (isAdmin === true) {
             firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
@@ -148,9 +148,9 @@ const SignUp = () => {
         })
         .catch(error => {
           console.error("Error signing up:", error.message);
-          if (error.message == "Firebase: Error (auth/email-already-in-use).")
+          if (error.message === "Firebase: Error (auth/email-already-in-use).")
             setError("Can't Sign Up, Email address already in use");
-          else if (error.message == "Firebase: Error (auth/invalid-email).")
+          else if (error.message === "Firebase: Error (auth/invalid-email).")
             setError("Can't Sign Up, Invalid email");
           else
             setError("Can't Sign Up, Unexpected error occured !!");

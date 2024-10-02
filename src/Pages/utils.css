@@ -171,3 +171,39 @@ input[type="file"]::file-selector-button {
 .justify-between {
     justify-content: space-between;
 }
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-field {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding-bottom: 10px;
+    font-size: 23px;
+    color: rgb(33, 33, 33);
+}
+
+
+.create-password-wrapper .input-field {
+    border: 1px solid #ccc;
+    padding-right: 40px;
+}
+
+.confirm-password-wrapper .input-field {
+    border: 1px solid #ccc;
+    padding-right: 40px;
+}
+

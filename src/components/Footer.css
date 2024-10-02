@@ -4,6 +4,7 @@ footer > div {
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .footer-right{
@@ -31,6 +32,7 @@ footer > div {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .footer-left > div > span, .footer-right > div {
@@ -62,4 +64,53 @@ footer > div {
     text-align: center;
     display: flex;
     justify-content: center;
+}
+
+/* tablet screen  */
+@media (max-width: 768px) {
+    footer > div {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px 0;
+    }
+    .footer-left, .footer-right {
+        width: 100%;
+        padding: 10px;
+    }
+    .footer-right > p {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .footer-left > div {
+        justify-content: center;
+    }
+
+    .footer-left > div > span, .footer-right > div {
+        font-size: 24px;
+    }
+
+    .social-icon {
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
+    }
+}
+
+/* mobile screen  */
+@media (max-width: 480px) {
+    .footer-left > div > span, .footer-right > div {
+        font-size: 20px;
+    }
+
+    .social-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .footer-links a {
+        margin-right: 8px;
+        font-size: 14px;
+    }
 }

@@ -22,6 +22,9 @@
     width: 100%;
     padding: 10px 200px;
     background: var(--primary-color);
+    top: 0px;
+    position: sticky;
+    opacity: 30;
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     display: flex;
     justify-content: space-between;
@@ -48,12 +51,40 @@
     list-style: none;
 }
 
-.nav-links > li > a{
+/* /* .nav-links > li > a{
     text-decoration: none;
     color: #fff;
     font-weight: 600;
-}
+} */
 
+/* .nav-links li { */
+/* Default styles for nav items */
+.nav-links li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 15px;
+  }
+  
+  /* Styling the active link - Blue color when selected */
+  .active-link {
+    font-weight: 600;
+    color: blue;
+    /* font-weight: bold;  */
+  }
+  
+  /* Styling the inactive link - White color when not selected */
+  .inactive-link {
+    font-weight: 600;
+    color: white; /* Makes the text white when not selected */
+    text-decoration: none; /* Prevents underline by default */
+  }
+  
+  /* Hide div class (for conditional rendering) */
+  .hide-div {
+    display: none;
+  }
+  
+  
 .red {
     color: green;
 }

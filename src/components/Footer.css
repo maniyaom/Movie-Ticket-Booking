@@ -51,15 +51,19 @@ footer > div {
 }
 
 .social-icon {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     margin-left: 8px;
 }
-
+.footer-left > div > a {
+    transition: all .38s ease-in-out;
+}
 .footer-links > a:hover {
     color: rgba(255, 255, 255,0.8);
 }
-
+.footer-left > div > a:hover{
+    transform: scale(1.2);
+}
 .footer-bottom {
     color: white;
     text-align: center;

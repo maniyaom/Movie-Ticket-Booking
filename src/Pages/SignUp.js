@@ -180,14 +180,14 @@ const SignUp = () => {
     };
   }
 
-  return (
+  return (  
     <>
       <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Sign Up</div>
           
           {/* Google Signup Option*/}
-          <div class="google-signup">
+          <div className="google-signup">
             <button onClick={handleGoogleSignIn} className="google-btn">
               <img src="googleLogo.png" alt="Google Logo" />
                 Sign up with Google
@@ -204,6 +204,7 @@ const SignUp = () => {
           </label>
           <input
             type="text"
+            id="username"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={`input-field ${nameError !== "" ? 'error-input-field' : ''}`}
@@ -217,6 +218,7 @@ const SignUp = () => {
           </label>
           <input
             type="email"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={`input-field ${emailError !== "" ? 'error-input-field' : ''}`}
@@ -230,6 +232,7 @@ const SignUp = () => {
           </label>
           <input
             type="text"
+            id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className={`input-field ${phoneError !== "" ? 'error-input-field' : ''}`}
@@ -283,6 +286,7 @@ const SignUp = () => {
           <div className="input-wrapper create-password-wrapper">
               <input
                   type={isCreatePasswordVisible ? "text" : "password"}
+                  id="createPassword"
                   value={createPassword}
                   onChange={(e) => setCreatePassword(e.target.value)}
                   placeholder="Create Password"
@@ -305,6 +309,7 @@ const SignUp = () => {
           <div className="input-wrapper confirm-password-wrapper">
               <input
                   type={isConfirmPasswordVisible ? "text" : "password"}
+                  id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm Password"

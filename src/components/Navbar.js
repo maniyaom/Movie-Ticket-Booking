@@ -28,7 +28,7 @@ export default function Navbar() {
         // Cleanup event listener when component unmounts
         document.removeEventListener('click', handleClickOutside);
       };
-    }, []);
+    }, [handleClickOutside]);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -45,7 +45,7 @@ export default function Navbar() {
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
                     
-                    if(userDetails.isAdmin == false)
+                    if(userDetails.isAdmin === false)
                         setIsAdmin(false);
                     else
                         setIsAdmin(true);
@@ -55,11 +55,12 @@ export default function Navbar() {
             }
             else{
                 setIsLoggedIn(false);
+                setIsAdmin(false); // Reset admin state when not logged in
             }
         });
     
         return () => getUserData();
-    }, [auth]);
+    }, [firebase]);
 
     const handleLogout = () => {
         signOut(auth)
@@ -84,7 +85,6 @@ export default function Navbar() {
              <ul className="nav-links">
       <li>
         <NavLink
-          //exact
           to="/"
           className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
         >

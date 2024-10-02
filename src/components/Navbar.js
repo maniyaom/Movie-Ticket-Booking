@@ -12,6 +12,8 @@ export default function Navbar() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState(""); 
+    const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
+    const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown
     
     useEffect(() => {
         const getUserData = onAuthStateChanged(auth, async (user) => {
@@ -22,11 +24,7 @@ export default function Navbar() {
                     setName(userDetails.name);
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
-                    
-                    if(userDetails.isAdmin == false)
-                        setIsAdmin(false);
-                    else
-                        setIsAdmin(true);
+                    setIsAdmin(userDetails.isAdmin);
                 } catch (error) {
                     console.error("Error fetching user details:", error);
                 }
@@ -40,28 +38,41 @@ export default function Navbar() {
     }, [auth]);
 
     const handleLogout = () => {
-        signOut(auth)
+        signOut(auth);
+    }
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    }
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
     }
 
     return (
         <>
-            <link rel="stylesheet" href="Navbar.css" />
-            <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
-            <script src="NavbarScript.js" defer></script>
-
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
-                <ul className="nav-links">
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/AboutUs">About Us</Link></li>
-                    <li><Link to="/ContactUs">Contact Us</Link></li>
-                    <li className={isLoggedIn ? 'hide-div' : ''}><Link to="/Login">Login</Link></li>
-                    <li className={isAdmin ? '' : 'hide-div'}><Link to="/AddMovie">List Your Show</Link></li>
-                </ul>
+                <div className={`nav-menu  ${menuOpen ? 'active' : ''}`}>
+                    {/* Hamburger Icon */}
+                    <div className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul className="nav-links">
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/AboutUs">About Us</Link></li>
+                        <li><Link to="/ContactUs">Contact Us</Link></li>
+                        <li className={isLoggedIn ? 'hide-div' : ''}><Link to="/Login">Login</Link></li>
+                        <li className={isAdmin ? '' : 'hide-div'}><Link to="/AddMovie">List Your Show</Link></li>
+                    </ul>
 
-                <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
-                    <details className="dropdown right">
+                    
+
+                    <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
+                                            <details className="dropdown right">
                         <summary className="avatar">
                             <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp" alt="Avatar" />
                         </summary>
@@ -92,8 +103,11 @@ export default function Navbar() {
                             </li>
                         </ul>
                     </details>
+                    </div>
                 </div>
+
+                
             </nav>
         </>
-    )
+    );
 }

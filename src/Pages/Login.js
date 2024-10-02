@@ -112,7 +112,7 @@ const Login = () => {
           <span className="error">{error}</span>
 
           <button className="btn" onClick={handleSignIn}>Login</button>
-          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Don't have an account <Link to="/SignUp" style={{color: '#f84464'}}>Sign Up</Link></span>
+          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Don't have an account? <Link to="/SignUp" style={{color: '#f84464'}}>Sign Up</Link></span>
         </div>
       </div>
     </>

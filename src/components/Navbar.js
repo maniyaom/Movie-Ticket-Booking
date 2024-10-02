@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -7,28 +7,6 @@ import './Navbar.css';
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
-    const detailsRef = useRef(null); // Create a reference to the <details> element
-
-    // Function to close the dropdown when an item is clicked
-    const handleDropdownClose = () => {
-      if (detailsRef.current) {
-        detailsRef.current.removeAttribute('open'); // Close the <details> element
-      }
-    };
-    const handleClickOutside = (event) => {
-      if (detailsRef.current && !detailsRef.current.contains(event.target)) {
-        handleDropdownClose();
-      }
-    };
-    
-    useEffect(() => {
-      // Add event listener to detect clicks outside the dropdown
-      document.addEventListener('click', handleClickOutside);
-      return () => {
-        // Cleanup event listener when component unmounts
-        document.removeEventListener('click', handleClickOutside);
-      };
-    }, []);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -76,7 +54,6 @@ export default function Navbar() {
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
-
                 <div className={`nav-menu  ${menuOpen ? 'active' : ''}`}>
                     {/* Hamburger Icon */}
                     <div className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
@@ -96,58 +73,6 @@ export default function Navbar() {
 
                     <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
                                             <details className="dropdown right">
-                
-             <ul className="nav-links">
-      <li>
-        <NavLink
-          exact
-          to="/"
-          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/AboutUs"
-          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-        >
-          About Us
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/ContactUs"
-          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-        >
-          Contact Us
-        </NavLink>
-      </li>
-      {!isLoggedIn && (
-        <li>
-          <NavLink
-            to="/Login"
-            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-          >
-            Login
-          </NavLink>
-        </li>
-      )}
-      {isAdmin && (
-        <li>
-          <NavLink
-            to="/AddMovie"
-            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-          >
-            List Your Show
-          </NavLink>
-        </li>
-      )}
-    </ul>
-
-                <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
-                    <details className="dropdown right" ref={detailsRef}>
-
                         <summary className="avatar">
                             <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp" alt="Avatar" />
                         </summary>
@@ -160,19 +85,19 @@ export default function Navbar() {
                             </li>
 
                             <li>
-                                <Link to={'/Account'} onClick={handleDropdownClose}>
+                                <Link to={'/Account'}>
                                     <span className="material-symbols-outlined">account_circle</span> Account
                                 </Link>
                             </li>
                             <li>
-                                <Link to={'/ContactUs'} onClick={handleDropdownClose}>
+                                <Link to={'/ContactUs'}>
                                     <span className="material-symbols-outlined">help</span> Help
                                 </Link>
                             </li>
                             
                             <li className="divider"></li>
                             <li>
-                                <a onClick={() => { handleLogout(); handleDropdownClose(); }}>
+                                <a onClick={handleLogout}>
                                     <span className="material-symbols-outlined">logout</span> Logout
                                 </a>
                             </li>

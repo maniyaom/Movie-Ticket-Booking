@@ -3,6 +3,7 @@ import { useFirebase } from "../context/firebase";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import './utils.css'
 import '../components/Navbar.css';
 
@@ -29,7 +30,10 @@ const SignUp = () => {
   const [theaterNameError, setTheaterNameError] = useState("");
   const [theaterAddressError, setTheaterAddressError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
+  const [isCreatePasswordVisible, setIsCreatePasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+  
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -49,15 +53,22 @@ const SignUp = () => {
     setPasswordError("");
     setError("")
   }
+  const toggleCreatePasswordVisibility = () => {
+    setIsCreatePasswordVisible(!isCreatePasswordVisible);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
 
   const validateForm = () => {
     let isValid = true;
-    if (name == "") {
+    if (name === "") {
       setNameError("(Required Field)");
       isValid = false;
     }
 
-    if (email == "") {
+    if (email === "") {
       setEmailError("(Required Field)");
       isValid = false;
     }
@@ -66,18 +77,18 @@ const SignUp = () => {
       isValid = false;
     }
 
-    if (isAdmin == true) {
-      if (theaterName == "") {
+    if (isAdmin === true) {
+      if (theaterName === "") {
         setTheaterNameError("(Invalid Theater name)");
         isValid = false;
       }
-      if (theaterAddress == "") {
+      if (theaterAddress === "") {
         setTheaterAddressError("(Invalid Theater address)");
         isValid = false;
       }
     }
 
-    if (createPassword != confirmPassword) {
+    if (createPassword !== confirmPassword) {
       setPasswordError("(Passwords are not matching)")
       isValid = false;
     } else {
@@ -96,13 +107,13 @@ const SignUp = () => {
   const handleSignUp = () => {
     resetErrors();
     let isValid = validateForm()
-    if (isValid == true) {
+    if (isValid === true) {
       setIsLoading(true);
       setError("")
       firebase.signupUserWithEmailAndPassword(email, createPassword)
         .then((userCredential) => {
           console.log("User signed up successfully!");
-          if (isAdmin == true) {
+          if (isAdmin === true) {
             firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
@@ -137,9 +148,9 @@ const SignUp = () => {
         })
         .catch(error => {
           console.error("Error signing up:", error.message);
-          if (error.message == "Firebase: Error (auth/email-already-in-use).")
+          if (error.message === "Firebase: Error (auth/email-already-in-use).")
             setError("Can't Sign Up, Email address already in use");
-          else if (error.message == "Firebase: Error (auth/invalid-email).")
+          else if (error.message === "Firebase: Error (auth/invalid-email).")
             setError("Can't Sign Up, Invalid email");
           else
             setError("Can't Sign Up, Unexpected error occured !!");
@@ -234,32 +245,52 @@ const SignUp = () => {
               placeholder="e.g. Robert Robertson, 1234 NW Bobcat Lane"
             />
           </div>
+          
 
           <label htmlFor="createPassword" className="label-text">
-            Create Password 
-            <br/>
-            <span className="error-inline">{passwordError}</span>
+              Create Password 
+              <br />
+              <span className="error-inline">{passwordError}</span>
           </label>
-          <input
-            type="password"
-            value={createPassword}
-            onChange={(e) => setCreatePassword(e.target.value)}
-            placeholder="Create Password"
-            className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-          />
+          <div className="input-wrapper create-password-wrapper">
+              <input
+                  type={isCreatePasswordVisible ? "text" : "password"}
+                  value={createPassword}
+                  onChange={(e) => setCreatePassword(e.target.value)}
+                  placeholder="Create Password"
+                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+              />
+              <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={toggleCreatePasswordVisibility} 
+              >
+                  {isCreatePasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+          </div>
 
           <label htmlFor="confirmPassword" className="label-text">
-            Confirm Password
-            <br/>
-             <span className="error-inline">{passwordError}</span>
+              Confirm Password
+              <br />
+              <span className="error-inline">{passwordError}</span>
           </label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm Password"
-            className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-          />
+          <div className="input-wrapper confirm-password-wrapper">
+              <input
+                  type={isConfirmPasswordVisible ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm Password"
+                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+              />
+              <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={toggleConfirmPasswordVisibility} // Call the correct function
+              >
+                  {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+          </div>
+
 
           <div className={isLoading ? 'show-loader' : 'hide-div'}>
             <img src={loader_icon} alt="Loader Icon" />

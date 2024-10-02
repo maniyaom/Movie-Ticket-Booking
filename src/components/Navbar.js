@@ -64,7 +64,7 @@ export default function Navbar() {
         <NavLink
           exact
           to="/"
-          className={({ isActive }) => (isActive ? 'active-link' : '')}
+          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
         >
           Home
         </NavLink>
@@ -72,7 +72,7 @@ export default function Navbar() {
       <li>
         <NavLink
           to="/AboutUs"
-          className={({ isActive }) => (isActive ? 'active-link' : '')}
+          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
         >
           About Us
         </NavLink>
@@ -80,7 +80,7 @@ export default function Navbar() {
       <li>
         <NavLink
           to="/ContactUs"
-          className={({ isActive }) => (isActive ? 'active-link' : '')}
+          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
         >
           Contact Us
         </NavLink>
@@ -89,7 +89,7 @@ export default function Navbar() {
         <li>
           <NavLink
             to="/Login"
-            className={({ isActive }) => (isActive ? 'active-link' : '')}
+            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
           >
             Login
           </NavLink>
@@ -99,7 +99,7 @@ export default function Navbar() {
         <li>
           <NavLink
             to="/AddMovie"
-            className={({ isActive }) => (isActive ? 'active-link' : '')}
+            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
           >
             List Your Show
           </NavLink>

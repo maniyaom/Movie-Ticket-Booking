@@ -155,6 +155,15 @@ const SignUp = () => {
       <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Sign Up</div>
+          
+          {/* Google Signup Option*/}
+            <div class="google-signup">
+              <a href="#" class="google-btn">
+                <img src="googleLogo.png" alt="Google Logo" />
+                Sign up with Google
+              </a>
+            </div>
+
           <div className="signup-subheading myb-20">
             Please provide your name, email address, and phone number.
           </div>

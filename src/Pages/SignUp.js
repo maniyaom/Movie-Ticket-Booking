@@ -219,51 +219,77 @@ const SignUp = () => {
               onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-no" style={{marginLeft: '3px'}}>No</label>
           </div>
 
+          <div name='theater' className={isAdmin ? '' : 'hide-div'}>
+            <label className="label-text">
+              Theater Name 
+              <br/>
+              <span className="error-inline">{theaterNameError}</span>
+            </label>
+            <input
+              type="text"
+              value={theaterName}
+              onChange={(e) => setTheaterName(e.target.value)}
+              className={`input-field ${theaterNameError !== "" ? 'error-input-field' : ''}`}
+              placeholder="e.g. Rahulraj PVR"
+            />
+
+            <label className="label-text">
+              Theater Address
+              <br/>
+               <span className="error-inline">{theaterAddressError}</span>
+            </label>
+            <textarea
+              value={theaterAddress}
+              onChange={(e) => setTheaterAddress(e.target.value)}
+              className={`input-field ${theaterAddressError !== "" ? 'error-input-field' : ''}`}
+              placeholder="e.g. Robert Robertson, 1234 NW Bobcat Lane"
+            />
+          </div>
           
 
           <label htmlFor="createPassword" className="label-text">
-    Create Password 
-    <br />
-    <span className="error-inline">{passwordError}</span>
-</label>
-<div className="input-wrapper create-password-wrapper">
-    <input
-        type={isCreatePasswordVisible ? "text" : "password"}
-        value={createPassword}
-        onChange={(e) => setCreatePassword(e.target.value)}
-        placeholder="Create Password"
-        className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-    />
-    <button
-        type="button"
-        className="password-toggle"
-        onClick={toggleCreatePasswordVisibility} // Call the correct function
-    >
-        {isCreatePasswordVisible ? <FaEyeSlash /> : <FaEye />}
-    </button>
-</div>
+              Create Password 
+              <br />
+              <span className="error-inline">{passwordError}</span>
+          </label>
+          <div className="input-wrapper create-password-wrapper">
+              <input
+                  type={isCreatePasswordVisible ? "text" : "password"}
+                  value={createPassword}
+                  onChange={(e) => setCreatePassword(e.target.value)}
+                  placeholder="Create Password"
+                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+              />
+              <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={toggleCreatePasswordVisibility} 
+              >
+                  {isCreatePasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+          </div>
 
-<label htmlFor="confirmPassword" className="label-text">
-    Confirm Password
-    <br />
-    <span className="error-inline">{passwordError}</span>
-</label>
-<div className="input-wrapper confirm-password-wrapper">
-    <input
-        type={isConfirmPasswordVisible ? "text" : "password"}
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirm Password"
-        className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-    />
-    <button
-        type="button"
-        className="password-toggle"
-        onClick={toggleConfirmPasswordVisibility} // Call the correct function
-    >
-        {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-    </button>
-</div>
+          <label htmlFor="confirmPassword" className="label-text">
+              Confirm Password
+              <br />
+              <span className="error-inline">{passwordError}</span>
+          </label>
+          <div className="input-wrapper confirm-password-wrapper">
+              <input
+                  type={isConfirmPasswordVisible ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm Password"
+                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+              />
+              <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={toggleConfirmPasswordVisibility} // Call the correct function
+              >
+                  {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+          </div>
 
 
           <div className={isLoading ? 'show-loader' : 'hide-div'}>

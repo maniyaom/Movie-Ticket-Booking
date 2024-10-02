@@ -160,3 +160,8 @@ input[type="file"]::file-selector-button {
 .justify-between {
     justify-content: space-between;
 }
+
+.signup {
+    padding: 5% 0 0 35%;
+    height: 1000px;
+}

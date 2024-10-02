@@ -1,0 +1,50 @@
+.contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.heading {
+    margin: 5%;
+}
+.heading h1 {
+    width:200px;
+    text-align: center;
+    margin-left: 35%;
+}
+.heading p {
+    width: 550px;
+    text-align: center;
+}
+.infos {
+    margin-top: -2%;
+    background-color: black;
+    box-shadow: 5px 5px 4px grey;
+    color: white;
+    height: 350px;
+    width: 1200px;
+    padding: 2% 3% 3% 3%;
+}
+.infos .customer, .infos .business {
+    width:600px;
+    margin-bottom: 2%;
+}
+.feedback {
+    background-color: #f84464;
+    height: 400px;
+    width: 450px;
+    color: white;
+    margin: -24.5% 0 5% 40%;
+    padding: 3% 2% 1% 2%;
+}
+.feedback .para {
+    margin-bottom: 6%;
+}
+.feedback h3 {
+    text-align: center;
+    margin-bottom: 5%;
+}
+.feedback p {
+    text-align: center;
+    margin-bottom: 3%;
+}

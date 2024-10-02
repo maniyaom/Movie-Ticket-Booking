@@ -6,6 +6,7 @@ import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import '../components/Navbar.css';
+import movie from '../assets/images/Movie-Ticket-Booking-1024x768.png';
 
 const Login = () => {
 
@@ -78,7 +79,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex justify-center align-center" style={{ marginTop: '70px' }}>
+      <div className="login" style={{ backgroundImage: `url(${movie})` } }>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Login</div>
           <div className="signup-subheading myb-20">

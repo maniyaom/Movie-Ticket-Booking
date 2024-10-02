@@ -36,3 +36,8 @@ body{
     opacity: 0.4;
     font-size: 13px;
 }
+.login {
+    object-fit: cover;
+    height: 675px;
+    padding: 7% 0 0 35%;
+}

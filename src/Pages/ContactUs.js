@@ -3,100 +3,50 @@ import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import "./utils.css";
-import "./AboutUs.css";
+import "./ContactUs.css";
 import Footer from '../components/Footer';
+import bg from '../assets/images/brown.webp';
 
 const ContactUs = () => {
   return (
-    <>
-      <div className="flex justify-center">
-        <div>
-          <h1
-            style={{
-              color: "#f84464",
-              textAlign: "center",
-              marginTop: "30px",
-              fontSize: "43px",
-            }}
-          >
-            Contact US
-          </h1>
-          <p
-            style={{ opacity: "0.8", fontWeight: "600", margin: "10px 200px" }}
-          >
-            Thank you for choosing Ticketify! We're here to assist you with any
-            questions or concerns you may have. Here's how you can get in touch
-            with us:
-          </p>
-
-          <div className="card-image-div flex-col">
-            <h2 className="title">Customer Support:</h2>
-            <ul style={{ marginLeft: "2rem" }}>
-              <li>
-                For assistance with your bookings, refunds, or any other
-                inquiries, please reach out to our Customer Support team.
-              </li>
-              <ul style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                <li>
-                  <b>Email: </b>support@ticketify.com
-                </li>
-                <li>
-                  <b>Phone: </b>1-800-MOVIE-TIX (1-800-668-4384)
-                </li>
-                <li>
-                  <b>Live Chat: </b>Available on our website during business
-                  hours
-                </li>
-              </ul>
-            </ul>
-          </div>
-
-          <div className="card-image-div flex-col">
-            <h2 className="title">Business Inquiries:</h2>
-            <ul style={{ marginLeft: "2rem" }}>
-              <li>
-                Interested in partnership opportunities or have a business
-                proposal? Contact our Business Development team.
-              </li>
-              <ul style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                <li>
-                  <b>Email: </b>partnership@ticketify.com
-                </li>
-                <li>
-                  <b>Phone: </b>1-888-555-PART (1-888-555-7278)
-                </li>
-              </ul>
-            </ul>
-          </div>
-
-          <div className="card-image-div flex-col">
-            <ul style={{ marginLeft: "2rem" }}>
-              <li>
-                We value your feedback and suggestions. Let us know how we can
-                improve your experience.
-              </li>
-              <ul style={{ marginLeft: "2rem", marginTop: '1rem', marginBottom: '2rem' }}>
-                <li>
-                  <b>Email: </b>feedback@yourmovietickets.com
-                </li>
-              </ul>
-            </ul>
-
-            <h2 className="title" style={{fontSize: '22px', fontWeight: 500}}>Address</h2>
-            <p style={{ marginLeft: "2rem", fontWeight: 600, opacity: 0.8, marginBottom: '1rem' }}>
-              Ticketify private limited, 123 Movie Ave, Surat, Gujarat, 394107,
-              India
-            </p>
-          </div>
-          <p className="card-image-div flex-col" style={{backgroundColor: '#fdcad3', fontWeight: 600}}>
-              Feel free to reach out to us through any of the above channels. We
-              strive to respond to all inquiries within 24 hours during business
-              days. Thank you for choosing Ticketify!
-            </p>
+    <div className="contact" style={{ backgroundImage: `url(${bg})` } }>
+      <div className="heading">
+        <h1>Contact Us</h1>
+        <p>Thank you for choosing Ticketify! We're here to assist you with any
+          questions or concerns you may have. Here's how you can get in touch
+          with us</p>
+      </div>
+      <div className="infos">
+        <div className="customer">
+          <h2>Customer Support</h2>
+          <p>For assistance with your bookings, refunds, or any other
+            inquiries, please reach out to our Customer Support team</p>
+          <p><b>Email: </b>support@ticketify.com</p>
+          <p><b>Phone: </b>1-800-MOVIE-TIX (1-800-668-4384)</p>
+        </div>
+        <div className="business">
+          <h2>Business enquiries</h2>
+          <p>Interested in partnership opportunities or have a business
+            proposal? Contact our Business Development team</p>
+          <p><b>Email: </b>partnership@ticketify.com</p>
+          <p><b>Phone: </b>1-888-555-PART (1-888-555-7278)</p>
         </div>
       </div>
-      <Footer />
-    </>
+      <div className="feedback">
+        <div className="para">
+          <p>We value your feedback and suggestions. Let us know how we can
+            improve your experience.</p>
+          <p><b>Email: </b>feedback@yourmovietickets.com</p>
+        </div>
+        <h3>Address</h3>
+        <p>Ticketify private limited, 123 Movie Ave, Surat, Gujarat, 394107,
+              India</p>
+        <p>Feel free to reach out to us through any of the beside channels. We
+              strive to respond to all inquiries within 24 hours during business
+              days. Thank you for choosing Ticketify!</p>
+      </div>
+      <Footer/>
+    </div>
   );
 };
 

@@ -15,6 +15,7 @@ footer > div {
 .footer-right > div {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 15px;
 }
 
@@ -81,6 +82,7 @@ footer > div {
     .footer-right > p {
         margin-right: 0;
         margin-bottom: 20px;
+
     }
 
     .footer-left > div {
@@ -89,6 +91,7 @@ footer > div {
 
     .footer-left > div > span, .footer-right > div {
         font-size: 24px;
+        
     }
 
     .social-icon {
@@ -102,7 +105,9 @@ footer > div {
 @media (max-width: 480px) {
     .footer-left > div > span, .footer-right > div {
         font-size: 20px;
+
     }
+    
 
     .social-icon {
         width: 25px;
@@ -113,4 +118,5 @@ footer > div {
         margin-right: 8px;
         font-size: 14px;
     }
+    
 }

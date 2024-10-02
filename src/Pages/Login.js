@@ -5,10 +5,10 @@ import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import '../components/Navbar.css';
 
 const Login = () => {
-
   const firebase = useFirebase();
   const auth = getAuth();
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -24,11 +25,11 @@ const Login = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigate("/Home")
+        navigate("/Home");
       }
     });
     document.title = 'Login';
-  },[auth])
+  }, [auth]);
 
   const resetErrors = () => {
     setError("");
@@ -38,11 +39,11 @@ const Login = () => {
 
   const validateForm = () => {
     let isValid = true;
-    if (email == "") {
+    if (email === "") {
       setEmailError("(Required Field)");
       isValid = false;
     }
-    if (password == "") {
+    if (password === "") {
       setPasswordError("(Required Field)");
       isValid = false;
     }
@@ -52,28 +53,32 @@ const Login = () => {
   const handleSignIn = () => {
     resetErrors();
     let isValid = validateForm();
-    if (isValid == true) {
+    if (isValid) {
       setIsLoading(true);
-      setError("")
+      setError("");
       firebase.loginUserWithEmailAndPassword(email, password)
         .then(() => {
-          console.log("User login successfully!");
-          setEmail("")
-          setPassword("")
-          setError("")
+          console.log("User logged in successfully!");
+          setEmail("");
+          setPassword("");
+          setError("");
         })
         .catch(error => {
-          if (error.message == "Firebase: Error (auth/invalid-credential).")
-            setError("Incorrect email or password")
-          else if (error.message == "Firebase: Error (auth/invalid-email).")
-            setEmailError("(Invalid Email)")
+          if (error.message === "Firebase: Error (auth/invalid-credential).")
+            setError("Incorrect email or password");
+          else if (error.message === "Firebase: Error (auth/invalid-email).")
+            setEmailError("(Invalid Email)");
           else
-            setError("Can't Sign In, Unexpected error occured !!")
+            setError("Can't Sign In, Unexpected error occurred!");
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
   };
 
   return (
@@ -99,20 +104,31 @@ const Login = () => {
           <label htmlFor="password" className="label-text">
             Password <span className="error-inline mxl-10">{passwordError}</span>
           </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-          />
+          <div className="input-wrapper">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={togglePasswordVisibility}
+            >
+              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
           <div className={isLoading ? 'show-loader' : 'hide-div'}>
             <img src={loader_icon} alt="Loader Icon" />
           </div>
           <span className="error">{error}</span>
 
           <button className="btn" onClick={handleSignIn}>Login</button>
-          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Don't have an account <Link to="/SignUp" style={{color: '#f84464'}}>Sign Up</Link></span>
+          <span style={{ marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center' }}>
+            Don't have an account <Link to="/SignUp" style={{ color: '#f84464' }}>Sign Up</Link>
+          </span>
         </div>
       </div>
     </>

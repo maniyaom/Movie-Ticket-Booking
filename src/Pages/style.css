@@ -39,17 +39,22 @@ body{
 .signup-card.add-movie{
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     width: 100%;
 }
 
 .left-side-form, .right-side-form {
-    width: 48%;
+    width: 100%;
 }
 
-.left-side-form {
+@media (min-width: 768px) {
+    .signup-card.add-movie {
+      flex-direction: row;
+    }
+    .left-side-form {
     padding-right: 20px;
-}
-
-.right-side-form {
+    }
+    .right-side-form {
     padding-left: 20px;
+    }
 }

@@ -197,7 +197,7 @@ const AddMovie = () => {
                 Please provide movie name, language, poster.
             </div>
     <div className="signup-card add-movie flex" style={{width:'90%'}}>
-        <div className="left-side-form">
+        <div className="left-side-form"  >
             
             
 

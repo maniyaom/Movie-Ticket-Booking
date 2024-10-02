@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import "./Navbar.css";
@@ -13,6 +13,32 @@ export default function Navbar() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for hamburger menu
+  const detailsRef = useRef(null); // Reference to the <details> element
+
+  // Function to toggle hamburger menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Function to close dropdown when an item is clicked
+  const handleDropdownClose = () => {
+    if (detailsRef.current) {
+      detailsRef.current.removeAttribute("open");
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (detailsRef.current && !detailsRef.current.contains(event.target)) {
+      handleDropdownClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const getUserData = onAuthStateChanged(auth, async (user) => {
@@ -39,10 +65,6 @@ export default function Navbar() {
     signOut(auth);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle menu state
-  };
-
   return (
     <>
       <link rel="stylesheet" href="Navbar.css" />
@@ -50,7 +72,6 @@ export default function Navbar() {
         rel="stylesheet"
         href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
       />
-      <script src="NavbarScript.js" defer></script>
 
       <nav className="nav">
         <a href="/" className="logo">
@@ -64,24 +85,38 @@ export default function Navbar() {
 
         <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink exact to="/" className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}>
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/AboutUs">About Us</Link>
+            <NavLink to="/AboutUs" className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}>
+              About Us
+            </NavLink>
           </li>
           <li>
-            <Link to="/ContactUs">Contact Us</Link>
+            <NavLink to="/ContactUs" className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}>
+              Contact Us
+            </NavLink>
           </li>
-          <li className={isLoggedIn ? "hide-div" : ""}>
-            <Link to="/Login">Login</Link>
-          </li>
-          <li className={isAdmin ? "" : "hide-div"}>
-            <Link to="/AddMovie">List Your Show</Link>
-          </li>
+          {!isLoggedIn && (
+            <li>
+              <NavLink to="/Login" className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}>
+                Login
+              </NavLink>
+            </li>
+          )}
+          {isAdmin && (
+            <li>
+              <NavLink to="/AddMovie" className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}>
+                List Your Show
+              </NavLink>
+            </li>
+          )}
         </ul>
 
         <div className={isLoggedIn ? "dropdown-container" : "hide-div"}>
-          <details className="dropdown right">
+          <details className="dropdown right" ref={detailsRef}>
             <summary className="avatar">
               <img
                 src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp"
@@ -97,24 +132,20 @@ export default function Navbar() {
               </li>
 
               <li>
-                <Link to={"/Account"}>
-                  <span className="material-symbols-outlined">
-                    account_circle
-                  </span>{" "}
-                  Account
+                <Link to="/Account" onClick={handleDropdownClose}>
+                  <span className="material-symbols-outlined">account_circle</span> Account
                 </Link>
               </li>
               <li>
-                <Link to={"/ContactUs"}>
+                <Link to="/ContactUs" onClick={handleDropdownClose}>
                   <span className="material-symbols-outlined">help</span> Help
                 </Link>
               </li>
 
               <li className="divider"></li>
               <li>
-                <a onClick={handleLogout}>
-                  <span className="material-symbols-outlined">logout</span>{" "}
-                  Logout
+                <a onClick={() => { handleLogout(); handleDropdownClose(); }}>
+                  <span className="material-symbols-outlined">logout</span> Logout
                 </a>
               </li>
             </ul>

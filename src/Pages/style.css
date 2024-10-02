@@ -24,6 +24,7 @@ body{
     /* box-shadow: -2px -1px 35px 1px var(--primary-color); */
     border: 2px solid rgba(248, 68, 100, 0.5);
     margin-bottom: 40px;
+    margin-top: 50px;
 }
 
     /*added google button */
@@ -33,17 +34,19 @@ body{
     justify-content:space-around;
     align-items: center; /* Centers the content vertically */
     background-color: white; /* White background for the button */
-    color: #333; /* Dark gray text */
+    color: rgb(23, 23, 23); /* Dark gray text */
     border-radius: 20px; /* Smaller border radius for rounded but more compact edges */
     padding: 5px 5px; /* Reduced padding to shrink the height and width */
     text-decoration: none; /* Removes underline from link */
-    font-weight: bold; /* Bold text */
+    font-weight: 600; /* Bold text */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
     transition: transform 0.3s ease; /* Smooth hover effect */
     max-width: 250px; /* Further reduced maximum width */
     font-size: 15px; /* Slightly smaller font size */
     margin: 0 auto;
     margin-bottom: 15px;
+    border: none; 
+    outline: none;
 }
 .google-btn img {
     width: 30px; /* Reduced width of the Google icon */

@@ -1,8 +1,10 @@
 import { createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword ,signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { getDatabase, set, ref, push, get } from "firebase/database";
 import { getDownloadURL as getStorageDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
+import { Link, useNavigate,} from 'react-router-dom' 
+
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -25,6 +27,33 @@ const FirebaseContext = createContext(null);
 export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = (props) => {
+    const navigate = useNavigate();
+
+    const signInWithGoogle = () => {
+        const provider = new GoogleAuthProvider(); // Initialize Google Auth provider
+
+        signInWithPopup(firebaseAuth, provider) // Use popup for Google authentication
+            .then(async (result) => {
+                const user = result.user; // Get signed-in user's information
+                console.log("User signed in with Google:", user);
+
+                // Optional: Add user to the database if they don't already exist
+                const userRef = ref(database, `users/${user.uid}`);
+                const snapshot = await get(userRef);
+                if (!snapshot.exists()) {
+                    await addUser(user.uid, { email: user.email, displayName: user.displayName });
+                }
+
+                // Redirect to the Home route after successful login
+                navigate("/Home"); // Use navigate for redirection
+            })
+            .catch((error) => {
+                console.log("Error during Google sign-in:", error.message);
+                // Optionally set an error state here
+            });
+    };
+
+      
     const signupUserWithEmailAndPassword = async (email, password) => {
         try {
             return await createUserWithEmailAndPassword(firebaseAuth, email, password);
@@ -225,7 +254,7 @@ export const FirebaseProvider = (props) => {
 
 
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails }}>
+        <FirebaseContext.Provider value={{signInWithGoogle, signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails }}>
             {props.children}
         </FirebaseContext.Provider>
     );

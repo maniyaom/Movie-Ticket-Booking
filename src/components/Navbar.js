@@ -84,7 +84,7 @@ export default function Navbar() {
              <ul className="nav-links">
       <li>
         <NavLink
-          exact
+          //exact
           to="/"
           className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
         >

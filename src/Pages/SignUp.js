@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useFirebase } from "../context/firebase";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { Link, useNavigate } from 'react-router-dom'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth,GoogleAuthProvider,signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 import './utils.css'
 import '../components/Navbar.css';
@@ -12,6 +12,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const firebase = useFirebase();
   const auth = getAuth();
+  const provider = new GoogleAuthProvider(); 
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,7 +43,25 @@ const SignUp = () => {
       }
     });
     document.title = 'Sign Up';
-  },[auth])
+  },[auth,navigate]);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Google sign-in successful!", user);
+
+      // Optionally, add the user to your Firebase database or do any additional setup here
+      await firebase.addUser(user.uid, { name: user.displayName, email: user.email, phone: user.phoneNumber || "", isAdmin: false, wallet: 2000 });
+      navigate('/Home');
+    } catch (error) {
+      console.error("Google sign-in error:", error.message);
+      setError("Google sign-in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const resetErrors = () => {
     setNameError("");
@@ -168,13 +187,13 @@ const SignUp = () => {
           <div className="signup-heading text-center myb-20">Sign Up</div>
           
           {/* Google Signup Option*/}
-            <div class="google-signup">
-              <a href="#" class="google-btn">
-                <img src="googleLogo.png" alt="Google Logo" />
+          <div class="google-signup">
+            <button onClick={handleGoogleSignIn} className="google-btn">
+              <img src="googleLogo.png" alt="Google Logo" />
                 Sign up with Google
-              </a>
-            </div>
-
+            </button>
+          </div>
+        
           <div className="signup-subheading myb-20">
             Please provide your name, email address, and phone number.
           </div>

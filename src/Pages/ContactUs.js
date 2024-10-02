@@ -22,7 +22,7 @@ const ContactUs = () => {
             Contact US
           </h1>
           <p
-            style={{ opacity: "0.8", fontWeight: "600", margin: "10px 200px" }}
+            style={{ fontWeight: "600", margin: "10px 200px" }}
           >
             Thank you for choosing Ticketify! We're here to assist you with any
             questions or concerns you may have. Here's how you can get in touch

@@ -39,7 +39,7 @@
 }
 
 .nav-links {
-    width: 60%;
+    width:fit-content;
     display: flex;
     justify-content: space-evenly;
 }

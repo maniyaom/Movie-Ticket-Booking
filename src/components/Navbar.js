@@ -13,7 +13,7 @@ export default function Navbar() {
     const detailsRef = useRef(null); 
     const handleNotificationClick = () => {
       navigate('/notifications');
-    };
+  };
 
     // Function to close the dropdown when an item is clicked
     const handleDropdownClose = () => {

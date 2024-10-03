@@ -170,9 +170,11 @@ export default function Navbar() {
                          
                     </details>
                 </div>
+                {isLoggedIn && (
                 <span className="notification-icon" onClick={handleNotificationClick}>
                     <FontAwesomeIcon icon={faBell} />
                 </span>
+                )}
             </nav>
         </>
     )

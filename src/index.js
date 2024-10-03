@@ -16,7 +16,7 @@ import './components/Navbar.css'
 import Account from './Pages/Account';
 import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
-import Notifications from './Pages/Notifications';
+import MyTickets from './Pages/MyTickets';
 
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Home" element={<Home />} />
+        <Route path="/MyTickets/:uid" element={<MyTickets />} />
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/ContactUs/:name" element={<ContactUs />} />
@@ -44,7 +45,9 @@ function App() {
         <Route path="/Account" element={<Account />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
 
+
         <Route path="/notifications" element={<Notifications />} />
+
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>

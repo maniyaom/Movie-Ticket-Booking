@@ -136,12 +136,37 @@ export const FirebaseProvider = (props) => {
         } else {
           return "User not found";
         }
+
       } else {
         return "No users found";
       }
     } catch (error) {
       console.error("Error updating emailVerified:", error);
       throw error;
+
+       
+        
+    }
+    const fetchUserTickets = async (userId) => {
+        try {
+           
+            const snapshot = await get(ref(database, "tickets"));
+            const ticketsData = snapshot.val();
+            if (!ticketsData) {
+                console.log("No tickets data found.");
+                return [];
+            }
+            const ticketArray = Object.values(ticketsData);
+            const userTickets = ticketArray.filter(ticket => 
+                ticket.paidBy === userId || ticket.receivedBy === userId
+            );
+            return userTickets;
+    
+        } catch (error) {
+            console.error("Error fetching tickets for user: ", error);
+            throw error;
+        }
+
     }
   };
 
@@ -311,3 +336,5 @@ export const FirebaseProvider = (props) => {
     </FirebaseContext.Provider>
   );
 };
+
+

@@ -221,11 +221,33 @@ export const FirebaseProvider = (props) => {
             console.error("Error fetching ticket data : ", error);
             throw error;
         }
+       
+        
+    }
+    const fetchUserTickets = async (userId) => {
+        try {
+           
+            const snapshot = await get(ref(database, "tickets"));
+            const ticketsData = snapshot.val();
+            if (!ticketsData) {
+                console.log("No tickets data found.");
+                return [];
+            }
+            const ticketArray = Object.values(ticketsData);
+            const userTickets = ticketArray.filter(ticket => 
+                ticket.paidBy === userId || ticket.receivedBy === userId
+            );
+            return userTickets;
+    
+        } catch (error) {
+            console.error("Error fetching tickets for user: ", error);
+            throw error;
+        }
     }
 
 
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails, fetchUserTickets }}>
             {props.children}
         </FirebaseContext.Provider>
     );

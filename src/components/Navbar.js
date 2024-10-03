@@ -1,20 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate, NavLink} from "react-router-dom";
+import { Link, NavLink } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faPenSquare, faUserCircle, faBell } from "@fortawesome/free-solid-svg-icons";
 import './Navbar.css';
 
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
-    const navigate = useNavigate();
     const detailsRef = useRef(null); // Create a reference to the <details> element
-
-    const handleNotificationClick = () => {
-      navigate('/notifications');
-  };
 
     // Function to close the dropdown when an item is clicked
     const handleDropdownClose = () => {
@@ -41,11 +34,12 @@ export default function Navbar() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState(""); 
-    
+    const [userId, setUserId] = useState(null);
     useEffect(() => {
         const getUserData = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
+                setUserId(uid);
                 try {
                     const userDetails = await firebase.fetchUserDetails(uid);
                     setName(userDetails.name);
@@ -62,6 +56,7 @@ export default function Navbar() {
             }
             else{
                 setIsLoggedIn(false);
+                setUserId(null);
             }
         });
     
@@ -98,6 +93,18 @@ export default function Navbar() {
           Home
         </NavLink>
       </li>
+      {isLoggedIn?
+      <li>
+      <NavLink
+        to={`/MyTickets/${userId}`}
+        className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+      >
+        My Tickets
+      </NavLink>
+    </li>
+    :""
+      }
+      
       <li>
         <NavLink
           to="/AboutUs"
@@ -167,14 +174,8 @@ export default function Navbar() {
                                 </a>
                             </li>
                         </ul>
-                         
                     </details>
                 </div>
-                {isLoggedIn && (
-                <span className="notification-icon" onClick={handleNotificationClick}>
-                    <FontAwesomeIcon icon={faBell} />
-                </span>
-                )}
             </nav>
         </>
     )

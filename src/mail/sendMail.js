@@ -6,10 +6,21 @@ const sendEmail = (email, url) => {
     to_email: email,
   };
 
-  emailjs.send("service_zaqu6de", "template_6wf9ubo", templateParams, {
-    publicKey: "l7yYDugauYC9Exay2",
-    privateKey: "u9Apf6hrNkPjR5OiKdDtk",
-  });
+  emailjs
+    .send(
+      "<YOUR_SERVICE_ID>",
+      "template_6wf9ubo",
+      templateParams,
+      "<YOUR_USER_ID>"
+    )
+    .then(
+      function (response) {
+        console.log("SUCCESS!", response.status, response.text);
+      },
+      function (error) {
+        console.log("FAILED...", error);
+      }
+    );
 };
 
 export default sendEmail;

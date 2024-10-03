@@ -125,7 +125,9 @@ const SignUp = () => {
             "secret"
           ).toString();
           const url = `http://localhost:3000/verify-email/${encryptedEmail}`;
+          console.log("Encrypted email: ", encryptedEmail);
           sendEmail(email, url);
+          console.log("Email sent successfully");
           if (isAdmin === true) {
             firebase
               .addUser(userCredential.user.uid, {
@@ -140,7 +142,7 @@ const SignUp = () => {
               })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
-                navigate("/Login");
+                // navigate("/Login");
                 setName("");
                 setEmail("");
                 setPhone("");

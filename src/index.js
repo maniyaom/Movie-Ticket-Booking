@@ -15,6 +15,7 @@ import './components/Navbar.css'
 import Account from './Pages/Account';
 import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
+import Notifications from './Pages/Notifications';
 
 function App() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function App() {
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />
         <Route path="/Account" element={<Account />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>

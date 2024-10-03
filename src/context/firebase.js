@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword ,signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { getDatabase, set, ref, push, get } from "firebase/database";
@@ -28,32 +28,35 @@ export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = (props) => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false); // Loading state
 
-    const signInWithGoogle = () => {
+    const signInWithGoogle = async() => {
         const provider = new GoogleAuthProvider(); // Initialize Google Auth provider
+        setLoading(true);
 
-        signInWithPopup(firebaseAuth, provider) // Use popup for Google authentication
-            .then(async (result) => {
-                const user = result.user; // Get signed-in user's information
-                console.log("User signed in with Google:", user);
+        try {
+            const result = await signInWithPopup(firebaseAuth, provider); // Use popup for Google authentication
+            const user = result.user; 
+            console.log("User signed in with Google:", user);
 
-                // Optional: Add user to the database if they don't already exist
-                const userRef = ref(database, `users/${user.uid}`);
-                const snapshot = await get(userRef);
-                if (!snapshot.exists()) {
-                    await addUser(user.uid, { email: user.email, displayName: user.displayName });
-                }
-
-                // Redirect to the Home route after successful login
-                navigate("/Home"); // Use navigate for redirection
-            })
-            .catch((error) => {
-                console.log("Error during Google sign-in:", error.message);
-                // Optionally set an error state here
-            });
+            const userRef = ref(database, `users/${user.uid}`);
+            const snapshot = await get(userRef);
+            if (!snapshot.exists()) {
+                await addUser(user.uid, { email: user.email, displayName: user.displayName });
+                console.log("New account created:", { email: user.email, displayName: user.displayName });
+            } else {
+                const existingUser = snapshot.val();
+                console.log("User already exists:", existingUser);
+            }
+            navigate("/Home");
+        }catch(error) {
+                console.error("Error during Google sign-in:", error);
+        } finally {
+            setLoading(false); 
+        }
     };
+   
 
-      
     const signupUserWithEmailAndPassword = async (email, password) => {
         try {
             return await createUserWithEmailAndPassword(firebaseAuth, email, password);

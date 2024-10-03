@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Link, NavLink ,useNavigate } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -7,7 +7,8 @@ import './Navbar.css';
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
-    const detailsRef = useRef(null); // Create a reference to the <details> element
+    const navigate = useNavigate();
+    const detailsRef = useRef(null); 
 
     // Function to close the dropdown when an item is clicked
     const handleDropdownClose = () => {
@@ -15,11 +16,11 @@ export default function Navbar() {
         detailsRef.current.removeAttribute('open'); // Close the <details> element
       }
     };
-    const handleClickOutside = (event) => {
+    const handleClickOutside = useCallback((event) => {
       if (detailsRef.current && !detailsRef.current.contains(event.target)) {
         handleDropdownClose();
       }
-    };
+    },[]);
     
     useEffect(() => {
       // Add event listener to detect clicks outside the dropdown
@@ -60,12 +61,18 @@ export default function Navbar() {
         });
     
         return () => getUserData();
-    }, [firebase]);
+    }, [auth,firebase]);
 
-    const handleLogout = () => {
-        signOut(auth)
-    }
-
+    const handleLogout = async () => {
+      try {
+          await signOut(auth); // Call signOut
+          setIsLoggedIn(false); // Update local state immediately
+          setIsAdmin(false); // Reset admin state
+          navigate('/Login'); // Redirect to login page
+      } catch (error) {
+          console.error("Logout failed:", error);
+      }
+  }
     return (
         <>
             <link rel="stylesheet" href="Navbar.css" />
@@ -155,9 +162,9 @@ export default function Navbar() {
                             
                             <li className="divider"></li>
                             <li>
-                                <a onClick={() => { handleLogout(); handleDropdownClose(); }}>
+                                <button className="logout-button" onClick={() => { handleLogout(); handleDropdownClose(); }}>
                                     <span className="material-symbols-outlined">logout</span> Logout
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </details>

@@ -115,7 +115,7 @@ function MovieTicket() {
             <hr />
             <h4>Seat: {ticketData.bookedSeats.join(', ')}</h4>
             <hr />
-            <h4>TIme: {ticketData.movieTiming}</h4>
+            <h4>Time: {ticketData.movieTiming}</h4>
             <img
               src={qrCode}
               style={{ width: "8rem", height: "6rem", marginBottom: "0.5rem" }}

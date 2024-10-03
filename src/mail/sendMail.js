@@ -8,7 +8,7 @@ const sendEmail = (email, url) => {
 
   emailjs
     .send(
-      "LVJrq8KgbHhBckSW",
+      "service_ilo8yko",
       "template_6wf9ubo",
       templateParams,
       "WvxgL3c2U8vG-7VKg"

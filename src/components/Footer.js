@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import facebook_icon from '../assets/icons/facebook.png'
-import instagram_icon from '../assets/icons/instagram.png'
-import linkedin_icon from '../assets/icons/linkedin.png'
+import facebook_icon from '../assets/icons/facebook2.png'
+import instagram_icon from '../assets/icons/instagram2.png'
+import linkedin_icon from '../assets/icons/linkedin2.png'
 import twitter_icon from '../assets/icons/twitter.png'
 
 export default function Footer() {

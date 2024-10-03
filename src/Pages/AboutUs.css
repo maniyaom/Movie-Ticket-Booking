@@ -1,49 +1,76 @@
 .card-image-div {
-    width: 80vw;
-    margin: 30px 10vw;
-    display: flex;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 15px;
+  width: 80vw;
+  margin: 30px 10vw;
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 15px;
+}
+
+.card-image-div > div {
+  width: 50%;
+}
+
+.card-image-div > div > p {
+  padding: 0px 12px 8px 10px;
+  margin-left: 5px;
+}
+
+.title {
+  font-size: 30px;
+  margin: 5px 0px 10px 5px;
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+.card-image-div > div > img {
+  width: 38vw;
+  height: 300px;
+  border-radius: 8px;
+}
+
+.card-without-image {
+  width: 80vw;
+  margin: 40px 10vw;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px 40px;
+}
+
+.card-without-image > ol > li {
+  font-weight: 600;
+  margin-top: 14px;
+}
+
+.social-icons > a > img {
+  width: 25px;
+  height: 25px;
+  transition: all .38s ease-in-out;
+  margin: 15px 0px 12px 8px;
+}
+.social-icons > a > img:hover{
+  transform: scale(1.2);
+}
+
+@media only screen and (min-width: 250px) and (max-width: 900px) {
+  .card-image-div {
+    flex-direction: column;
   }
 
-  .card-image-div>div {
-    width: 50%;
+  .card-image-div > div {
+    width: 100%;
   }
-
-  .card-image-div>div>p {
-    padding: 0px 12px 8px 10px;
-    margin-left: 5px;
-  }
-
-  .title {
-    font-size: 30px;
-    margin: 5px 0px 10px 5px;
-    padding-left: 10px;
-    font-weight: 600;
-  }
-
   .card-image-div > div > img {
-    width: 38vw;
-    height: 300px;
-    border-radius: 8px;
+    width: 100%;
   }
-
-  .card-without-image {
-    width: 80vw;
-    margin: 40px 10vw;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 20px 40px;
+  .About_Us_Text {
+    margin: 0 !important;
+    text-align: center;
+    width: 100%;
   }
-
-  .card-without-image > ol > li {
-    font-weight: 600;
-    margin-top: 14px;
+  .Contact_Us_Text {
+    margin: 0 !important;
+    text-align: center;
+    width: 100%;
   }
-
-  .social-icons > a > img {
-    width: 45px;
-    height: 45px;
-    margin: 15px 0px 12px 8px;
-  }
+}

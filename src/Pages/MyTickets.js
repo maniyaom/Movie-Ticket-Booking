@@ -67,7 +67,7 @@ function MyTickets() {
                         <p><strong>Theater:</strong> {ticket.theaterName}</p>
                         <p><strong>Date & Time:</strong> {ticket.transactionTime}</p>
                         <p><strong>Seats:</strong> {ticket.bookedSeats.join(', ')}</p>
-                        <p><strong>Subtotal:</strong> ${ticket.subtotal.toFixed(2)}</p>
+                        <p><strong>Subtotal:</strong> ₹{ticket.subtotal.toFixed(2)}</p>
                         <button style={{border:"none",backgroundColor:"#f84464",color:"white", padding:"5px 20px",marginTop:'10px'}} onClick={()=>handleNavigate(ticket.ticketId)}>View Ticket</button>
                        
                     </li>

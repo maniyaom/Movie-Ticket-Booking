@@ -8,10 +8,10 @@ const sendEmail = (email, url) => {
 
   emailjs
     .send(
-      "<YOUR_SERVICE_ID>",
+      "LVJrq8KgbHhBckSW",
       "template_6wf9ubo",
       templateParams,
-      "<YOUR_USER_ID>"
+      "WvxgL3c2U8vG-7VKg"
     )
     .then(
       function (response) {

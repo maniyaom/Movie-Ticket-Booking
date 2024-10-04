@@ -279,7 +279,7 @@ export const FirebaseProvider = (props) => {
 
 
     return (
-        <FirebaseContext.Provider value={{signInWithGoogle, signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails }}>
+        <FirebaseContext.Provider value={{signInWithGoogle, signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails, fetchUserTickets }}>
             {props.children}
         </FirebaseContext.Provider>
     );

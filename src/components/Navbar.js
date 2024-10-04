@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
@@ -15,6 +16,7 @@ export default function Navbar() {
         detailsRef.current.removeAttribute('open'); // Close the <details> element
       }
     };
+
     const handleClickOutside = (event) => {
       if (detailsRef.current && !detailsRef.current.contains(event.target)) {
         handleDropdownClose();
@@ -35,6 +37,7 @@ export default function Navbar() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState(""); 
     const [userId, setUserId] = useState(null);
+    
     useEffect(() => {
         const getUserData = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -45,16 +48,11 @@ export default function Navbar() {
                     setName(userDetails.name);
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
-                    
-                    if(userDetails.isAdmin == false)
-                        setIsAdmin(false);
-                    else
-                        setIsAdmin(true);
+                    setIsAdmin(userDetails.isAdmin || false);
                 } catch (error) {
                     console.error("Error fetching user details:", error);
                 }
-            }
-            else{
+            } else {
                 setIsLoggedIn(false);
                 setUserId(null);
             }
@@ -64,7 +62,7 @@ export default function Navbar() {
     }, [auth]);
 
     const handleLogout = () => {
-        signOut(auth)
+        signOut(auth);
     }
 
     return (
@@ -76,72 +74,71 @@ export default function Navbar() {
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
-                {/* <ul className="nav-links">
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/AboutUs">About Us</Link></li>
-                    <li><Link to="/ContactUs">Contact Us</Link></li>
-                    <li className={isLoggedIn ? 'hide-div' : ''}><Link to="/Login">Login</Link></li>
-                    <li className={isAdmin ? '' : 'hide-div'}><Link to="/AddMovie">List Your Show</Link></li>
-                </ul> */}
-             <ul className="nav-links">
-      <li>
-        <NavLink
-          exact
-          to="/"
-          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-        >
-          Home
-        </NavLink>
-      </li>
-      {isLoggedIn?
-      <li>
-      <NavLink
-        to={`/MyTickets/${userId}`}
-        className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-      >
-        My Tickets
-      </NavLink>
-    </li>
-    :""
-      }
-      
-      <li>
-        <NavLink
-          to="/AboutUs"
-          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-        >
-          About Us
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/ContactUs"
-          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-        >
-          Contact Us
-        </NavLink>
-      </li>
-      {!isLoggedIn && (
-        <li>
-          <NavLink
-            to="/Login"
-            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-          >
-            Login
-          </NavLink>
-        </li>
-      )}
-      {isAdmin && (
-        <li>
-          <NavLink
-            to="/AddMovie"
-            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
-          >
-            List Your Show
-          </NavLink>
-        </li>
-      )}
-    </ul>
+                <ul className="nav-links">
+                    <li>
+                        <NavLink
+                            exact
+                            to="/"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    {isLoggedIn && (
+                        <li>
+                            <NavLink
+                                to={`/MyTickets/${userId}`}
+                                className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                            >
+                                My Tickets
+                            </NavLink>
+                        </li>
+                    )}
+                    <li>
+                        <NavLink
+                            to="/AboutUs"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            About Us
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/Explore" // Adding the Explore link here
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            Explore
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/ContactUs"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            Contact Us
+                        </NavLink>
+                    </li>
+                    {!isLoggedIn && (
+                        <li>
+                            <NavLink
+                                to="/Login"
+                                className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                            >
+                                Login
+                            </NavLink>
+                        </li>
+                    )}
+                    {isAdmin && (
+                        <li>
+                            <NavLink
+                                to="/AddMovie"
+                                className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                            >
+                                List Your Show
+                            </NavLink>
+                        </li>
+                    )}
+                </ul>
 
                 <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
                     <details className="dropdown right" ref={detailsRef}>

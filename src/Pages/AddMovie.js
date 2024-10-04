@@ -169,13 +169,6 @@ const AddMovie = () => {
             setTicketPriceError("(Required Field)");
             isValid = false;
         }
-        {
-            const [hours, minutes,seconds] = movieDuration.split(':');
-            if(hours>3) {
-                setMovieDurationError("(Please check the duration)")
-                isValid = false; 
-            }
-        }
         return isValid;
     }
 

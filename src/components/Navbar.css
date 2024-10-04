@@ -23,12 +23,18 @@
     padding: 10px 200px;
     background: var(--primary-color);
     top: 0px;
+    position: fixed ;
+    z-index: 1000;
     opacity: 30;
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     display: flex;
     justify-content: space-between;
     align-items: center;
     opacity:1 ;
+}
+
+body{
+    padding-top: 30px;
 }
 
 .logo {

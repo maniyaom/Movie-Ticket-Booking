@@ -33,6 +33,10 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isCreatePasswordVisible, setIsCreatePasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+
+  const [otp, setOtp] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [verificationId, setVerificationId] = useState(null);
   
   
   useEffect(() => {
@@ -136,7 +140,8 @@ const SignUp = () => {
             firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
-                navigate("/Login");
+                // navigate("/Login");
+                sendOtp(phone);
                 setName("")
                 setEmail("")
                 setPhone("")
@@ -152,7 +157,8 @@ const SignUp = () => {
             firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
-                navigate('/Login');
+                // navigate('/Login');
+                sendOtp(phone);
                 setName("")
                 setEmail("")
                 setPhone("")
@@ -179,7 +185,37 @@ const SignUp = () => {
         })
     };
   }
+  const sendOtp = (phoneNumber) => {
+    const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible',
+      callback: (response) => {
+        console.log("reCAPTCHA solved");
+      },
+    });
+    firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+      .then((confirmationResult) => {
+        setVerificationId(confirmationResult.verificationId);
+        setShowOtpModal(true); // Open OTP modal
+      })
+      .catch((error) => {
+        console.error("Error sending OTP:", error);
+        setError("Error sending OTP. Please try again.");
+      });
+  };
 
+  const handleVerifyOtp = () => {
+    const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, otp);
+    firebase.auth().signInWithCredential(credential)
+      .then(() => {
+        console.log("OTP verified successfully");
+        setShowOtpModal(false); // Close OTP modal
+        navigate('/Login'); // Navigate to the next page
+      })
+      .catch((error) => {
+        console.error("Error verifying OTP:", error);
+        setError("Invalid OTP. Please try again.");
+      });
+  };
   return (  
     <>
       <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
@@ -336,6 +372,24 @@ const SignUp = () => {
             By clicking the button, you are agreeing to our Terms and Services
           </div>
           <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Already have an account <Link to="/Login" style={{color: '#f84464'}}>Login</Link></span>
+          {showOtpModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Verify OTP</h3>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+            />
+            <button onClick={handleVerifyOtp}>Verify OTP</button>
+            <button onClick={() => setShowOtpModal(false)}>Cancel</button>
+            {error && <p>{error}</p>}
+          </div>
+        </div>
+      )}
+
+      <div id="recaptcha-container"></div>
         </div>
       </div>
     </>

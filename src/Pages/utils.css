@@ -21,14 +21,24 @@ input[type=radio] {
     accent-color: var(--error-color);
 }
 
-.input-field{
-    padding: 14px;
+/* border: 1px solid var(--input-field-border-color); */
+/* .input-field{
     padding-left: 12px;
-    border: 1px solid var(--input-field-border-color);
+    padding: 14px;
     border-radius: 7px;
     margin-bottom: 20px;
     width: 100%;
-}
+    } */
+    .input-field {
+        width: 100%; /* Ensure it takes full width of the parent */
+        max-width: 100%; /* Prevent it from exceeding the parent's width */
+        padding: 14px; /* Optional padding */
+        box-sizing: border-box; /* Ensures padding and border are included in the width */
+        resize: vertical; /* Allow resizing only vertically */
+        border: 1px solid #ccc; /* Default border */
+        margin-bottom: 20px;
+        border-radius: 7px;
+  }
 
 .input-field:focus{
     outline: 1px solid var(--primary-color);
@@ -98,6 +108,7 @@ input[type=radio] {
 
 .hide-div {
     display: none;
+    width: 100%;
 }
 
 .show-loader{
@@ -160,8 +171,8 @@ input[type="file"]::file-selector-button {
 .justify-between {
     justify-content: space-between;
 }
-
 .signup {
     padding: 5% 0 0 35%;
     height: 1000px;
 }
+

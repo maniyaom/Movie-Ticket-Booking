@@ -39,7 +39,12 @@ export default function Navbar() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState(""); 
+
+    const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
+    const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown
+
     const [userId, setUserId] = useState(null);
+
     useEffect(() => {
         const getUserData = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -50,6 +55,7 @@ export default function Navbar() {
                     setName(userDetails.name);
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
+                    setIsAdmin(userDetails.isAdmin);
                     
                     if(userDetails.isAdmin === false)
                         setIsAdmin(false);
@@ -67,6 +73,19 @@ export default function Navbar() {
         });
     
         return () => getUserData();
+    }, [auth]);
+
+    const handleLogout = () => {
+        signOut(auth);
+    }
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    }
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    }
     }, [auth,firebase]);
 
     const handleLogout = async () => {
@@ -81,13 +100,23 @@ export default function Navbar() {
   }
     return (
         <>
-            <link rel="stylesheet" href="Navbar.css" />
-            <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
-            <script src="NavbarScript.js" defer></script>
-
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
+                <div className={`nav-menu  ${menuOpen ? 'active' : ''}`}>
+                    {/* Hamburger Icon */}
+                    <div className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul className="nav-links">
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/AboutUs">About Us</Link></li>
+                        <li><Link to="/ContactUs">Contact Us</Link></li>
+                        <li className={isLoggedIn ? 'hide-div' : ''}><Link to="/Login">Login</Link></li>
+                        <li className={isAdmin ? '' : 'hide-div'}><Link to="/AddMovie">List Your Show</Link></li>
+                    </ul>
                 {/* <ul className="nav-links">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/AboutUs">About Us</Link></li>
@@ -154,8 +183,10 @@ export default function Navbar() {
       )}
     </ul>
 
-                <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
-                    <details className="dropdown right" ref={detailsRef}>
+                    
+
+                    <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
+                                            <details className="dropdown right">
                         <summary className="avatar">
                             <img src="https://gravatar.com/avatar/00000000000000000000000000000000?d=mp" alt="Avatar" />
                         </summary>
@@ -168,26 +199,30 @@ export default function Navbar() {
                             </li>
 
                             <li>
-                                <Link to={'/Account'} onClick={handleDropdownClose}>
+                                <Link to={'/Account'}>
                                     <span className="material-symbols-outlined">account_circle</span> Account
                                 </Link>
                             </li>
                             <li>
-                                <Link to={'/ContactUs'} onClick={handleDropdownClose}>
+                                <Link to={'/ContactUs'}>
                                     <span className="material-symbols-outlined">help</span> Help
                                 </Link>
                             </li>
                             
                             <li className="divider"></li>
                             <li>
+                                <a onClick={handleLogout}>
                                 <button className="logout-button" onClick={() => { handleLogout(); handleDropdownClose(); }}>
                                     <span className="material-symbols-outlined">logout</span> Logout
                                 </button>
                             </li>
                         </ul>
                     </details>
+                    </div>
                 </div>
+
+                
             </nav>
         </>
-    )
+    );
 }

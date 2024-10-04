@@ -21,6 +21,88 @@ body{
     width: 30vw;
     padding: 30px;
     border-radius: 9px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+    .signup-card {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .signup-card {
+        width: 60vw;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-card {
+        width: 90vw;
+        padding: 15px;
+    }
+    
+    .signup-heading {
+        font-size: 25px;
+    }
+    
+    .signup-subheading {
+        font-size: 12px;
+    }
+    
+    input, button {
+        font-size: 14px;
+    }
+}
+
+.signup-heading{
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.signup-subheading{
+    opacity: 0.4;
+    font-size: 13px;
+}
+
+/* For better responsiveness on small devices */
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 100%;
+    /* padding: 12px; */
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.btn:hover {
+    background-color: #e63950;
+}
+
+.error-inline {
+    color: red;
+    font-size: 12px;
+}
+
+.show-loader img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 10px auto;
+}
     /* box-shadow: -2px -1px 35px 1px var(--primary-color); */
     border: 2px solid rgba(248, 68, 100, 0.5);
     margin-bottom: 40px;

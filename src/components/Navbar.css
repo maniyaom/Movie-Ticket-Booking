@@ -60,10 +60,6 @@
 
 .nav-links {
     width: fit-content;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    transition: transform 0.3s ease-in-out;
 }
 .nav-links.active {
     transform: translateX(0); /* Slide-in from the right */
@@ -369,4 +365,23 @@ a{
         opacity: 1;
         transform: translateY(0);
     }
+}
+.logout-button {
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    font-size: 16px; 
+    transition: color 0.3s; 
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.logout-button:hover {
+    color: var(--primary);
+}
+
+.logout-button span {
+    margin-right: 2px; 
 }

@@ -100,8 +100,9 @@ const AddMovie = () => {
         setIsLoading(true);
         if (validateForm() == true){
             try {
-                const [hours, minutes] = movieDuration.split(':');
-                const formattedMovieDuration = `${hours}h ${minutes}m`;
+                const [hours, minutes,seconds] = movieDuration.split(':');
+                const formattedMovieDuration = `${hours}h ${minutes}m ${seconds}s`;
+                console.log(formattedMovieDuration);
                 const releaseDate = convertDate(movieReleaseDate);
                 console.log(releaseDate)
     
@@ -169,6 +170,13 @@ const AddMovie = () => {
             setTicketPriceError("(Required Field)");
             isValid = false;
         }
+        {
+            const [hours, minutes,seconds] = movieDuration.split(':');
+            if(hours>3) {
+                setMovieDurationError("(Please check the duration)")
+                isValid = false; 
+            }
+        }
         return isValid;
     }
 
@@ -224,11 +232,12 @@ const AddMovie = () => {
             />
 
             <label className="label-text">
-                Movie Duration (HH:MM) <span className="error-inline mxl-10">{movieDurationError}</span>
+                Movie Duration (HH:MM:SS)<span className="error-inline mxl-10">{movieDurationError}</span>
             </label>
             <input
                 type="time"
                 value={movieDuration}
+                step = '2'
                 onChange={(e) => setMovieDuration(e.target.value)}
                 className="input-field"
             />

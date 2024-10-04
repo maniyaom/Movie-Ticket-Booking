@@ -37,6 +37,28 @@ body{
     opacity: 0.4;
     font-size: 13px;
 }
+.signup-card.add-movie{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+}
+
+.left-side-form, .right-side-form {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .signup-card.add-movie {
+      flex-direction: row;
+    }
+    .left-side-form {
+    padding-right: 20px;
+    }
+    .right-side-form {
+    padding-left: 20px;
+    }
+}
 
    /*added google button */
    /* Adjusted Google button for reduced height and width */

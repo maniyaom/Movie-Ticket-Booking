@@ -1,73 +1,71 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-:root {
-  --primary-color: #f84464;
-  /* --primary-color : #2496ff */
+:root{
+    --primary-color : #f84464
+    /* --primary-color : #2496ff */
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
-body {
-  background-color: white;
+body{
+    background-color: white;
 }
 
-.signup-card {
-  background-color: #ffffff;
-  width: 30vw;
-  padding: 30px;
-  border-radius: 9px;
-  /* box-shadow: -2px -1px 35px 1px var(--primary-color); */
-  border: 2px solid rgba(248, 68, 100, 0.5);
-  margin-bottom: 40px;
+.signup-card{
+    background-color: #ffffff;
+    width: 30vw;
+    padding: 30px;
+    border-radius: 9px;
+    /* box-shadow: -2px -1px 35px 1px var(--primary-color); */
+    border: 2px solid rgba(248, 68, 100, 0.5);
+    margin-bottom: 40px;
+    margin-top: 50px;
 }
 
-.signup-heading {
-  font-size: 30px;
-  font-weight: 600;
-  color: var(--primary-color);
+    /*added google button */
+   /* Adjusted Google button for reduced height and width */
+.google-btn {
+    display: flex; /* Aligns the icon and text horizontally */
+    justify-content:space-around;
+    align-items: center; /* Centers the content vertically */
+    background-color: white; /* White background for the button */
+    color: rgb(23, 23, 23); /* Dark gray text */
+    border-radius: 20px; /* Smaller border radius for rounded but more compact edges */
+    padding: 5px 5px; /* Reduced padding to shrink the height and width */
+    text-decoration: none; /* Removes underline from link */
+    font-weight: 600; /* Bold text */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+    max-width: 250px; /* Further reduced maximum width */
+    font-size: 15px; /* Slightly smaller font size */
+    margin: 0 auto;
+    margin-bottom: 15px;
+    border: none; 
+    outline: none;
+}
+.google-btn img {
+    width: 30px; /* Reduced width of the Google icon */
+    height: 30px; /* Reduced height of the Google icon */
+    margin-right: 0px; /* Space between the image and the text */
+    background-color: white;
+}
+/* Hover effect */
+.google-btn:hover {
+    transform: scale(1.05); /* Slight enlargement on hover */
 }
 
-.signup-subheading {
-  opacity: 0.4;
-  font-size: 13px;
-}
-.signup-card.add-movie {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 100%;
+.signup-heading{
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
-.left-side-form,
-.right-side-form {
-  width: 100%;
-}
-
-@media (min-width: 768px) {
-  .signup-card.add-movie {
-    flex-direction: row;
-  }
-  .left-side-form {
-    padding-right: 20px;
-  }
-  .right-side-form {
-    padding-left: 20px;
-  }
-}
-
-@media only screen and (min-width: 250px) and (max-width: 600px) {
-  .signup-card {
-    width: 90%;
-  }
-}
-
-@media only screen and (min-width: 600px) and (max-width: 900px) {
-  .signup-card {
-    width: 70%;
-  }
+.signup-subheading{
+    opacity: 0.4;
+    font-size: 13px;
 }

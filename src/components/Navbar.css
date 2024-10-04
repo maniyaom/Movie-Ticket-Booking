@@ -29,6 +29,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0px;
+    opacity:1 ;
 }
 
 .logo {
@@ -252,4 +255,24 @@ a{
 .hide-div {
     display: none;
     visibility: hidden;
+}
+
+.logout-button {
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    font-size: 16px; 
+    transition: color 0.3s; 
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.logout-button:hover {
+    color: var(--primary);
+}
+
+.logout-button span {
+    margin-right: 2px; 
 }

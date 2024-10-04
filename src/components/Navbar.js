@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Link, useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { useFirebase } from '../context/firebase';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -7,6 +7,11 @@ import './Navbar.css';
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
+    const navigate = useNavigate();
+    const detailsRef = useRef(null); 
+    const handleNotificationClick = () => {
+      navigate('/notifications');
+  };
     const detailsRef = useRef(null); // Create a reference to the <details> element
 
     // Function to close the dropdown when an item is clicked
@@ -15,11 +20,11 @@ export default function Navbar() {
         detailsRef.current.removeAttribute('open'); // Close the <details> element
       }
     };
-    const handleClickOutside = (event) => {
+    const handleClickOutside = useCallback((event) => {
       if (detailsRef.current && !detailsRef.current.contains(event.target)) {
         handleDropdownClose();
       }
-    };
+    },[]);
     
     useEffect(() => {
       // Add event listener to detect clicks outside the dropdown
@@ -28,7 +33,7 @@ export default function Navbar() {
         // Cleanup event listener when component unmounts
         document.removeEventListener('click', handleClickOutside);
       };
-    }, []);
+    }, [handleClickOutside]);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -46,7 +51,7 @@ export default function Navbar() {
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
                     
-                    if(userDetails.isAdmin == false)
+                    if(userDetails.isAdmin === false)
                         setIsAdmin(false);
                     else
                         setIsAdmin(true);
@@ -56,17 +61,24 @@ export default function Navbar() {
             }
             else{
                 setIsLoggedIn(false);
+                setIsAdmin(false); // Reset admin state when not logged in
                 setUserId(null);
             }
         });
     
         return () => getUserData();
-    }, [auth]);
+    }, [auth,firebase]);
 
-    const handleLogout = () => {
-        signOut(auth)
-    }
-
+    const handleLogout = async () => {
+      try {
+          await signOut(auth); // Call signOut
+          setIsLoggedIn(false); // Update local state immediately
+          setIsAdmin(false); // Reset admin state
+          navigate('/Login'); // Redirect to login page
+      } catch (error) {
+          console.error("Logout failed:", error);
+      }
+  }
     return (
         <>
             <link rel="stylesheet" href="Navbar.css" />
@@ -86,7 +98,6 @@ export default function Navbar() {
              <ul className="nav-links">
       <li>
         <NavLink
-          exact
           to="/"
           className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
         >
@@ -169,9 +180,9 @@ export default function Navbar() {
                             
                             <li className="divider"></li>
                             <li>
-                                <a onClick={() => { handleLogout(); handleDropdownClose(); }}>
+                                <button className="logout-button" onClick={() => { handleLogout(); handleDropdownClose(); }}>
                                     <span className="material-symbols-outlined">logout</span> Logout
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </details>

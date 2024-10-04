@@ -108,8 +108,8 @@ const BookTicket = () => {
         const subtotal = seatList.length * ticketPrice;
         try{
             await firebase.makePayment(subtotal, seats, seatList, movieDetails, userData);
-            alert('Your tickets are booked successfully\nYou will be redirected to Home page');
-            navigate('/Home');
+            alert('Your tickets are booked successfully\nYou will be redirected to Your Tickets page');
+            navigate(`/MyTickets/${userData.uid}`);
         }
         catch(error){
             alert("Transaction failed !!", error.message);

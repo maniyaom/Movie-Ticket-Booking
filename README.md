@@ -1,3 +1,83 @@
+# Ticketify - Movie Ticket Booking App
+
+Ticketify is a user-friendly movie ticket booking application developed using *React* for the frontend and *Firebase* for backend services. This project allows users to browse movies, check available showtimes, and book tickets seamlessly. Firebase is used for authentication, data storage, and hosting.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Code of Conduct](#code-of-conduct)
+- [Contributing](#contributing)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Getting Started with Create React App](#getting-started-with-create-react-app)
+- [Learn More](#learn-more)
+
+## Introduction
+
+Ticketify aims to simplify the movie booking process by providing a responsive, easy-to-use platform. With Firebase, it ensures secure user authentication and real-time updates for bookings and movie availability.
+
+## Features
+
+- Browse and search for movies
+- View available showtimes
+- User authentication using Firebase
+- Book tickets and view booking history
+- Responsive UI for mobile and desktop
+- Real-time updates for movie availability and bookings
+
+## Installation
+
+To get started with Ticketify, follow these steps:
+
+1. Clone the repository:
+
+    ```
+    git clone https://github.com/maniyaom/Movie-Ticket-Booking.git
+    ```
+    
+
+2. Navigate to the project directory:
+
+    ```
+    cd Movie-Ticket-Booking
+    ```
+    
+
+3. Install the dependencies:
+
+    ```
+    npm install
+    ```
+    
+4. Run the application:
+
+    ```
+    npm start
+    ```
+    
+## Usage
+
+1. Register or sign in using Firebase Authentication.
+2. Browse available movies and select showtimes.
+3. Book tickets for a movie and view your booking history.
+
+## Code of Conduct
+
+Please refer to our [Code of Conduct](https://github.com/maniyaom/Movie-Ticket-Booking/blob/master/CODE_OF_CONDUCT.md) for guidelines on how to interact with the project community.
+
+## Contributing
+
+We welcome contributions! To get started, please refer to the following:
+
+- [Contribution Guidelines](https://github.com/maniyaom/Movie-Ticket-Booking/blob/master/CODE_OF_CONDUCT.md)
+- [Contribution Guide](https://github.com/maniyaom/Movie-Ticket-Booking/blob/master/CODE_OF_CONDUCT.md)
+
+## Contribution Guidelines
+
+Before contributing, please make sure to read our [Contribution Guidelines](https://github.com/maniyaom/Movie-Ticket-Booking/blob/master/CODE_OF_CONDUCT.md).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

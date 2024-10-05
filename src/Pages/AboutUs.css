@@ -42,6 +42,10 @@
   margin-top: 14px;
 }
 
+.social-icons {
+  display: flex;
+}
+
 .social-icons > a > img {
   width: 25px;
   height: 25px;

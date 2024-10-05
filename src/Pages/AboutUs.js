@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './AboutUs.css'
 import facebook_icon from '../assets/icons/facebook2.png'
 import instagram_icon from '../assets/icons/instagram2.png'
@@ -88,10 +89,10 @@ const AboutUs = () => {
             <p>Thank you for choosing MovieTicketsOnline. We look forward to making your movie-watching experience unforgettable.</p>
 
             <div className="social-icons">
-              <a href="https://www.facebook.com/"><img src={facebook_icon} alt="Facebook" /></a>
-              <a href="https://www.instagram.com/"><img src={instagram_icon} alt="Instagram" /></a>
-              <a href="https://twitter.com/"><img src={twitter_icon} alt="Twitter" /></a>
-              <a href="https://linkedin.com/"><img src={linkedin_icon} alt="LinkedIn" /></a>
+              <Link to="https://www.facebook.com/"><img src={facebook_icon} alt="Facebook" /></Link>
+              <Link to="https://www.instagram.com/"><img src={instagram_icon} alt="Instagram" /></Link>
+              <Link to="https://twitter.com/"><img src={twitter_icon} alt="Twitter" /></Link>
+              <Link to="https://linkedin.com/"><img src={linkedin_icon} alt="LinkedIn" /></Link>
             </div>
           </div>
         </div>

@@ -71,3 +71,7 @@ body {
     width: 70%;
   }
 }
+.header {
+  height: 5px;
+  width: 50px;
+}

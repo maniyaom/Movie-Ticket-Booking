@@ -101,7 +101,7 @@ const AddMovie = () => {
         if (validateForm() == true){
             try {
                 const [hours, minutes,seconds] = movieDuration.split(':');
-                const formattedMovieDuration = `${hours}h ${minutes}m ${seconds}`;
+                const formattedMovieDuration = `${hours}h ${minutes}m ${seconds}s`;
                 const releaseDate = convertDate(movieReleaseDate);
                 console.log(releaseDate)
     

@@ -50,7 +50,7 @@ const Home = () => {
 
   return (
     <>
-      <Search movies={allMovies} posterPaths={posterPaths} />
+      <Search movies={allMovies} />
       <div className="poster-container">
         {allMovies.map((movie, index) => {
           const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;

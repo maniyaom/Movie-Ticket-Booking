@@ -1,0 +1,42 @@
+name: Feature Request
+description: Suggest an idea for this project
+title: "[Feat]: "
+labels: ["enhancement"]
+assignees:
+  - octocat
+body:
+  - type: input
+    id: feature-description
+    attributes:
+      label: Feature Description
+      description: Summarize the Feature in a single sentence
+      placeholder:
+    validations:
+      required: true
+  - type: textarea
+    id: describe-feature
+    attributes:
+      label: Provide a detailed description of the feature
+      description: A clear and concise description of the desired feature
+      placeholder: Tell us about the feature
+    validations:
+      required: true
+  - type: textarea
+    id: images-videos
+    attributes:
+      label: Put here any screenshots or videos (optional)
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: By submitting this issue, you agree to 
+      options:
+        - label: I agree to follow this project's Code of Conduct
+        - label: I’ve read all the issues in the issue section, and this feature has not been proposed yet.
+  - type: checkboxes
+    id: other-information
+    attributes:
+      label: Other Information 
+      options:
+        - label: I'm a GSSoC '24 Extended contributor
+        - label: I'm a Hacktoberfest '24 contributor
+        - label: I am willing to work on this feature (optional)

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import './AboutUs.css';
-import facebook_icon from '../assets/icons/facebook.png';
-import instagram_icon from '../assets/icons/instagram.png';
-import linkedin_icon from '../assets/icons/linkedin.png';
-import twitter_icon from '../assets/icons/twitter.png';
-import join_our_community from '../assets/images/join-our-community.jpg';
-import our_mission from '../assets/images/our-mission.jpg';
-import who_we_are from '../assets/images/who-we-are.jpg';
-import Footer from '../components/Footer';
+import React, { useEffect } from 'react'
+import './AboutUs.css'
+import facebook_icon from '../assets/icons/facebook2.png'
+import instagram_icon from '../assets/icons/instagram2.png'
+import linkedin_icon from '../assets/icons/linkedin2.png'
+import twitter_icon from '../assets/icons/twitter.png'
+import join_our_community from '../assets/images/join-our-community.jpg'
+import our_mission from '../assets/images/our-mission.jpg'
+import who_we_are from '../assets/images/who-we-are.jpg'
+import Footer from '../components/Footer'
 
 const AboutUs = () => {
   const [openFaq, setOpenFaq] = useState(null); // State to track which FAQ is open

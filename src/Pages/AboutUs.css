@@ -71,10 +71,6 @@
   }
 }
 
-
-
-/* Existing styles remain unchanged */
-
 /* Testimonials Section */
 .testimonials {
   display: flex;
@@ -187,8 +183,8 @@
   transition: all 0.3s ease;
 }
 .testimonial-item:hover {
-  transform: scale(1.01); /* Reduced scale from 1.03 to 1.01 */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Reduced shadow for a more subtle effect */
+  transform: scale(1.01); 
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 .testimonial-content {

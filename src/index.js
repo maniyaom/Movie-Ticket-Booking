@@ -15,6 +15,7 @@ import './components/Navbar.css'
 import Account from './Pages/Account';
 import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
+import HeroSection from './Pages/HeroSection';
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Home" element={<Home />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/herosection" element={<HeroSection />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/ContactUs/:name" element={<ContactUs />} />
         <Route path="/Login" element={<Login />} />

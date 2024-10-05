@@ -50,10 +50,10 @@ export default function Navbar() {
             <script src="NavbarScript.js" defer></script>
 
             <nav className="nav">
-                <a href="/" className="logo">Ticketify</a>
+                <Link to={isLoggedIn ? '/' :'/herosection'} className="logo">Ticketify</Link>
 
                 <ul className="nav-links">
-                    <li><Link to="/">Home</Link></li>
+                    <li><Link to={isLoggedIn ? '/':'/herosection'}>Home</Link></li>
                     <li><Link to="/AboutUs">About Us</Link></li>
                     <li><Link to="/ContactUs">Contact Us</Link></li>
                     <li className={isLoggedIn ? 'hide-div' : ''}><Link to="/Login">Login</Link></li>

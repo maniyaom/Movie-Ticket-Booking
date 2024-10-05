@@ -70,3 +70,255 @@
     width: 100%;
   }
 }
+
+
+
+/* Existing styles remain unchanged */
+
+/* Testimonials Section */
+.testimonials {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.testimonial-item {
+  font-style: italic;
+  font-size: 18px;
+  padding: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.testimonial-item span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* FAQ Section */
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-item h4 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.faq-item p {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+}
+
+/* General styles */
+.card-image-div {
+  width: 80vw;
+  margin: 30px 10vw;
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 15px;
+}
+
+.card-image-div > div {
+  width: 50%;
+}
+
+.card-image-div > div > p {
+  padding: 0px 12px 8px 10px;
+  margin-left: 5px;
+}
+
+.title {
+  font-size: 30px;
+  margin: 5px 0px 10px 5px;
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+.card-image-div > div > img {
+  width: 38vw;
+  height: 300px;
+  border-radius: 8px;
+}
+
+.card-without-image {
+  width: 80vw;
+  margin: 40px 10vw;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px 40px;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  font-size: 20px;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+/* Testimonials Section */
+.testimonials-section {
+  margin: 50px 10vw;
+  padding: 30px;
+  background-color: #f4f4f9;
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.testimonials {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.testimonial-item {
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s ease;
+}
+.testimonial-item:hover {
+  transform: scale(1.01); /* Reduced scale from 1.03 to 1.01 */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Reduced shadow for a more subtle effect */
+}
+
+.testimonial-content {
+  position: relative;
+}
+
+.testimonial-feedback {
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  border-left: 4px solid #f84464;
+}
+
+.testimonial-author {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: right;
+  color: #555;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.author-icon {
+  font-size: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .testimonials {
+    flex-direction: column;
+  }
+
+  .testimonial-feedback {
+    font-size: 16px;
+  }
+
+  .testimonial-author {
+    font-size: 14px;
+  }
+}
+
+
+/* FAQ Section */
+.faq-section {
+  margin: 50px 10vw;
+  padding: 30px;
+  background-color: #f4f4f9;
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-item {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.faq-item.open {
+  background-color: #f9f9f9;
+}
+
+.faq-item:hover {
+  background-color: #f9f9f9;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.arrow {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  animation: slideDown 0.3s ease forwards;
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .faq-question h4 {
+    font-size: 16px;
+  }
+
+  .faq-answer {
+    font-size: 14px;
+  }
+}

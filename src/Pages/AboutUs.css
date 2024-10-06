@@ -43,10 +43,18 @@
   font-weight: 600;
 }
 
+.social-icons {
+  display: flex;
+}
+
 .social-icons > a > img {
-  width: 45px;
-  height: 45px;
+  width: 25px;
+  height: 25px;
+  transition: all .38s ease-in-out;
   margin: 15px 0px 12px 8px;
+}
+.social-icons > a > img:hover{
+  transform: scale(1.2);
 }
 
 /* Responsive Design */

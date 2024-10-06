@@ -1,0 +1,58 @@
+name: Bug Report
+description: Create a report to help us improve
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: input
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Summarize the bug in a single sentence
+      placeholder:
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Provide a detailed description of the bug
+      description: Also tell us the steps to reproduce the bug
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Expected Behavior
+      placeholder: Describe what you expected to happen
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Microsoft Edge
+      default: 0
+  - type: textarea
+    id: images-videos
+    attributes:
+      label: Put here any screenshots or videos (optional)
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: By submitting this issue, you agree to 
+      options:
+        - label: I agree to follow this project's Code of Conduct
+        - label: I’ve read all the issues in the issue section, and this has not been reported yet.
+  - type: checkboxes
+    id: other-information
+    attributes:
+      label: Other Information 
+      options:
+        - label: I'm a GSSoC '24 Extended contributor
+        - label: I'm a Hacktoberfest '24 contributor
+        - label: I am willing to work on this issue (optional)

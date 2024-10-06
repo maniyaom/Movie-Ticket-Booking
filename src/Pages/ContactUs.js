@@ -14,7 +14,7 @@ const ContactUs = () => {
         <h1>Contact Us</h1>
         <p>Thank you for choosing Ticketify! We're here to assist you with any
           questions or concerns you may have. Here's how you can get in touch
-          with us</p>
+          with us.</p>
       </div>
       <div className="infos">
         <div className="customer">
@@ -43,7 +43,7 @@ const ContactUs = () => {
               India</p>
         <p>Feel free to reach out to us through any of the beside channels. We
               strive to respond to all inquiries within 24 hours during business
-              days. Thank you for choosing Ticketify!</p>
+              days.  Thank you for choosing Ticketify!</p>
       </div>
       <Footer/>
     </div>

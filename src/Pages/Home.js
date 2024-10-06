@@ -4,6 +4,7 @@ import './Home.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import Footer from '../components/Footer';
+import Search from '../components/Search';
 
 const Home = () => {
   const firebase = useFirebase();
@@ -49,6 +50,7 @@ const Home = () => {
 
   return (
     <>
+      <Search movies={allMovies} />
       <div className="poster-container">
         {allMovies.map((movie, index) => {
           const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;

@@ -42,7 +42,6 @@ const AboutUs = () => {
   const toggleFAQ = (index) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
-const AboutUs = () => {
 
   useEffect(() => {
     document.title = 'About Us';

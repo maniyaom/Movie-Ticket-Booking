@@ -40,7 +40,7 @@ const ContactUs = () => {
         </div>
         <h3>Address</h3>
         <p>Ticketify private limited, 123 Movie Ave, Surat, Gujarat, 394107,
-              India.</p>
+              India</p>
         <p>Feel free to reach out to us through any of the beside channels. We
               strive to respond to all inquiries within 24 hours during business
               days. Thank you for choosing Ticketify!</p>

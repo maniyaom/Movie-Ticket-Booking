@@ -17,7 +17,6 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
           if [[ "${{ github.event_name }}" == "issues" ]]; then
-            gh issue edit $ISSUE_URL --add-label "triage"
             gh issue comment $ISSUE_URL --body "Thank you for raising this issue! 🎉🙌
             
             We truly appreciate your contribution to this project and will review the details shortly. 🛠️✨

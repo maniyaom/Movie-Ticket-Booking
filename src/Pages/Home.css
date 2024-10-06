@@ -1,84 +1,179 @@
-body{
-    background-color: white;
+/* Google Fonts - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --primary-color: #f84464;
+    --text-color: #333;
+    --hover-bg: #ff99cc; /* Light pink for hover background */
 }
+
+body {
+    background-color: white;
+    font-family: 'Poppins', sans-serif; /* Set font for body */
+}
+
+/* Sort Container */
+.sort-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    margin: 20px 0; /* Spacing around the container */
+    padding: 20px; /* Padding around the container */
+    border-radius: 8px; /* Rounded corners for the container */
+    background-color: rgba(248, 68, 100, 0.1); /* Light background color */
+}
+
+.sort-label {
+    font-size: 1.5rem; /* Adjust font size as needed */
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 10px; /* Space between label and select */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.sort-label:hover {
+    color: var(--primary-color); /* Change color on hover */
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.sort-select {
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #ffffff; /* Background for the select */
+    color: var(--text-color); /* Text color */
+    min-width: 150px; /* Set a minimum width */
+    transition: background 0.3s ease;
+}
+
+.sort-select:hover {
+    background: #f0f0f0; /* Background on hover */
+}
+
+.dropdown-options {
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 0 10px #00000030; /* Shadow for options */
+    position: absolute;
+    top: 100%;
+    border-radius: 10px;
+    background-color: #fff; /* Background for options */
+    z-index: 2;
+}
+
+.dropdown-options li {
+    padding: 10px 15px;
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.dropdown-options li:hover {
+    background-color: var(--hover-bg); /* Hover color */
+    color: var(--primary-color); /* Text color on hover */
+}
+
+/* Posters */
 .poster {
     width: 222px;
-    margin-right: 40px;
-    margin-bottom: 30px;
+    margin: 20px; /* Spacing around posters */
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.poster:hover {
+    transform: scale(1.05); /* Zoom in effect on hover */
 }
 
 img {
-    width: 222px;
-    height: 340px;
+    width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
     border-radius: 8px;
+    transition: opacity 0.3s ease; /* Fade effect for images */
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
 
-.myt-10 {
-    margin-top: 10px;
-}
-
-.myt-5 {
-    margin-top: 3px;
-}
-
 .poster-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center; /* Center posters */
     flex-wrap: wrap;
     margin-top: 40px;
-    width: 90vw;
-    margin-left: 5vw;
-    margin-right: 5vw;
+    width: 90%; /* Use percentage for responsive width */
+    max-width: 1200px; /* Max width to maintain layout */
 }
 
+/* Placeholder and Shimmer */
 .placeholder {
     width: 222px;
     height: 340px;
-  }
-  .faux-image-wrapper {
+    position: relative; /* Positioning for shimmer effect */
+}
+
+.faux-image-wrapper {
     margin-bottom: 10px;
     height: inherit;
-    /* position: relative; */
-    padding-bottom: 100%;
-  }
-  .faux-image {
+    padding-bottom: 100%; /* Maintain aspect ratio */
+}
+
+.faux-image {
     background: #dddddd;
     border-radius: 4px;
     height: 100%;
-    /* position: absolute; */
     width: 100%;
-  }
+}
 
-  .shimmer {
+.shimmer {
     overflow: hidden;
-    /* position: relative; */
-  }
+}
 
-  .shimmer::before {
+.shimmer::before {
     content: "";
     position: absolute;
     background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0) 100%
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
     );
     height: 100%;
     width: 100%;
     z-index: 1;
     animation: shimmer 1s infinite;
-  }
+}
 
-  @keyframes shimmer {
+@keyframes shimmer {
     0% {
-      transform: translateX(-100%);
+        transform: translateX(-100%);
     }
     100% {
-      transform: translateX(100%);
+        transform: translateX(100%);
     }
-  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sort-container {
+        margin: 10px 0; /* Reduce spacing for smaller screens */
+    }
+
+    .sort-label {
+        font-size: 1.2rem; /* Adjust font size */
+    }
+
+    .sort-select {
+        min-width: 120px; /* Adjust min-width */
+    }
+
+    .poster {
+        width: 150px; /* Smaller poster size for mobile */
+        margin: 10px; /* Adjust margin */
+    }
+}

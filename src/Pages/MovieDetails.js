@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useFirebase } from "../context/firebase";
-import { useParams, Link } from "react-router-dom";
 import "./MovieDetails.css";
 import star from "../assets/icons/star.png";
 import closeIcon from "../assets/icons/close-icon.png";
 import Footer from '../components/Footer';
 
 const MovieDetails = () => {
-  const movieId = useParams();
-
+  const { movieId } = useParams(); // Correctly destructure movieId
   const firebase = useFirebase();
   const auth = getAuth();
   const navigate = useNavigate();
 
   const [rating, setRating] = useState(3);
-  const [averageRating, setAverageRating] = useState(0);
+  const [averageRating, setAverageRating] = useState("0.0/5.0 (0 Votes)");
   const [showRatingPopup, setShowRatingPopup] = useState(false);
 
   const [userDetails, setUserDetails] = useState(null);
@@ -24,46 +22,51 @@ const MovieDetails = () => {
   const [moviePosterUrl, setMoviePosterUrl] = useState("");
 
   const submitRating = async () => {
-    await firebase.updateData(
-      `movies/${movieDetails.movieId}/rating/${userDetails.uid}`,
-      rating
-    );
+    await firebase.updateData(`movies/${movieDetails.movieId}/rating/${userDetails.uid}`, rating);
+    fetchMovieDetails(); // Refetch movie details
     setShowRatingPopup(false);
+  };
+
+  const fetchMovieDetails = async () => {
+    try {
+      const movieData = await firebase.fetchMovieDetails(movieId);
+      const posterUrl = await firebase.fetchMoviePoster(movieId);
+      setMovieDetails(movieData);
+      setMoviePosterUrl(posterUrl);
+      if (movieData.rating) {
+        let totalRating = 0;
+        Object.entries(movieData.rating).forEach(([key, value]) => {
+          totalRating += value;
+        });
+        setAverageRating((totalRating / Object.keys(movieData.rating).length).toFixed(2) + '/5.0 (' + Object.keys(movieData.rating).length + ' Votes)');
+      }
+    } catch (error) {
+      console.log("Error fetching movie details:", error);
+      setAverageRating("Error fetching rating");
+    }
   };
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const x = await firebase.fetchMovieDetails(movieId.movieId);
-        const y = await firebase.fetchMoviePoster(movieId.movieId);
-        setMovieDetails(x);
-        setMoviePosterUrl(y);
-        if (x.rating) {
-          let totalRating = 0;
-          Object.entries(x.rating).forEach(([key, value]) => {
-            totalRating += value;
-          });
-          setAverageRating((totalRating / Object.keys(x.rating).length).toFixed(2) + '/5.0 (' + Object.keys(x.rating).length + ' Votes)');
-        }
-        else {
-          setAverageRating("0.0/5.0 (0 Votes)");
-        }
+        await fetchMovieDetails(); // Fetch movie details on load
       } catch (error) {
         console.log("Error : ", error);
       }
     };
 
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userDetails = await firebase.fetchUserDetails(user.uid);
         setUserDetails(userDetails);
+        fetchMovie();
       } else {
         navigate("/Login");
       }
     });
 
-    fetchMovie();
-  }, [auth, showRatingPopup]);
+    return () => unsubscribe(); // Clean up subscription
+  }, [auth]);
 
   if (!movieDetails || !moviePosterUrl || !userDetails) {
     return <p>Loading movie details...</p>;
@@ -74,15 +77,12 @@ const MovieDetails = () => {
       <div className="main-div">
         <div className="container">
           <div className="row" style={{ width: "50rem" }}>
-            <img src={moviePosterUrl} className="poster" />
+            <img src={moviePosterUrl} alt="Movie Poster" className="poster" />
             <div className="column">
-              <h2 name="title" className="text">
-                {movieDetails.movieTitle}
-              </h2>
-
-              <div className="row rating" style={{width: '28rem'}}>
+              <h2 className="text">{movieDetails.movieTitle}</h2>
+              <div className="row rating" style={{ width: '28rem' }}>
                 <div className="flex align-center" style={{ marginLeft: '20px' }}>
-                  <img src={star} />
+                  <img src={star} alt="Star Icon" />
                   <p className="text">{averageRating}</p>
                 </div>
                 <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
@@ -93,20 +93,13 @@ const MovieDetails = () => {
                 <span>{movieDetails.movieLanguage}</span>
               </div>
               <div className="row">
-                <div name="Duration" className="text">
-                  {movieDetails.movieDuration}
-                </div>
+                <div className="text">{movieDetails.movieDuration}</div>
                 <span className="text"> • </span>
-                <div name="Genre" className="text">
-                  {movieDetails.movieGenre}
-                </div>
+                <div className="text">{movieDetails.movieGenre}</div>
                 <span className="text"> • </span>
-                <div name="Date" className="text">
-                  {movieDetails.movieReleaseDate}
-                </div>
+                <div className="text">{movieDetails.movieReleaseDate}</div>
               </div>
-
-              <Link to={'/BookTicket/' + movieId.movieId} className="book">Book Tickets</Link>
+              <Link to={`/BookTicket/${movieId}`} className="book">Book Tickets</Link>
             </div>
           </div>
         </div>
@@ -116,9 +109,9 @@ const MovieDetails = () => {
         <div style={{ color: "black", margin: '1.5rem 13.5rem' }}>
           <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
           <p>{movieDetails.aboutMovie}</p>
-          <br></br>
-          <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
-          <br></br>
+          <br />
+          <hr style={{ color: 'skyblue', opacity: 0.3 }} />
+          <br />
           <h3 style={{ marginBottom: '5px' }}>Cast</h3>
           <p>{movieDetails.movieCast}</p>
         </div>
@@ -126,60 +119,24 @@ const MovieDetails = () => {
 
       <div className={showRatingPopup ? "toggle-popup" : "hide-div"}>
         <div className="rating-container">
-          <img src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)} />
+          <img src={closeIcon} alt="Close" className="close-icon" onClick={() => setShowRatingPopup(false)} />
           <span className="rate-popup-title">Rate Movie</span>
           <div className="rating-popup">
-            <input
-              value="5"
-              name="rate"
-              id="star5"
-              type="radio"
-              checked={rating == 5}
-              onChange={() => setRating(5)}
-            />
-            <label title="text" htmlFor="star5"></label>
-            <input
-              value="4"
-              name="rate"
-              id="star4"
-              type="radio"
-              checked={rating == 4}
-              onChange={() => setRating(4)}
-            />
-            <label title="text" htmlFor="star4"></label>
-            <input
-              value="3"
-              name="rate"
-              id="star3"
-              type="radio"
-              checked={rating == 3}
-              onChange={() => setRating(3)}
-            />
-            <label title="text" htmlFor="star3"></label>
-            <input
-              value="2"
-              name="rate"
-              id="star2"
-              type="radio"
-              checked={rating == 2}
-              onChange={() => setRating(2)}
-            />
-            <label title="text" htmlFor="star2"></label>
-            <input
-              value="1"
-              name="rate"
-              id="star1"
-              type="radio"
-              checked={rating == 1}
-              onChange={() => setRating(1)}
-            />
-            <label title="text" htmlFor="star1"></label>
+            {[5, 4, 3, 2, 1].map((value) => (
+              <React.Fragment key={value}>
+                <input
+                  value={value}
+                  name="rate"
+                  id={`star${value}`}
+                  type="radio"
+                  checked={rating === value}
+                  onChange={() => setRating(value)}
+                />
+                <label htmlFor={`star${value}`}>{value}</label>
+              </React.Fragment>
+            ))}
           </div>
-          <button
-            className="btn"
-            style={{ width: "55%", margin: "30px 20%" }}
-            onClick={submitRating}
-          >
+          <button className="btn" style={{ width: "55%", margin: "30px 20%" }} onClick={submitRating}>
             Submit
           </button>
         </div>

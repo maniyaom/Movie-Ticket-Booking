@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Search.css';
 import { useNavigate } from 'react-router-dom';
-import videoPng from '../assets/images/video.png'
 
 export default function Search({ movies}) {
     const navigate = useNavigate();
@@ -37,11 +36,6 @@ export default function Search({ movies}) {
                         {filteredMovies.length ?
                             (filteredMovies.map(movie => (
                                 <div key={movie.movieId} className='suggestion-item' onClick={() => navigate(`/MovieDetails/${movie.movieId}`)}>
-                                    <img
-                                        src={videoPng}
-                                        alt={movie.movieTitle}
-                                        className='image'
-                                    />
                                     <p className='title'>{movie.movieTitle}</p>
                                 </div>
                             ))) :

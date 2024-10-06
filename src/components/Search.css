@@ -1,7 +1,7 @@
 .search-wrapper{
     margin: 2rem auto;
     position: relative;
-    width: 80vw;
+    width: 70vw;
 }
 
 .search-input{
@@ -21,19 +21,11 @@
     font-size: inherit;
 }
 
-/* .search-input button{
-    background-color: inherit;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: inherit;
-} */
-
 .search-suggestion{
     position: absolute;
     z-index: 10;
     width: 100%;
-    max-height: 25rem;
+    max-height: 20rem;
     overflow-y: auto;
     min-height: 100%;
     top: 100%;
@@ -55,12 +47,6 @@
 
 .search-suggestion .suggestion-item:hover{
     background-color: #dadada;
-}
-
-.search-suggestion .suggestion-item .image{
-    height: 4rem;
-    width: 4rem;
-    object-fit: cover;
 }
 
 .search-suggestion .suggestion-item .title{

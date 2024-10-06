@@ -43,20 +43,20 @@ a{
   .faux-image-wrapper {
     margin-bottom: 10px;
     height: inherit;
-    position: relative;
+    /* position: relative; */
     padding-bottom: 100%;
   }
   .faux-image {
     background: #dddddd;
     border-radius: 4px;
     height: 100%;
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
   }
 
   .shimmer {
     overflow: hidden;
-    position: relative;
+    /* position: relative; */
   }
 
   .shimmer::before {

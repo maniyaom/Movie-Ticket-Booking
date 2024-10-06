@@ -100,8 +100,8 @@ const AddMovie = () => {
         setIsLoading(true);
         if (validateForm() == true){
             try {
-                const [hours, minutes] = movieDuration.split(':');
-                const formattedMovieDuration = `${hours}h ${minutes}m`;
+                const [hours, minutes,seconds] = movieDuration.split(':');
+                const formattedMovieDuration = `${hours}h ${minutes}m ${seconds}s`;
                 const releaseDate = convertDate(movieReleaseDate);
                 console.log(releaseDate)
     
@@ -191,128 +191,136 @@ const AddMovie = () => {
 
     return (
         <>
-            <div className="flex justify-center align-center" style={{ marginTop: '70px' }}>
-                <div className="signup-card">
-                    <div className="signup-heading text-center myb-20">List Movie</div>
-                    <div className="signup-subheading myb-20">
-                        Please provide movie name, language, poster.
-                    </div>
-
-                    <label className="label-text">
-                        Movie Title <span className="error-inline mxl-10">{movieTitleError}</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={movieTitle}
-                        onChange={(e) => setMovieTitle(e.target.value)}
-                        className="input-field"
-                        placeholder="e.g. Sholay"
-                    />
-
-                    <label className="label-text">
-                        Movie Languages <span className="error-inline mxl-10">{movieLanguageError}</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={movieLanguage}
-                        onChange={(e) => setMovieLanguage(e.target.value)}
-                        placeholder="e.g. English"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Movie Duration (HH:MM) <span className="error-inline mxl-10">{movieDurationError}</span>
-                    </label>
-                    <input
-                        type="time"
-                        value={movieDuration}
-                        onChange={(e) => setMovieDuration(e.target.value)}
-                        placeholder="e.g. 02:30"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Movie Genre <span className="error-inline mxl-10">{movieGenreError}</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={movieGenre}
-                        onChange={(e) => setMovieGenre(e.target.value)}
-                        placeholder="e.g. Action/Horror"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Movie Release Date <span className="error-inline mxl-10">{movieReleaseDateError}</span>
-                    </label>
-                    <input
-                        type="date"
-                        value={movieReleaseDate}
-                        onChange={(e) => setMovieReleaseDate(e.target.value)}
-                        placeholder="e.g. 6-10-2023"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
-                    </label>
-                    <input
-                        type="time"
-                        value={movieTiming}
-                        onChange={(e) => setMovieTiming(e.target.value)}
-                        placeholder="e.g. 02:30"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        About Movie <span className="error-inline mxl-10">{aboutMovieError}</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={aboutMovie}
-                        onChange={(e) => setAboutMovie(e.target.value)}
-                        placeholder="e.g. Description"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Movie Cast <span className="error-inline mxl-10">{movieCastError}</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={movieCast}
-                        onChange={(e) => setMovieCast(e.target.value)}
-                        placeholder="e.g. Rajnikant, Amitabh Bachhan, etc.."
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Ticket Price (In Rs.) <span className="error-inline mxl-10">{ticketPriceError}</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={ticketPrice}
-                        onChange={(e) => setTicketPrice(e.target.value)}
-                        placeholder="e.g. 250"
-                        className="input-field"
-                    />
-
-                    <label className="label-text">
-                        Poster <span className="error-inline mxl-10">{moviePosterError}</span>
-                    </label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handlePosterChange}
-                    />
-                    <div className={isLoading ? 'show-loader' : 'hide-div'}>
-                        <img src={loader_icon} alt="Loader Icon" />
-                    </div>
-                    <span className="error">{error}</span>
-
-                    <button className="btn" onClick={handleSubmit}>Submit</button>
-                </div>
+            <div className="flex justify-center align-center" style={{ marginTop: '5px',flexDirection:'column' }}>
+            <div className="signup-heading text-center myb-10">List Your Movie</div>
+            <div className="signup-subheading myb-20">
+                Please provide movie name, language, poster.
             </div>
+    <div className="signup-card add-movie flex" style={{width:'90%'}}>
+        <div className="left-side-form"  >
+            
+            
+
+            <label className="label-text">
+                Movie Title <span className="error-inline mxl-10">{movieTitleError}</span>
+            </label>
+            <input
+                type="text"
+                value={movieTitle}
+                onChange={(e) => setMovieTitle(e.target.value)}
+                className="input-field"
+                placeholder="e.g. Sholay"
+            />
+
+            <label className="label-text">
+                Movie Languages <span className="error-inline mxl-10">{movieLanguageError}</span>
+            </label>
+            <input
+                type="text"
+                value={movieLanguage}
+                onChange={(e) => setMovieLanguage(e.target.value)}
+                placeholder="e.g. English"
+                className="input-field"
+            />
+
+            <label className="label-text">
+                Movie Duration (HH:MM:SS) <span className="error-inline mxl-10">{movieDurationError}</span>
+            </label>
+            <input
+                type="time"
+                value={movieDuration}
+                step ='2'
+                onChange={(e) => setMovieDuration(e.target.value)}
+                className="input-field"
+            />
+
+            <label className="label-text">
+                Movie Genre <span className="error-inline mxl-10">{movieGenreError}</span>
+            </label>
+            <input
+                type="text"
+                value={movieGenre}
+                onChange={(e) => setMovieGenre(e.target.value)}
+                placeholder="e.g. Action/Horror"
+                className="input-field"
+            />
+            <label className="label-text">
+                Movie Release Date <span className="error-inline mxl-10">{movieReleaseDateError}</span>
+            </label>
+            <input
+                type="date"
+                value={movieReleaseDate}
+                onChange={(e) => setMovieReleaseDate(e.target.value)}
+                className="input-field"
+            />
+        </div>
+
+        
+        <div className="right-side-form">
+            
+
+            <label className="label-text">
+                Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
+            </label>
+            <input
+                type="time"
+                value={movieTiming}
+                onChange={(e) => setMovieTiming(e.target.value)}
+                className="input-field"
+            />
+
+            <label className="label-text">
+                About Movie <span className="error-inline mxl-10">{aboutMovieError}</span>
+            </label>
+            <input
+                type="text"
+                value={aboutMovie}
+                onChange={(e) => setAboutMovie(e.target.value)}
+                placeholder="e.g. Description"
+                className="input-field"
+            />
+
+            <label className="label-text">
+                Movie Cast <span className="error-inline mxl-10">{movieCastError}</span>
+            </label>
+            <input
+                type="text"
+                value={movieCast}
+                onChange={(e) => setMovieCast(e.target.value)}
+                placeholder="e.g. Rajnikant, Amitabh Bachhan, etc."
+                className="input-field"
+            />
+
+            <label className="label-text">
+                Ticket Price (In Rs.) <span className="error-inline mxl-10">{ticketPriceError}</span>
+            </label>
+            <input
+                type="text"
+                value={ticketPrice}
+                onChange={(e) => setTicketPrice(e.target.value)}
+                placeholder="e.g. 250"
+                className="input-field"
+            />
+
+            <label className="label-text">
+                Poster <span className="error-inline mxl-10">{moviePosterError}</span>
+            </label>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handlePosterChange}
+            />
+
+            <div className={isLoading ? 'show-loader' : 'hide-div'}>
+                <img src={loader_icon} alt="Loader Icon" />
+            </div>
+            <span className="error">{error}</span>
+
+            <button className="btn" onClick={handleSubmit}>Submit</button>
+        </div>
+    </div>
+</div>
+
             <Footer />
         </>
     );

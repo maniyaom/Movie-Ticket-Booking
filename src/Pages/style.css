@@ -24,6 +24,7 @@ body{
     /* box-shadow: -2px -1px 35px 1px var(--primary-color); */
     border: 2px solid rgba(248, 68, 100, 0.5);
     margin-bottom: 40px;
+    margin-top: 50px;
 }
 
 .signup-heading{
@@ -36,6 +37,7 @@ body{
     opacity: 0.4;
     font-size: 13px;
 }
+
 .login {
     object-fit: cover;
     height: 675px;

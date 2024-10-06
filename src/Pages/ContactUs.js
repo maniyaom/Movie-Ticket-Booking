@@ -9,7 +9,7 @@ import bg from '../assets/images/brown.webp';
 
 const ContactUs = () => {
   return (
-    <div className="contact" style={{ backgroundImage: `url(${bg})` } }>
+    <div className="contact" style={{ backgroundImage: `url(${bg})` }}>
       <div className="heading">
         <h1>Contact Us</h1>
         <p>Thank you for choosing Ticketify! We're here to assist you with any

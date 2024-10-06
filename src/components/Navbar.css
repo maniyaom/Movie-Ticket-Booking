@@ -9,6 +9,10 @@
     --text-color: #333;
     --primary: #ff34b2;
     /* --primary-color : #2496ff */
+    --hover-bg: #ff99cc; /* Light pink for hover background */
+    --light-grayHover: rgba(255, 255, 255, 0.15); /* Subtle white overlay for hover */
+    --hover-text-color: hsla(0, 60%, 98%, 0.941); /* White color for text on hover */
+
 }
 
 * {
@@ -35,7 +39,15 @@
     font-weight: 700;
     text-decoration: none;
     color: #fff;
+    transition: color 0.3s, transform 0.3s; /* Smooth transition for color and size */
 }
+
+.logo:hover {
+    color: var(--hover-text-color); /* Changes the logo color on hover */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Optional: adds a subtle shadow */
+    transform: scale(1.1); /* Slightly enlarge the logo */
+}
+
 
 .nav-links {
     width:fit-content;
@@ -62,6 +74,24 @@
     margin: 0 15px;
   }
   
+ 
+
+.nav-links > li > a {
+    text-decoration: none;
+    color: white; /* Default text color */
+    padding: 5px 5px; /* Padding for a better click area */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.nav-links > li > a:hover {
+    background-color: #c0392b; /* Darker shade of red */
+    transform: scale(1.1); /* Slightly enlarge the text */
+    text-decoration: underline; /* Underline effect */
+}
+
+
+
   /* Styling the active link - Blue color when selected */
   .active-link {
     font-weight: 600;
@@ -106,6 +136,7 @@ Dropdown Styles
 .dropdown[open] summary {
     background: #ffffff10;
 }
+
 
 summary {
     list-style: none;
@@ -185,6 +216,7 @@ summary.avatar img {
     margin: 0;
 }
 
+
 .dropdown ul li a {
     display: flex;
     align-items: center;
@@ -193,12 +225,15 @@ summary.avatar img {
     text-decoration: none;
     line-height: 1;
     color: var(--text-color);
+    transition: color 0.3s, background-color 0.3s, transform 0.3s; /* Smooth transition */
 }
 
 .dropdown ul li a:hover {
     color: var(--primary);
+    background-color: var(--light-grayHover);
+    border-radius: 5px;
+    transform: scale(1.05); /* Slightly enlarge the dropdown items */
 }
-
 .dropdown ul li:first-of-type {
     border-radius: 10px 10px 0 0;
 }
@@ -254,6 +289,7 @@ a{
     visibility: hidden;
 }
 
+
 .logout-button {
     background: none; 
     border: none; 
@@ -261,14 +297,17 @@ a{
     display: flex; 
     align-items: center; 
     font-size: 16px; 
-    transition: color 0.3s; 
+    transition: color 0.3s, transform 0.3s; /* Smooth transition for color and size */
     padding-left: 25px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
 .logout-button:hover {
-    color: var(--primary);
+    color: var(--hover-text-color);
+    transform: scale(1.05); /* Slightly enlarge the button text */
 }
+
 
 .logout-button span {
     margin-right: 2px; 

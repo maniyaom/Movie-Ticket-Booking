@@ -4,7 +4,7 @@
 
 ## Table of Contents
 - [Introduction](#ticketify-event-ticket-booking-application)
-- [Show Your Support!](show-your-support)
+- [Show Your Support!](#show-your-support)
 - [Initial Setup](#initial-setup)
 - [Accepted for GirlScript Summer of Code - Extended 2024](#accepted-for-girlscript-summer-of-code-extended-2024)
 - [Prerequisites](#prerequisites)

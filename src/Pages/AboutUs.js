@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import './AboutUs.css'
 import facebook_icon from '../assets/icons/facebook2.png'

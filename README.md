@@ -6,6 +6,8 @@ Ticketify is a user-friendly movie ticket booking application developed using *R
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Initial Setup](#initial-setup)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Code of Conduct](#code-of-conduct)
@@ -27,6 +29,19 @@ Ticketify aims to simplify the movie booking process by providing a responsive, 
 - Responsive UI for mobile and desktop
 - Real-time updates for movie availability and bookings
 
+## Initial Setup
+
+To get started with the Ticketify app, follow these steps:
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your machine:
+
+- **Node.js** (version 14 or higher)
+- **npm** (Node Package Manager)
+- **Git** (for version control)
+
+
 ## Installation
 
 To get started with Ticketify, follow these steps:
@@ -34,7 +49,7 @@ To get started with Ticketify, follow these steps:
 1. Clone the repository:
 
     ```
-    git clone https://github.com/maniyaom/Movie-Ticket-Booking.git
+    git clone https://github.com/yourusername/Movie-Ticket-Booking.git
     ```
     
 

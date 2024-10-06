@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AboutUs.css';
 import facebook_icon from '../assets/icons/facebook.png';
 import instagram_icon from '../assets/icons/instagram.png';
@@ -10,27 +9,7 @@ import our_mission from '../assets/images/our-mission.jpg';
 import who_we_are from '../assets/images/who-we-are.jpg';
 import Footer from '../components/Footer';
 
-const AboutUs = () => {
-  const [openFaq, setOpenFaq] = useState(null); // State to track which FAQ is open
-
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index); // Toggle the FAQ open/closed
-  };
-
-  useEffect(() => {
-    document.title = 'About Us';
-  }, []);
-
-  const [openFAQ, setOpenFAQ] = useState(null);
-
-const toggleFAQ = (index) => {
-  if (openFAQ === index) {
-    setOpenFAQ(null); // Close the current FAQ
-  } else {
-    setOpenFAQ(index); // Open the clicked FAQ
-  }
-};
-
+// Sample data for FAQs and Testimonials
 const faqData = [
   {
     question: "How can I book a movie ticket?",
@@ -49,6 +28,23 @@ const faqData = [
     answer: "Our customer support team is available 24/7 to help you with any issues or queries you may have."
   }
 ];
+
+const testimonialsData = [
+  { feedback: 'I love how easy it is to book tickets! The interface is so simple and user-friendly.', author: 'John Doe' },
+  { feedback: 'Great service and excellent customer support. My go-to app for booking movie tickets!', author: 'Jane Smith' },
+  { feedback: 'Quick and reliable. I always use this platform to book tickets for my family.', author: 'Chris Lee' },
+];
+
+const AboutUs = () => {
+  const [openFAQ, setOpenFAQ] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setOpenFAQ(openFAQ === index ? null : index);
+  };
+
+  useEffect(() => {
+    document.title = 'About Us';
+  }, []);
 
   return (
     <>
@@ -114,40 +110,38 @@ const faqData = [
         </div>
 
         {/* Testimonials Section */}
-<div className="testimonials-section">
-  <div className="title" style={{ textAlign: 'center' }}>What Our Customers Say</div>
-  <div className="testimonials">
-    {testimonialsData.map((testimonial, index) => (
-      <div className="testimonial-item" key={index}>
-        <div className="testimonial-content">
-          <p className="testimonial-feedback">"{testimonial.feedback}"</p>
-          <div className="testimonial-author">
-            <span className="author-icon">👤</span>
-            {testimonial.author}
+        <div className="testimonials-section">
+          <div className="title" style={{ textAlign: 'center' }}>What Our Customers Say</div>
+          <div className="testimonials">
+            {testimonialsData.map((testimonial, index) => (
+              <div className="testimonial-item" key={index}>
+                <div className="testimonial-content">
+                  <p className="testimonial-feedback">"{testimonial.feedback}"</p>
+                  <div className="testimonial-author">
+                    <span className="author-icon">👤</span>
+                    {testimonial.author}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-</div>
 
-
-      {/* FAQ Section */}
-<div className="faq-section">
-  <div className="title" style={{ textAlign: 'center' }}>Frequently Asked Questions (FAQs)</div>
-  <div className="faq">
-    {faqData.map((faq, index) => (
-      <div key={index} className={`faq-item ${openFAQ === index ? 'open' : ''}`} onClick={() => toggleFAQ(index)}>
-        <div className="faq-question">
-          <h4>{faq.question}</h4>
-          <span className={`arrow ${openFAQ === index ? 'open' : ''}`}>&#9660;</span>
+        {/* FAQ Section */}
+        <div className="faq-section">
+          <div className="title" style={{ textAlign: 'center' }}>Frequently Asked Questions (FAQs)</div>
+          <div className="faq">
+            {faqData.map((faq, index) => (
+              <div key={index} className={`faq-item ${openFAQ === index ? 'open' : ''}`} onClick={() => toggleFAQ(index)}>
+                <div className="faq-question">
+                  <h4>{faq.question}</h4>
+                  <span className={`arrow ${openFAQ === index ? 'open' : ''}`}>&#9660;</span>
+                </div>
+                {openFAQ === index && <p className="faq-answer">{faq.answer}</p>}
+              </div>
+            ))}
+          </div>
         </div>
-        {openFAQ === index && <p className="faq-answer">{faq.answer}</p>}
-      </div>
-    ))}
-  </div>
-</div>
-
 
         {/* Join Our Community */}
         <div className="card-image-div">
@@ -168,19 +162,5 @@ const faqData = [
     </>
   );
 };
-
-// Sample data for FAQs and Testimonials
-const faqData = [
-  { question: 'How can I book a movie ticket?', answer: 'Simply visit our homepage, select your movie, choose the seats, and complete the payment process. It\'s that easy!' },
-  { question: 'Is my payment information secure?', answer: 'Yes, we use advanced encryption technologies to ensure that your payment details are safe and secure.' },
-  { question: 'Can I cancel my booking?', answer: 'Yes, cancellations are allowed up to 2 hours before the showtime. Refunds will be processed as per our cancellation policy.' },
-  { question: 'What if I face any issues?', answer: 'Our customer support team is available 24/7 to help you with any issues or queries you may have.' }
-];
-
-const testimonialsData = [
-  { feedback: 'I love how easy it is to book tickets! The interface is so simple and user-friendly.', author: 'John Doe' },
-  { feedback: 'Great service and excellent customer support. My go-to app for booking movie tickets!', author: 'Jane Smith' },
-  { feedback: 'Quick and reliable. I always use this platform to book tickets for my family.', author: 'Chris Lee' },
-];
 
 export default AboutUs;

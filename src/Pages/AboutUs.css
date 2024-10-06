@@ -1,3 +1,4 @@
+/* General Card Styles */
 .card-image-div {
   width: 80vw;
   margin: 30px 10vw;
@@ -14,13 +15,6 @@
 .card-image-div > div > p {
   padding: 0px 12px 8px 10px;
   margin-left: 5px;
-}
-
-.title {
-  font-size: 30px;
-  margin: 5px 0px 10px 5px;
-  padding-left: 10px;
-  font-weight: 600;
 }
 
 .card-image-div > div > img {
@@ -42,94 +36,6 @@
   margin-top: 14px;
 }
 
-.social-icons > a > img {
-  width: 45px;
-  height: 45px;
-  margin: 15px 0px 12px 8px;
-}
-
-@media only screen and (min-width: 250px) and (max-width: 900px) {
-  .card-image-div {
-    flex-direction: column;
-  }
-
-  .card-image-div > div {
-    width: 100%;
-  }
-  .card-image-div > div > img {
-    width: 100%;
-  }
-  .About_Us_Text {
-    margin: 0 !important;
-    text-align: center;
-    width: 100%;
-  }
-  .Contact_Us_Text {
-    margin: 0 !important;
-    text-align: center;
-    width: 100%;
-  }
-}
-
-/* Testimonials Section */
-.testimonials {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.testimonial-item {
-  font-style: italic;
-  font-size: 18px;
-  padding: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  text-align: center;
-}
-
-.testimonial-item span {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-/* FAQ Section */
-.faq {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.faq-item h4 {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.faq-item p {
-  margin: 5px 0 0 0;
-  font-size: 16px;
-}
-
-/* General styles */
-.card-image-div {
-  width: 80vw;
-  margin: 30px 10vw;
-  display: flex;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 15px;
-}
-
-.card-image-div > div {
-  width: 50%;
-}
-
-.card-image-div > div > p {
-  padding: 0px 12px 8px 10px;
-  margin-left: 5px;
-}
-
 .title {
   font-size: 30px;
   margin: 5px 0px 10px 5px;
@@ -137,28 +43,34 @@
   font-weight: 600;
 }
 
-.card-image-div > div > img {
-  width: 38vw;
-  height: 300px;
-  border-radius: 8px;
+.social-icons > a > img {
+  width: 45px;
+  height: 45px;
+  margin: 15px 0px 12px 8px;
 }
 
-.card-without-image {
-  width: 80vw;
-  margin: 40px 10vw;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 20px 40px;
+/* Responsive Design */
+@media only screen and (max-width: 900px) {
+  .card-image-div {
+    flex-direction: column;
+  }
+
+  .card-image-div > div {
+    width: 100%;
+  }
+
+  .card-image-div > div > img {
+    width: 100%;
+  }
+
+  .About_Us_Text,
+  .Contact_Us_Text {
+    margin: 0 !important;
+    text-align: center;
+    width: 100%;
+  }
 }
 
-.arrow {
-  transition: transform 0.3s ease;
-  font-size: 20px;
-}
-
-.arrow.open {
-  transform: rotate(180deg);
-}
 /* Testimonials Section */
 .testimonials-section {
   margin: 50px 10vw;
@@ -179,11 +91,11 @@
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
   transition: all 0.3s ease;
 }
+
 .testimonial-item:hover {
-  transform: scale(1.01); 
+  transform: scale(1.01);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -216,7 +128,6 @@
   font-size: 20px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .testimonials {
     flex-direction: column;
@@ -230,7 +141,6 @@
     font-size: 14px;
   }
 }
-
 
 /* FAQ Section */
 .faq-section {
@@ -280,15 +190,6 @@
   color: #333;
 }
 
-.arrow {
-  font-size: 24px;
-  transition: transform 0.3s ease;
-}
-
-.arrow.open {
-  transform: rotate(180deg);
-}
-
 .faq-answer {
   margin-top: 15px;
   font-size: 16px;
@@ -308,7 +209,15 @@
   }
 }
 
-/* Responsive Design */
+.arrow {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
 @media (max-width: 768px) {
   .faq-question h4 {
     font-size: 16px;

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import './AboutUs.css';
 import facebook_icon from '../assets/icons/facebook.png';
 import instagram_icon from '../assets/icons/instagram.png';

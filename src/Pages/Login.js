@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../components/Navbar.css";
+import { TextInput, PasswordInput } from '../components/Inputs'; 
 
 const Login = () => {
   const firebase = useFirebase();
@@ -37,18 +38,10 @@ const Login = () => {
     setPasswordError("");
   };
 
-  const validateEmailFormat = (email) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-  };
-
   const validateForm = () => {
     let isValid = true;
     if (email === "") {
       setEmailError("(Required Field)");
-      isValid = false;
-    } else if (!validateEmailFormat(email)) {
-      setEmailError("(Invalid Email Format)");
       isValid = false;
     }
     if (password === "") {
@@ -90,76 +83,73 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div
-        className="flex justify-center align-center"
-        style={{ marginTop: "70px" }}
-      >
+<>
+      <div className="flex justify-center align-center" style={{ marginTop: "70px" }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Login</div>
           <div className="signup-subheading myb-20">
             Please provide your email address and password.
           </div>
 
-          <label htmlFor="email" className="label-text">
-            Email <span className="error-inline mxl-10">{emailError}</span>
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={`input-field ${
-              emailError !== "" ? "error-input-field" : ""
-            }`}
-            placeholder="e.g. example@gmail.com"
-          />
+          {/* Form Starts */}
+          <form onSubmit={(e) => { e.preventDefault(); handleSignIn(); }}>
+            
+            {/* Reusable Email Input Component */}
+            <TextInput
+              label="Email"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError}
+              placeholder="e.g. example@gmail.com"
+            />
 
-          <label htmlFor="password" className="label-text">
-            Password{" "}
-            <span className="error-inline mxl-10">{passwordError}</span>
-          </label>
-          <div className="input-wrapper">
-            <input
-              type={isPasswordVisible ? "text" : "password"}
+            {/* Reusable Password Input Component */}
+            <PasswordInput
+              label="Password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={passwordError}
               placeholder="Password"
-              className={`input-field ${
-                passwordError !== "" ? "error-input-field" : ""
-              }`}
+              isVisible={isPasswordVisible}
+              toggleVisibility={togglePasswordVisibility}
             />
-            <button
-              type="button"
-              className="password-toggle"
-              onClick={togglePasswordVisibility}
-            >
-              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-          <div className={isLoading ? "show-loader" : "hide-div"}>
-            <img src={loader_icon} alt="Loader Icon" />
-          </div>
-          <span className="error">{error}</span>
 
-          <button className="btn" onClick={handleSignIn}>
-            Login
-          </button>
-          <span
-            style={{
-              marginTop: "20px",
-              fontSize: "15px",
-              display: "block",
-              textAlign: "center",
-            }}
-          >
-            Don't have an account{" "}
-            <Link to="/SignUp" style={{ color: "#f84464" }}>
-              Sign Up
-            </Link>
-          </span>
+            {/* Loader */}
+            <div className={isLoading ? "show-loader" : "hide-div"}>
+              <img src={loader_icon} alt="Loader Icon" />
+            </div>
+
+            {/* Error Message */}
+            <span className="error">{error}</span>
+
+            {/* Submit Button */}
+            <button className="btn" type="submit">
+              Login
+            </button>
+
+            {/* Sign Up Link */}
+            <span
+              style={{
+                marginTop: "20px",
+                fontSize: "15px",
+                display: "block",
+                textAlign: "center",
+              }}
+            >
+              Don't have an account{" "}
+              <Link to="/SignUp" style={{ color: "#f84464" }}>
+                Sign Up
+              </Link>
+            </span>
+          </form>
+          {/* Form Ends */}
         </div>
       </div>
     </>
+  
   );
 };
 

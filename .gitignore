@@ -5,9 +5,6 @@
 /.pnp
 .pnp.js
 
-.env   
-# changing this because env file contains private keys
-
 # testing
 /coverage
 

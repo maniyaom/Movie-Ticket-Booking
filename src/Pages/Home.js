@@ -20,29 +20,31 @@ const Home = () => {
   const sortMovies = (movies) => {
     console.log("Sort Clicked", sortType);
     let sortedMovies = [...movies];
-
+  
     if (sortType === "avgRating") {
       const moviesWithAverageRatings = sortedMovies.map((movie) => {
-        const ratingsArray = Object.values(movie.rating);
+        const ratingsArray = Object.values(movie.rating || {});
+  
         const averageRating =
-          ratingsArray.reduce((acc, curr) => acc + curr, 0) /
-          ratingsArray.length;
+          ratingsArray.length > 0
+            ? ratingsArray.reduce((acc, curr) => acc + curr, 0) / ratingsArray.length
+            : 0; 
+  
         return { ...movie, averageRating };
       });
-
+  
       sortedMovies = moviesWithAverageRatings.sort(
         (a, b) => b.averageRating - a.averageRating
       );
     } else if (sortType === "totalVotes") {
       const moviesWithHighestVoteCount = sortedMovies.map((movie) => {
-        const ratingsArray = Object.values(movie.rating);
-        const votes = ratingsArray.length;
+        const ratingsArray = Object.values(movie.rating || {}); // Handle cases with no ratings
+        const votes = ratingsArray.length; // If no ratings, votes will be 0
+  
         return { ...movie, votes };
       });
-
-      sortedMovies = moviesWithHighestVoteCount.sort(
-        (a, b) => b.votes - a.votes
-      );
+  
+      sortedMovies = moviesWithHighestVoteCount.sort((a, b) => b.votes - a.votes);
     } else if (sortType === "recent") {
       sortedMovies = sortedMovies.sort((a, b) => {
         const dateA = new Date(a.movieReleaseDate);
@@ -50,9 +52,10 @@ const Home = () => {
         return dateB - dateA;
       });
     }
-
+  
     setAllMovies(sortedMovies);
   };
+  
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {

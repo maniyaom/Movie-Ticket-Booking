@@ -3,9 +3,10 @@ import { useFirebase } from "../context/firebase";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth,GoogleAuthProvider,signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+
 import './utils.css'
 import '../components/Navbar.css';
+import { TextInput, PasswordInput, TextAreaInput, RadioInput } from '../components/Inputs';
 
 const SignUp = () => {
 
@@ -33,10 +34,6 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isCreatePasswordVisible, setIsCreatePasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-
-  const [otp, setOtp] = useState("");
-  const [showOtpModal, setShowOtpModal] = useState(false);
-  const [verificationId, setVerificationId] = useState(null);
   
   
   useEffect(() => {
@@ -84,6 +81,11 @@ const SignUp = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
+  const validateEmailFormat = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
   const validateForm = () => {
     let isValid = true;
     if (name === "") {
@@ -93,6 +95,9 @@ const SignUp = () => {
 
     if (email === "") {
       setEmailError("(Required Field)");
+      isValid = false;
+    } else if (!validateEmailFormat(email)) {
+      setEmailError("(Invalid Email Format)");
       isValid = false;
     }
     if (!phone.match(/^(\+\d{1,3}[- ]?)?\d{10}$/) || phone.match(/0{5,}/)) {
@@ -140,8 +145,7 @@ const SignUp = () => {
             firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
-                // navigate("/Login");
-                sendOtp(phone);
+                navigate("/Login");
                 setName("")
                 setEmail("")
                 setPhone("")
@@ -157,8 +161,7 @@ const SignUp = () => {
             firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, wallet:2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
-                // navigate('/Login');
-                sendOtp(phone);
+                navigate('/Login');
                 setName("")
                 setEmail("")
                 setPhone("")
@@ -185,214 +188,133 @@ const SignUp = () => {
         })
     };
   }
-  const sendOtp = (phoneNumber) => {
-    const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible',
-      callback: (response) => {
-        console.log("reCAPTCHA solved");
-      },
-    });
-    firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
-      .then((confirmationResult) => {
-        setVerificationId(confirmationResult.verificationId);
-        setShowOtpModal(true); // Open OTP modal
-      })
-      .catch((error) => {
-        console.error("Error sending OTP:", error);
-        setError("Error sending OTP. Please try again.");
-      });
-  };
 
-  const handleVerifyOtp = () => {
-    const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, otp);
-    firebase.auth().signInWithCredential(credential)
-      .then(() => {
-        console.log("OTP verified successfully");
-        setShowOtpModal(false); // Close OTP modal
-        navigate('/Login'); // Navigate to the next page
-      })
-      .catch((error) => {
-        console.error("Error verifying OTP:", error);
-        setError("Invalid OTP. Please try again.");
-      });
-  };
   return (  
-    <>
-      <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
-        <div className="signup-card">
-          <div className="signup-heading text-center myb-20">Sign Up</div>
-          
-          {/* Google Signup Option*/}
+<div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
+      <div className="signup-card">
+        <div className="signup-heading text-center myb-20">Sign Up</div>
+
+        {/* Form Starts */}
+        <form onSubmit={(e) => { e.preventDefault(); handleSignUp(); }}>
+
+          {/* Google Signup Option */}
           <div className="google-signup">
-            <button onClick={handleGoogleSignIn} className="google-btn">
+            <button type="button" onClick={handleSignUp} className="google-btn">
               <img src="googleLogo.png" alt="Google Logo" />
-                Sign up with Google
+              Sign up with Google
             </button>
           </div>
-        
+
           <div className="signup-subheading myb-20">
             Please provide your name, email address, and phone number.
           </div>
 
-          <label htmlFor="username" className="label-text">
-            Name
-            <span className="error-inline">{nameError}</span>
-          </label>
-          <input
-            type="text"
+          {/* Reusable Text Input Components */}
+          <TextInput
+            label="Name"
             id="username"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`input-field ${nameError !== "" ? 'error-input-field' : ''}`}
+            error={error}
             placeholder="e.g. John Doe"
           />
 
-          <label htmlFor="email" className="label-text">
-            Email 
-            <br/>
-            <span className="error-inline">{emailError}</span>
-          </label>
-          <input
-            type="email"
+          <TextInput
+            label="Email"
             id="email"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`input-field ${emailError !== "" ? 'error-input-field' : ''}`}
+            error={error}
             placeholder="e.g. example@gmail.com"
           />
 
-          <label htmlFor="phone" className="label-text">
-            Phone Number 
-            <br/>
-            <span className="error-inline">{phoneError}</span>
-          </label>
-          <input
-            type="text"
+          <TextInput
+            label="Phone Number"
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className={`input-field ${phoneError !== "" ? 'error-input-field' : ''}`}
+            error={error}
             placeholder="e.g. 1234567890"
           />
 
-          <label className="label-text">
-            Want to list your show?
-          </label>
+          {/* Reusable Radio Input Component */}
+          <RadioInput
+            label="Want to list your show?"
+            name="isAdmin"
+            options={[
+              { id: 'admin-yes', value: 'true', label: 'Yes' },
+              { id: 'admin-no', value: 'false', label: 'No' }
+            ]}
+            onChange={(e) => setIsAdmin(e.target.value === 'true')}
+          />
 
-          <div className="flex align-center myb-20">
-            <input type="radio" name="isAdmin" id="admin-yes" value="true" className="mxl-10"
-              onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-yes" style={{marginLeft:'3px'}}>Yes</label>
-            <input type="radio" name="isAdmin" id="admin-no" value="false" className="mxl-10"
-              onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-no" style={{marginLeft: '3px'}}>No</label>
-          </div>
-
-          <div name='theater' className={isAdmin ? '' : 'hide-div'}>
-            <label className="label-text">
-              Theater Name 
-              <br/>
-              <span className="error-inline">{theaterNameError}</span>
-            </label>
-            <input
-              type="text"
-              value={theaterName}
-              onChange={(e) => setTheaterName(e.target.value)}
-              className={`input-field ${theaterNameError !== "" ? 'error-input-field' : ''}`}
-              placeholder="e.g. Rahulraj PVR"
-            />
-
-            <label className="label-text">
-              Theater Address
-              <br/>
-               <span className="error-inline">{theaterAddressError}</span>
-            </label>
-            <textarea
-              value={theaterAddress}
-              onChange={(e) => setTheaterAddress(e.target.value)}
-              className={`input-field ${theaterAddressError !== "" ? 'error-input-field' : ''}`}
-              placeholder="e.g. Robert Robertson, 1234 NW Bobcat Lane"
-            />
-          </div>
-          
-
-          <label htmlFor="createPassword" className="label-text">
-              Create Password 
-              <br />
-              <span className="error-inline">{passwordError}</span>
-          </label>
-          <div className="input-wrapper create-password-wrapper">
-              <input
-                  type={isCreatePasswordVisible ? "text" : "password"}
-                  id="createPassword"
-                  value={createPassword}
-                  onChange={(e) => setCreatePassword(e.target.value)}
-                  placeholder="Create Password"
-                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+          {/* Conditional Theater Inputs */}
+          {isAdmin && (
+            <>
+              <TextInput
+                label="Theater Name"
+                value={theaterName}
+                onChange={(e) => setTheaterName(e.target.value)}
+                error={error}
+                placeholder="e.g. Rahulraj PVR"
               />
-              <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={toggleCreatePasswordVisibility} 
-              >
-                  {isCreatePasswordVisible ? <FaEyeSlash /> : <FaEye />}
-              </button>
-          </div>
-
-          <label htmlFor="confirmPassword" className="label-text">
-              Confirm Password
-              <br />
-              <span className="error-inline">{passwordError}</span>
-          </label>
-          <div className="input-wrapper confirm-password-wrapper">
-              <input
-                  type={isConfirmPasswordVisible ? "text" : "password"}
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm Password"
-                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
+              <TextAreaInput
+                label="Theater Address"
+                value={theaterAddress}
+                onChange={(e) => setTheaterAddress(e.target.value)}
+                error={error}
+                placeholder="e.g. Robert Robertson, 1234 NW Bobcat Lane"
               />
-              <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={toggleConfirmPasswordVisibility} // Call the correct function
-              >
-                  {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-              </button>
-          </div>
+            </>
+          )}
 
+          {/* Reusable Password Input Components */}
+          <PasswordInput
+            label="Create Password"
+            id="createPassword"
+            value={createPassword}
+            onChange={(e) => setCreatePassword(e.target.value)}
+            error={error}
+            placeholder="Create Password"
+            isVisible={isCreatePasswordVisible}
+            toggleVisibility={toggleCreatePasswordVisibility}
+          />
 
+          <PasswordInput
+            label="Confirm Password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={error}
+            placeholder="Confirm Password"
+            isVisible={isConfirmPasswordVisible}
+            toggleVisibility={toggleConfirmPasswordVisibility}
+          />
+
+          {/* Loader */}
           <div className={isLoading ? 'show-loader' : 'hide-div'}>
             <img src={loader_icon} alt="Loader Icon" />
           </div>
 
+          {/* Error Message */}
           <span className="error">{error}</span>
 
-          <button className="btn" onClick={() => { handleSignUp(); }}>Sign Up</button>
+          {/* Sign Up Button */}
+          <button className="btn" type="submit">Sign Up</button>
+
           <div className="terms-condition">
             By clicking the button, you are agreeing to our Terms and Services
           </div>
-          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Already have an account <Link to="/Login" style={{color: '#f84464'}}>Login</Link></span>
-          {showOtpModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>Verify OTP</h3>
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter OTP"
-            />
-            <button onClick={handleVerifyOtp}>Verify OTP</button>
-            <button onClick={() => setShowOtpModal(false)}>Cancel</button>
-            {error && <p>{error}</p>}
-          </div>
-        </div>
-      )}
 
-      <div id="recaptcha-container"></div>
-        </div>
+          {/* Already have an account */}
+          <span style={{ marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center' }}>
+            Already have an account <Link to="/Login" style={{ color: '#f84464' }}>Login</Link>
+          </span>
+        </form>
+        {/* Form Ends */}
       </div>
-    </>
+    </div>
   );
 };
 

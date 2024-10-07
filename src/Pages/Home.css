@@ -26,6 +26,22 @@ a{
     margin-top: 3px;
 }
 
+.search-sort-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 2px solid red; */
+  padding: 1.5rem;
+}
+
+.search-sort-container select{
+  outline: none;
+  background-color: #F6F6F6;
+  padding: 10px;
+  border-radius: 8px;
+}
+
 .poster-container {
     display: flex;
     justify-content: flex-start;

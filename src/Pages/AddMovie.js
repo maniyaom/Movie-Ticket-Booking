@@ -255,9 +255,9 @@ const AddMovie = () => {
             />
         </div>
 
-        
+
         <div className="right-side-form">
-            
+
 
             <label className="label-text">
                 Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
@@ -312,16 +312,16 @@ const AddMovie = () => {
             />
 
             <div className={isLoading ? 'show-loader' : 'hide-div'}>
-                <img src={loader_icon} alt="Loader Icon" />
+                <img src={loader_icon} alt="Loader Icon"/>
             </div>
             <span className="error">{error}</span>
 
             <button className="btn" onClick={handleSubmit}>Submit</button>
         </div>
     </div>
-</div>
+            </div>
 
-            <Footer />
+            <Footer/>
         </>
     );
 };

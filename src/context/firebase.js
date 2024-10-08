@@ -1,10 +1,21 @@
 import { createContext, useContext, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword ,signInWithPopup, GoogleAuthProvider} from "firebase/auth";
+import {
+    createUserWithEmailAndPassword,
+    getAuth,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    sendPasswordResetEmail // Import this
+} from "firebase/auth";
 import { getDatabase, set, ref, push, get } from "firebase/database";
-import { getDownloadURL as getStorageDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
-import { Link, useNavigate,} from 'react-router-dom' 
-
+import {
+    getDownloadURL as getStorageDownloadURL,
+    getStorage,
+    ref as storageRef,
+    uploadBytes
+} from 'firebase/storage';
+import { Link, useNavigate } from 'react-router-dom';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -30,13 +41,13 @@ export const FirebaseProvider = (props) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false); // Loading state
 
-    const signInWithGoogle = async() => {
+    const signInWithGoogle = async () => {
         const provider = new GoogleAuthProvider(); // Initialize Google Auth provider
         setLoading(true);
 
         try {
             const result = await signInWithPopup(firebaseAuth, provider); // Use popup for Google authentication
-            const user = result.user; 
+            const user = result.user;
             console.log("User signed in with Google:", user);
 
             const userRef = ref(database, `users/${user.uid}`);
@@ -49,13 +60,12 @@ export const FirebaseProvider = (props) => {
                 console.log("User already exists:", existingUser);
             }
             navigate("/Home");
-        }catch(error) {
-                console.error("Error during Google sign-in:", error);
+        } catch (error) {
+            console.error("Error during Google sign-in:", error);
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
-   
 
     const signupUserWithEmailAndPassword = async (email, password) => {
         try {
@@ -167,7 +177,6 @@ export const FirebaseProvider = (props) => {
     };
 
     const makePayment = async (subtotal, updatedSeats, seatList, movieDetails, userData) => {
-
         const now = new Date();
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const month = months[now.getMonth()];
@@ -198,19 +207,18 @@ export const FirebaseProvider = (props) => {
                 transactionTime: formattedTime,
                 bookedSeats: seatList,
                 subtotal: subtotal
-            }
+            };
             await updateData(`movies/${movieDetails.movieId}/theaterSeats`, updatedSeats);
             await updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
             const creatorData = await fetchUserDetails(movieDetails.creatorId);
             await updateData(`users/${movieDetails.creatorId}/wallet`, creatorData.wallet + subtotal);
 
             await set(ref(database, `tickets/${ticketId}`), data);
-        }
-        catch (error) {
+        } catch (error) {
             console.error("Transaction Failed !!", error);
             throw error;
         }
-    }
+    };
 
     const fetchTransactionDetails = async (uid) => {
         console.log("fetch transaction data : ", uid);
@@ -235,7 +243,7 @@ export const FirebaseProvider = (props) => {
             console.error("Error fetching tickets : ", error);
             throw error;
         }
-    }
+    };
 
     const fetchTicketDetails = async (ticketId) => {
         try {
@@ -253,33 +261,39 @@ export const FirebaseProvider = (props) => {
             console.error("Error fetching ticket data : ", error);
             throw error;
         }
-       
-        
-    }
-    const fetchUserTickets = async (userId) => {
-        try {
-           
-            const snapshot = await get(ref(database, "tickets"));
-            const ticketsData = snapshot.val();
-            if (!ticketsData) {
-                console.log("No tickets data found.");
-                return [];
-            }
-            const ticketArray = Object.values(ticketsData);
-            const userTickets = ticketArray.filter(ticket => 
-                ticket.paidBy === userId || ticket.receivedBy === userId
-            );
-            return userTickets;
-    
-        } catch (error) {
-            console.error("Error fetching tickets for user: ", error);
-            throw error;
-        }
-    }
+    };
 
+    // New password reset function
+    const resetPassword = async (email) => {
+        try {
+            await sendPasswordResetEmail(firebaseAuth, email);
+            console.log("Password reset email sent!");
+        } catch (error) {
+            console.error("Error sending password reset email:", error);
+            throw error; // Throw error to handle it in the calling component
+        }
+    };
 
     return (
-        <FirebaseContext.Provider value={{signInWithGoogle, signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails, fetchUserTickets }}>
+        <FirebaseContext.Provider
+            value={{
+                loading,
+                signInWithGoogle,
+                signupUserWithEmailAndPassword,
+                loginUserWithEmailAndPassword,
+                addUser,
+                addMovie,
+                fetchAllMovies,
+                fetchUserDetails,
+                fetchMovieDetails,
+                updateData,
+                fetchMoviePoster,
+                makePayment,
+                fetchTransactionDetails,
+                fetchTicketDetails,
+                resetPassword // Add resetPassword to the context value
+            }}
+        >
             {props.children}
         </FirebaseContext.Provider>
     );

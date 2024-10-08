@@ -89,12 +89,14 @@ const Login = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
+  const handleForgotPassword = (e) => {
+    e.preventDefault(); // Prevent default button action
+    navigate("/reset-password"); // Navigate to reset password page
+  };
+
   return (
     <>
-      <div
-        className="flex justify-center align-center"
-        style={{ marginTop: "70px" }}
-      >
+      <div className="flex justify-center align-center" style={{ marginTop: "70px" }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Login</div>
           <div className="signup-subheading myb-20">
@@ -108,9 +110,7 @@ const Login = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`input-field ${
-              emailError !== "" ? "error-input-field" : ""
-            }`}
+            className={`input-field ${emailError !== "" ? "error-input-field" : ""}`}
             placeholder="e.g. example@gmail.com"
           />
 
@@ -124,9 +124,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className={`input-field ${
-                passwordError !== "" ? "error-input-field" : ""
-              }`}
+              className={`input-field ${passwordError !== "" ? "error-input-field" : ""}`}
             />
             <button
               type="button"
@@ -144,6 +142,18 @@ const Login = () => {
           <button className="btn" onClick={handleSignIn}>
             Login
           </button>
+          <span
+            style={{
+              marginTop: "20px",
+              fontSize: "15px",
+              display: "block",
+              textAlign: "center",
+            }}
+          >
+            <Link to="/password-reset" style={{ color: "#f84464" }}>
+              Forgot Password?
+            </Link>
+          </span>
           <span
             style={{
               marginTop: "20px",

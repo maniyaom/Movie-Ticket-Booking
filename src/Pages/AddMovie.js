@@ -260,12 +260,13 @@ const AddMovie = () => {
 
 
             <label className="label-text">
-                Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
+                Movie Duration (HH:MM:SS) <span className="error-inline mxl-10">{movieDurationError}</span>
             </label>
             <input
                 type="time"
-                value={movieTiming}
-                onChange={(e) => setMovieTiming(e.target.value)}
+                value={movieDuration}
+                step ='2'
+                onChange={(e) => setMovieDuration(e.target.value)}
                 className="input-field"
             />
 

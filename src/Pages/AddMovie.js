@@ -255,18 +255,17 @@ const AddMovie = () => {
             />
         </div>
 
-
+        
         <div className="right-side-form">
-
+            
 
             <label className="label-text">
-                Movie Duration (HH:MM:SS) <span className="error-inline mxl-10">{movieDurationError}</span>
+                Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
             </label>
             <input
                 type="time"
-                value={movieDuration}
-                step ='2'
-                onChange={(e) => setMovieDuration(e.target.value)}
+                value={movieTiming}
+                onChange={(e) => setMovieTiming(e.target.value)}
                 className="input-field"
             />
 
@@ -313,16 +312,16 @@ const AddMovie = () => {
             />
 
             <div className={isLoading ? 'show-loader' : 'hide-div'}>
-                <img src={loader_icon} alt="Loader Icon"/>
+                <img src={loader_icon} alt="Loader Icon" />
             </div>
             <span className="error">{error}</span>
 
             <button className="btn" onClick={handleSubmit}>Submit</button>
         </div>
     </div>
-            </div>
+</div>
 
-            <Footer/>
+            <Footer />
         </>
     );
 };

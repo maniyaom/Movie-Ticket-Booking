@@ -12,9 +12,9 @@ const Home = () => {
   const [posterPaths, setPosterPaths] = useState({});
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState("All"); // State for selected genre
+  const [selectedGenre, setSelectedGenre] = useState("All");
 
-  const genres = ["All", "Horror", "Adventure", "Action", "Drama"]; // List of genres
+  const genres = ["All", "Horror", "Comedy", "Adventure", "Action", "Drama"]; 
 
   const navigate = useNavigate();
   const auth = getAuth();

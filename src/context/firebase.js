@@ -206,8 +206,11 @@ export const FirebaseProvider = (props) => {
                 movieTitle: movieDetails.movieTitle,
                 transactionTime: formattedTime,
                 bookedSeats: seatList,
-                subtotal: subtotal
-            };
+
+                subtotal: subtotal,
+                ticketValidity:true,
+            }
+
             await updateData(`movies/${movieDetails.movieId}/theaterSeats`, updatedSeats);
             await updateData(`users/${userData.uid}/wallet`, userData.wallet - subtotal);
             const creatorData = await fetchUserDetails(movieDetails.creatorId);

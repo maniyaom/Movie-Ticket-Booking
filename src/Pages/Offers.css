@@ -1,0 +1,576 @@
+/* Offers Section Styles */
+.offers-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+
+.offer-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s;
+}
+
+.offer-card:hover {
+    transform: scale(1.05);
+}
+
+.offer-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.offer-details {
+    padding: 15px;
+}
+
+.offer-details h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.offer-details p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.validity {
+    font-size: 12px;
+    color: #ff5a5f;
+    font-weight: bold;
+}
+
+.claim-button {
+    background-color: #ff5a5f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.claim-button:hover {
+    background-color: #e94e52;
+}
+.offers-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.offer-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.offer-card:hover {
+    transform: scale(1.05);
+}
+
+.offer-icon {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+}
+
+.offer-title {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.offer-description,
+.offer-validity {
+    color: #555;
+}
+
+.call-to-action {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.cta-button {
+    background-color: #f84464;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+}
+
+.cta-button:hover {
+    background-color: #d33f54;
+}
+/* src/Pages/Offers.css */
+
+.offer-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .offer-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  /* src/pages/Offers.css */
+
+.offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between cards */
+  }
+  
+  .offer-card {
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 300px; /* Fixed width for the cards */
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding inside the card */
+    transition: transform 0.2s; /* Smooth scaling on hover */
+  }
+  
+  .offer-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .offer-image {
+    width: 100%; /* Full width of the card */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Round image corners */
+  }
+  
+  .offer-button {
+    background-color: #f84464; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside the button */
+    cursor: pointer; /* Pointer on hover */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .offer-button:hover {
+    background-color: #d73354; /* Darker shade on hover */
+  }
+  /* src/pages/Offers.css */
+
+.offers-page {
+    background: linear-gradient(to right, #6a5acd, #ff69b4); /* Gradient background */
+    color: white; /* Text color */
+    padding: 20px; /* Padding for the page */
+  }
+  
+  .offers-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 43px; /* Title size */
+    font-weight: bold; /* Make the title bold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for a 3D effect */
+  }
+  
+  .offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between cards */
+  }
+  
+  .offer-card {
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 300px; /* Fixed width for the cards */
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding inside the card */
+    transition: transform 0.2s; /* Smooth scaling on hover */
+  }
+  
+  .offer-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .offer-image {
+    width: 100%; /* Full width of the card */
+    height: 180px; /* Increased height */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 8px; /* Round image corners */
+  }
+  
+  .offer-button {
+    background-color: #f84464; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside the button */
+    cursor: pointer; /* Pointer on hover */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .offer-button:hover {
+    background-color: #d73354; /* Darker shade on hover */
+  }
+  /* src/pages/Offers.css */
+
+.offers-page {
+    background: linear-gradient(to right, #6a5acd, #ff69b4); /* Gradient background */
+    color: white; /* Text color */
+    padding: 20px; /* Padding for the page */
+  }
+  
+  .offers-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 43px; /* Title size */
+    font-weight: bold; /* Make the title bold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for a 3D effect */
+  }
+  
+  .offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between cards */
+  }
+  
+  .offer-card {
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 300px; /* Fixed width for the cards */
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding inside the card */
+    transition: transform 0.2s; /* Smooth scaling on hover */
+  }
+  
+  .offer-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .offer-image {
+    width: 100%; /* Full width of the card */
+    height: 220px; /* Increased height for better visibility */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 8px; /* Round image corners */
+  }
+  
+  .offer-description {
+    color: black; /* Set description text color to black for visibility */
+    margin: 10px 0; /* Space around the description */
+  }
+  
+  .offer-button {
+    background-color: #f84464; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside the button */
+    cursor: pointer; /* Pointer on hover */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .offer-button:hover {
+    background-color: #d73354; /* Darker shade on hover */
+  }
+/* src/pages/Offers.css */
+
+.offers-page {
+    background: linear-gradient(to right, #6a5acd, #ff69b4); /* Gradient background */
+    color: white; /* Text color */
+    padding: 20px; /* Padding for the page */
+  }
+  
+  .offers-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 43px; /* Title size */
+    font-weight: bold; /* Make the title bold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for a 3D effect */
+  }
+  
+  .offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between cards */
+  }
+  
+  .offer-card {
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 350px; /* Increased width for better layout */
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding inside the card */
+    transition: transform 0.2s; /* Smooth scaling on hover */
+  }
+  
+  .offer-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .offer-image {
+    width: 100%; /* Full width of the card */
+    height: 250px; /* Increased height for better visibility */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 8px; /* Round image corners */
+  }
+  
+  .offer-description {
+    color: black; /* Set description text color to black for visibility */
+    margin: 10px 0; /* Space around the description */
+  }
+  
+  .offer-button {
+    background-color: #f84464; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside the button */
+    cursor: pointer; /* Pointer on hover */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .offer-button:hover {
+    background-color: #d73354; /* Darker shade on hover */
+  }
+  .offers-page {
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Purple to Blue gradient */
+    padding: 20px;
+    color: white;
+  }
+  
+  .offers-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .filter-buttons button {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff; /* White background */
+    color: #6a11cb; /* Purple text */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .filter-buttons button:hover {
+    background-color: #e0e0e0; /* Light gray on hover */
+  }
+  
+  .offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .offer-card {
+    background-color: #fff; /* White background for cards */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px;
+    padding: 20px;
+    width: 300px; /* Set a fixed width for consistency */
+    text-align: center;
+    color: #333; /* Dark text */
+  }
+  
+  .offer-image {
+    height: 200px; /* Increased height for better visibility */
+    width: auto;
+    border-radius: 10px;
+  }
+  
+  .offer-description {
+    margin: 10px 0;
+  }
+  
+  .offer-discount {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .offer-button {
+    background-color: #6a11cb; /* Purple background for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .offer-button:hover {
+    background-color: #2575fc; /* Blue background on hover */
+  }
+  
+  /* Modal styles */
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 400px; /* Width of the modal */
+  }
+  
+  .close-button {
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+    color: #6a11cb; /* Purple close button */
+  }
+  .offers-page {
+    background: linear-gradient(to right, #ff6f91, #6a11cb, #2575fc); /* Pink, Purple to Blue gradient */
+    padding: 20px;
+    color: white;
+  }
+  
+  .offers-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .filter-buttons button {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff; /* White background */
+    color: #6a11cb; /* Purple text */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .filter-buttons button:hover {
+    background-color: #e0e0e0; /* Light gray on hover */
+  }
+  
+  .offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .offer-card {
+    background-color: #fff; /* White background for cards */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px;
+    padding: 20px;
+    width: 300px; /* Set a fixed width for consistency */
+    text-align: center;
+    color: #333; /* Dark text */
+  }
+  
+  .offer-image {
+    height: 200px; /* Increased height for better visibility */
+    width: auto;
+    border-radius: 10px;
+  }
+  
+  .offer-description {
+    margin: 10px 0;
+  }
+  
+  .offer-discount {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .offer-button {
+    background-color: #6a11cb; /* Purple background for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .offer-button:hover {
+    background-color: #2575fc; /* Blue background on hover */
+  }
+  
+  /* Modal styles */
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 400px; /* Width of the modal */
+  }
+  
+  .close-button {
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+    color: #6a11cb; /* Purple close button */
+  }
+  

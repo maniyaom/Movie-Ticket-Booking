@@ -17,6 +17,7 @@ import './components/Navbar.css';
 import Account from './Pages/Account';
 import MovieTicket from './Pages/MovieTicket';
 import MyTickets from './Pages/MyTickets';
+import Verify from './Pages/Verify';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/Offers" element={<Offers />} /> {/* Add Offers route */}
         <Route path='/MyTickets/:uid' element={<MyTickets />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
+        <Route path="/Verify" element={<Verify/>}/>
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>

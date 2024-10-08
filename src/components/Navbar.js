@@ -33,6 +33,7 @@ export default function Navbar() {
       }
     });
 
+
     return () => getUserData();
   }, [auth]);
 

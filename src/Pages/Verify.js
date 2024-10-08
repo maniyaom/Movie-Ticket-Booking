@@ -93,9 +93,9 @@ const Verify = () => {
             {scanResult ? (
                 ticketData ? (
                     ticketData.ticketValidity ? (
-                        <div style={{ color: "green" }}> Enjoy Your Movie!</div>
+                        <div style={{ color: "green" }}> This ticket is valid. Thank You for using Ticketify.</div>
                     ) : (
-                        <div style={{color:"red"}}>Oops! Ticket Already Used.</div>
+                        <div style={{color:"red"}}>Oops! This ticket has already been used.</div>
                     )
                 ) : (
                     <div>Loading ticket data...</div> 

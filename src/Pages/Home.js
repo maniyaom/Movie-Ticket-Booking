@@ -10,9 +10,13 @@ const Home = () => {
   const [allMovies, setAllMovies] = useState([]);
   const [posterPaths, setPosterPaths] = useState({});
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);  
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("All");
   const navigate = useNavigate();
   const auth = getAuth();
+
+  const genres = ["All", "Horror", "Comedy", "Adventure", "Action", "Drama"]; 
 
   // Redirect to login if user is not authenticated
   onAuthStateChanged(auth, (user) => {
@@ -33,15 +37,27 @@ const Home = () => {
     setIsImageLoaded(true);
   };
 
-  // Fetch movies and their poster paths
+  // Filter movies based on selected genre
+  const filterMoviesByGenre = (genre) => {
+    setSelectedGenre(genre);
+    if (genre === "All") {
+      setFilteredMovies(allMovies);
+    } else {
+      const filtered = allMovies.filter(movie => movie.movieGenre.toLowerCase().includes(genre.toLowerCase()));
+      setFilteredMovies(filtered);
+    }
+  }
+
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const movies = await firebase.fetchAllMovies();
         setAllMovies(movies);
-        
+        setFilteredMovies(movies); // Initialize with all movies
         // Fetch poster paths for all movies
         const paths = await Promise.all(movies.map(movie => firebase.fetchMoviePoster(movie.movieId)));
+        // Create an object with movie IDs as keys and poster paths as values
         const posterPathsObj = {};
         movies.forEach((movie, index) => {
           posterPathsObj[movie.movieId] = paths[index];
@@ -54,7 +70,7 @@ const Home = () => {
 
     document.title = 'Home - Book My Show';
     fetchMovies();
-  }, [firebase]);
+  }, []);
 
   return (
     <div className='dark:bg-slate-900 dark:text-white'>
@@ -62,8 +78,23 @@ const Home = () => {
         <Search movies={allMovies} />
       </div>
 
+      {/* Genre Filter Buttons */}
+      <div className="flex justify-center my-5 ">
+        {genres.map((genre, index) => (
+          <button
+            key={index}
+            className={`px-5 py-2 mx-2 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300 font-semibold 
+              ${selectedGenre === genre ? 'bg-red-500 text-white' : 'hover:bg-gray-400'}`}
+            onClick={() => filterMoviesByGenre(genre)}
+          >
+            {genre}
+          </button>
+        ))}
+      </div>
+
+
       <div className={`flex flex-wrap justify-start mt-10 w-[90vw] mx-auto`}>
-        {allMovies.map((movie, index) => {
+        {filteredMovies.map((movie, index) => {
           const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;
           const posterPath = posterPaths[movie.movieId];
           return (

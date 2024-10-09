@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // Adjust according to your file extensions
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {

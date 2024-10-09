@@ -16,6 +16,7 @@ import Account from './Pages/Account';
 import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
 import MyTickets from './Pages/MyTickets';
+import Verify from './Pages/Verify';
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />
         <Route path="/Account" element={<Account />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
+        <Route path="/Verify" element={<Verify/>}/>
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>

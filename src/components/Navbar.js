@@ -83,6 +83,7 @@ export default function Navbar() {
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
+
                 <ul className="nav-links ">
                     <li >
                       <NavLink
@@ -155,7 +156,6 @@ export default function Navbar() {
                   
                 </ul>
 
-                
 
                 <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
                     <details className="dropdown right" ref={detailsRef}>

@@ -13,7 +13,8 @@ const MovieDetails = () => {
   const auth = getAuth();
   const navigate = useNavigate();
 
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(0);
+  const [hoveredStar, setHoveredStar] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   const [showRatingPopup, setShowRatingPopup] = useState(false);
 
@@ -133,31 +134,42 @@ const MovieDetails = () => {
       </div>
 
       <div className={showRatingPopup ? "fixed left-1/2 transform -translate-x-1/2 top-1/2 transform -translate-y-1/2 bg-white border-2 border-red-600 rounded-lg p-5 w-64" : "hidden"}>
-        <div className="flex justify-between items-center mb-4">
-          <img src={closeIcon} className="w-6 h-6 cursor-pointer" onClick={() => setShowRatingPopup(false)} alt="Close" />
-          <span className="font-semibold text-xl text-red-600">Rate Movie</span>
-        </div>
-        <div className="flex items-center justify-center">
-          {[5, 4, 3, 2, 1].map((starValue) => (
-            <div key={starValue} className="flex items-center">
-              <input
-                value={starValue}
-                name="rate"
-                id={`star${starValue}`}
-                type="radio"
-                checked={rating === starValue}
-                onChange={() => setRating(starValue)}
-                className="hidden"
-              />
-              <label htmlFor={`star${starValue}`} className="cursor-pointer text-2xl text-gray-500 hover:text-yellow-400">★</label>
-            </div>
-          ))}
-        </div>
-        <button className="bg-red-600 text-white rounded-lg w-full mt-4 h-10" onClick={submitRating}>
-          Submit
-        </button>
+      <div className="flex justify-between items-center mb-4">
+        <img src={closeIcon} className="w-6 h-6 cursor-pointer" onClick={() => setShowRatingPopup(false)} alt="Close" />
+        <span className="font-semibold text-xl text-red-600">Rate Movie</span>
       </div>
-
+      <div className="flex items-center justify-center">
+        {[1, 2, 3, 4, 5].map((starValue) => (
+          <div
+            key={starValue}
+            className="flex items-center"
+            onMouseEnter={() => setHoveredStar(starValue)} // Set hovered star on mouse enter
+            onMouseLeave={() => setHoveredStar(0)} // Reset hovered star on mouse leave
+          >
+            <input
+              value={starValue}
+              name="rate"
+              id={`star${starValue}`}
+              type="radio"
+              checked={rating === starValue} // Check if the rating matches the starValue
+              onChange={() => setRating(starValue)} // Set rating on change
+              className="hidden"
+            />
+            <label
+              htmlFor={`star${starValue}`}
+              className={`cursor-pointer text-2xl ${
+                starValue <= (hoveredStar || rating) ? 'text-yellow-400' : 'text-gray-500'
+              } hover:text-yellow-400`}
+            >
+              ★
+            </label>
+          </div>
+        ))}
+      </div>
+      <button className="bg-red-600 text-white rounded-lg w-full mt-4 h-10" onClick={submitRating}>
+        Submit
+      </button>
+    </div>
       <Footer />
     </>
   );

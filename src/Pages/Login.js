@@ -7,7 +7,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../components/Navbar.css";
-import movie from '../assets/images/Movie-Ticket-Booking-1024x768.png';
 
 
 const Login = () => {
@@ -93,7 +92,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="login" style={{ backgroundImage: `url(${movie})` } }>
+      <div className="login">
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Login</div>
           <div className="signup-subheading myb-20">

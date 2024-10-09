@@ -18,6 +18,7 @@ import MovieTicket from './Pages/MovieTicket';
 import MyTickets from './Pages/MyTickets';
 import Verify from './Pages/Verify';
 import CheckOut from './Pages/CheckOut';
+import { BookingProvider } from './context/Booking';
 
 function App() {
   const location = useLocation();
@@ -54,7 +55,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <FirebaseProvider>
-      <App />
+      <BookingProvider>
+        <App />
+      </BookingProvider>
     </FirebaseProvider>
   </BrowserRouter>
 );

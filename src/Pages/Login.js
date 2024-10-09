@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
-import "./utils.css";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "../components/Navbar.css";
 
 const Login = () => {
   const firebase = useFirebase();
@@ -90,76 +87,62 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div
-        className="flex justify-center align-center"
-        style={{ marginTop: "70px" }}
-      >
-        <div className="signup-card">
-          <div className="signup-heading text-center myb-20">Login</div>
-          <div className="signup-subheading myb-20">
-            Please provide your email address and password.
-          </div>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white p-8 my-8 rounded-lg shadow-md w-full max-w-sm">
+        <h1 className="text-[#F84464] text-2xl font-bold text-center mb-4">Login</h1>
+        <p className="text-center mb-6 text-gray-600">
+          Please provide your email address and password.
+        </p>
 
-          <label htmlFor="email" className="label-text">
-            Email <span className="error-inline mxl-10">{emailError}</span>
-          </label>
+        <label htmlFor="email" className="text-[#F84464] block text-sm font-medium mb-1">
+          Email <span className="text-red-500">{emailError}</span>
+        </label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={`border rounded-md p-2 w-full mb-4 ${emailError && 'border-red-500'}`}
+          placeholder="e.g. example@gmail.com"
+        />
+
+        <label htmlFor="password" className="text-[#F84464] block text-sm font-medium mb-1">
+          Password <span className="text-red-500">{passwordError}</span>
+        </label>
+        <div className="relative mb-4">
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={`input-field ${
-              emailError !== "" ? "error-input-field" : ""
-            }`}
-            placeholder="e.g. example@gmail.com"
+            type={isPasswordVisible ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className={`border rounded-md p-2 w-full ${passwordError && 'border-red-500'}`}
           />
-
-          <label htmlFor="password" className="label-text">
-            Password{" "}
-            <span className="error-inline mxl-10">{passwordError}</span>
-          </label>
-          <div className="input-wrapper">
-            <input
-              type={isPasswordVisible ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className={`input-field ${
-                passwordError !== "" ? "error-input-field" : ""
-              }`}
-            />
-            <button
-              type="button"
-              className="password-toggle"
-              onClick={togglePasswordVisibility}
-            >
-              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-          <div className={isLoading ? "show-loader" : "hide-div"}>
-            <img src={loader_icon} alt="Loader Icon" />
-          </div>
-          <span className="error">{error}</span>
-
-          <button className="btn" onClick={handleSignIn}>
-            Login
-          </button>
           <span
-            style={{
-              marginTop: "20px",
-              fontSize: "15px",
-              display: "block",
-              textAlign: "center",
-            }}
+            onClick={togglePasswordVisibility}
+            className="absolute right-3 top-2 cursor-pointer"
           >
-            Don't have an account{" "}
-            <Link to="/SignUp" style={{ color: "#f84464" }}>
-              Sign Up
-            </Link>
+            {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
+
+        {isLoading && (
+          <div className="flex justify-center mb-4">
+            <img src={loader_icon} alt="Loading..." className="w-5 h-5" />
+          </div>
+        )}
+        <span className="text-red-500">{error}</span>
+
+        <button
+          onClick={handleSignIn}
+          className="bg-[#F84464] text-white rounded-lg p-2 w-full mt-4"
+        >
+          Login
+        </button>
+        <p className="text-center mt-4">
+          Don't have an account?{" "}
+          <Link to="/SignUp" className="text-blue-500 hover:underline">Sign Up</Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 

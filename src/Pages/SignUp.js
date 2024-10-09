@@ -191,7 +191,7 @@ const SignUp = () => {
 
   return (  
     <>
-      <div className="signup">
+      <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Sign Up</div>
           

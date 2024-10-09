@@ -16,7 +16,7 @@ export default function Search({ movies}) {
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearchVal(searchVal);
-        }, 1000); // Adjust the delay as needed (1000ms here)
+        }, 700); // Adjust the delay as needed (1000ms here)
 
         // Cleanup function to clear timeout if the component re-renders before the delay ends
         return () => {

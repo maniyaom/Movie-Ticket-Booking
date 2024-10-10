@@ -3,7 +3,7 @@ on:
   issues:
     types:
       - labeled
-  pull_request:
+  pull_request_target:
     types:
       - labeled
 
@@ -27,7 +27,7 @@ jobs:
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          if [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
             gh pr comment ${{ github.event.pull_request.html_url }} --body "@${{ github.event.pull_request.user.login }}
             
             ⚠️ The deployment on Vercel has failed due to an error in your code. Please review the issues, fix them, and commit your changes to this pull request. Your contributions are important to us, and we appreciate your efforts! 💪"
@@ -48,7 +48,7 @@ jobs:
             gh issue close ${{ github.event.issue.html_url }} \
             --reason "completed"
             
-          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          elif [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
             gh pr comment ${{ github.event.pull_request.html_url }} --body "@${{ github.event.pull_request.user.login }}
             
             🎉 Great news! Your pull request has been successfully merged. We appreciate your contribution!

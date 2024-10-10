@@ -108,7 +108,9 @@ const Home = () => {
                       </style>
                       <div className="faux-image-wrapper">
                         <div className="faux-image">
-                          <img alt="" src={posterPath}
+
+                          <img src={posterPath}
+
                                onLoad={handleImageLoad} />
                         </div>
                       </div>

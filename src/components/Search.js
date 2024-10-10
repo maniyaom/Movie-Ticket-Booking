@@ -6,17 +6,30 @@ export default function Search({ movies}) {
     const navigate = useNavigate();
     const [searchVal, setSearchVal] = useState("");
     const [filteredMovies, setFilteredMovies] = useState([]);
+    const [debouncedSearchVal, setDebouncedSearchVal] = useState(searchVal);
 
     const handleSearchVal = (e) => {
         setSearchVal(e.target.value);
     };
 
+    // Debouncing logic: Updates debouncedSearchVal after a delay
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearchVal(searchVal);
+        }, 700); // Adjust the delay as needed (1000ms here)
+
+        // Cleanup function to clear timeout if the component re-renders before the delay ends
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchVal]);
+
     useEffect(() => {
         const filtered = movies.filter(movie =>
-            movie?.movieTitle?.toLowerCase().includes(searchVal.toLowerCase())
+            movie?.movieTitle?.toLowerCase().includes(debouncedSearchVal.toLowerCase())
         );
         setFilteredMovies(filtered);
-    }, [searchVal, movies]);
+    }, [debouncedSearchVal, movies]);
 
     return (
         <div className='search-wrapper'>

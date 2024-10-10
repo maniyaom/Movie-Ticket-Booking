@@ -132,6 +132,7 @@ export default function Navbar() {
         </li>
       )}
       {isAdmin && (
+        <>
         <li>
           <NavLink
             to="/AddMovie"
@@ -140,6 +141,15 @@ export default function Navbar() {
             List Your Show
           </NavLink>
         </li>
+        <li>
+        <NavLink
+          to="/Verify"
+          className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+        >
+          Verify
+        </NavLink>
+      </li>
+      </>
       )}
     </ul>
 

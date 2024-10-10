@@ -181,7 +181,7 @@ const BookTicket = () => {
             <div className={showPopUp ? 'checkout-card' : 'hide-element'}>
                 <div className='flex justify-between'>
                     <div className="checkout-card-title">Booking Summary</div>
-                    <img src={closeIcon} className='icon' onClick={() => setShowPopUp(false)} />
+                    <img  alt="" src={closeIcon} className='icon' onClick={() => setShowPopUp(false)} />
                 </div>
                 <div className="text-key-value">
                     <span>Ticket Price ( x 1 Ticket)</span>
@@ -199,7 +199,7 @@ const BookTicket = () => {
                     <span>Remaining Balance</span>
                     <span className="values">{userData.wallet - seatList.length * ticketPrice} ₹</span>
                 </div>
-                <img src={loader_icon} className={isLoading ? 'loader' : 'hide-element'} />
+                <img  alt="" src={loader_icon} className={isLoading ? 'loader' : 'hide-element'} />
                 <button style={{ fontSize: '15px', margin: '5px 0px 20px calc((100% - 10rem)/2)' }} onClick={handlePayment} className='btn-primary'>
                     Make Payment
                 </button>

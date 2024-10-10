@@ -7,6 +7,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './utils.css'
 import '../components/Navbar.css';
 
+
 const SignUp = () => {
 
   const navigate = useNavigate();

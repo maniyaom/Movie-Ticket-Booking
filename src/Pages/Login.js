@@ -8,6 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../components/Navbar.css";
 
+
 const Login = () => {
   const firebase = useFirebase();
   const auth = getAuth();

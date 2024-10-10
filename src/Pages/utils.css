@@ -206,4 +206,10 @@ input[type="file"]::file-selector-button {
     border: 1px solid #ccc;
     padding-right: 40px;
 }
-
+.predefined-times{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-time.input-field{
+    padding: 13px;
+}

@@ -61,7 +61,7 @@ function MovieTicket() {
       <p>Loading</p>
     );
 
-  else if (ticketData.paidBy != userData.uid) {
+  else if (ticketData.paidBy !== userData.uid) {
     return (
       <p>You cannot access this ticket</p>
     )

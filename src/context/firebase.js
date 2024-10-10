@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword ,signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { getDatabase, set, ref, push, get } from "firebase/database";
 import { getDownloadURL as getStorageDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
-import { Link, useNavigate,} from 'react-router-dom' 
+import { useNavigate,} from 'react-router-dom' 
 
 
 const firebaseConfig = {
@@ -30,7 +30,7 @@ export const FirebaseProvider = (props) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false); // Loading state
 
-    const signInWithGoogle = async() => {
+    const signUpWithGoogle = async() => {
         const provider = new GoogleAuthProvider(); // Initialize Google Auth provider
         setLoading(true);
 
@@ -55,7 +55,32 @@ export const FirebaseProvider = (props) => {
             setLoading(false); 
         }
     };
-   
+    const signInWithGoogle = async () => {
+        const provider = new GoogleAuthProvider();
+        setLoading(true);
+    
+        try {
+            const result = await signInWithPopup(firebaseAuth, provider);
+            const user = result.user;
+            console.log("User signed in with Google:", user);
+    
+            const userRef = ref(database, `users/${user.uid}`);
+            const snapshot = await get(userRef);
+    
+            if (snapshot.exists()) {
+                console.log("User found in database:", snapshot.val());
+                return user; // Return the user object
+            } else {
+                console.log("User not found in database. Please sign up first.");
+                throw new Error("User not found. Please sign up first.");
+            }
+        } catch (error) {
+            console.error("Error during Google sign-in:", error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const signupUserWithEmailAndPassword = async (email, password) => {
         try {
@@ -226,8 +251,8 @@ export const FirebaseProvider = (props) => {
             const ticketArray = Object.values(ticketsData);
 
             // Filter the tickets where uid matches either paidBy or receivedBy
-            const paid = ticketArray.filter(ticket => uid == ticket.paidBy);
-            const received = ticketArray.filter(ticket => uid == ticket.receivedBy);
+            const paid = ticketArray.filter(ticket => uid === ticket.paidBy);
+            const received = ticketArray.filter(ticket => uid === ticket.receivedBy);
 
             return [...paid, ...received];
 
@@ -279,7 +304,7 @@ export const FirebaseProvider = (props) => {
 
 
     return (
-        <FirebaseContext.Provider value={{signInWithGoogle, signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails, fetchUserTickets }}>
+        <FirebaseContext.Provider value={{signInWithGoogle, signUpWithGoogle, signupUserWithEmailAndPassword, loginUserWithEmailAndPassword, addUser, addMovie, fetchAllMovies, fetchMoviePoster, fetchUserDetails, fetchMovieDetails, updateData, makePayment, fetchTransactionDetails, fetchTicketDetails, fetchUserTickets }}>
             {props.children}
         </FirebaseContext.Provider>
     );

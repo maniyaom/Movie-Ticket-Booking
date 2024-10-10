@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useFirebase } from "../context/firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import loader_icon from "../assets/icons/loader_icon.gif";
+import React from "react";
 import "./utils.css";
 import "./AboutUs.css";
 import Footer from "../components/Footer";

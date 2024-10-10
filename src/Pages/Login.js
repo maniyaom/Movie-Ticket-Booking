@@ -29,7 +29,7 @@ const Login = () => {
       }
     });
     document.title = "Login";
-  }, [auth]);
+  }, [auth, navigate]);
 
   const resetErrors = () => {
     setError("");
@@ -57,6 +57,30 @@ const Login = () => {
     }
     return isValid;
   };
+
+ 
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const user = await firebase.signInWithGoogle();
+      if (user) {
+        const userDetails = await firebase.fetchUserDetails(user.uid);
+        console.log("User details:", userDetails);
+        navigate("/Home");
+      }
+    } catch (error) {
+      console.error("Error during Google sign-in:", error);
+      if (error.message === "User not found. Please sign up first.") {
+        setError("No account found. Please sign up first.");
+      } else {
+        setError("Failed to sign in with Google. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   const handleSignIn = () => {
     resetErrors();
@@ -97,6 +121,15 @@ const Login = () => {
       >
         <div className="signup-card">
           <div className="signup-heading text-center myb-20">Login</div>
+
+           {/* Google Signin Option*/}
+           <div className="google-signup">
+            <button onClick={handleGoogleSignIn} className="google-btn">
+              <img src="googleLogo.png" alt="Google Logo" />
+                Sign In with Google
+            </button>
+          </div>
+        
           <div className="signup-subheading myb-20">
             Please provide your email address and password.
           </div>
@@ -152,7 +185,7 @@ const Login = () => {
               textAlign: "center",
             }}
           >
-            Don't have an account{" "}
+            Don't have an account?
             <Link to="/SignUp" style={{ color: "#f84464" }}>
               Sign Up
             </Link>

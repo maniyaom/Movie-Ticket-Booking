@@ -74,7 +74,7 @@ const MovieDetails = () => {
       <div className="main-div">
         <div className="container">
           <div className="row" style={{ width: "50rem" }}>
-            <img src={moviePosterUrl} className="poster" />
+            <img alt="" src={moviePosterUrl} className="poster" />
             <div className="column">
               <h2 name="title" className="text">
                 {movieDetails.movieTitle}
@@ -82,7 +82,7 @@ const MovieDetails = () => {
 
               <div className="row rating" style={{width: '28rem'}}>
                 <div className="flex align-center" style={{ marginLeft: '20px' }}>
-                  <img src={star} />
+                  <img alt="" src={star} />
                   <p className="text">{averageRating}</p>
                 </div>
                 <button type="button" className="rate" onClick={() => setShowRatingPopup(true)}>
@@ -126,7 +126,7 @@ const MovieDetails = () => {
 
       <div className={showRatingPopup ? "toggle-popup" : "hide-div"}>
         <div className="rating-container">
-          <img src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)} />
+          <img s alt="" src={closeIcon} className="close-icon" onClick={() => setShowRatingPopup(false)} />
           <span className="rate-popup-title">Rate Movie</span>
           <div className="rating-popup">
             <input
@@ -134,7 +134,7 @@ const MovieDetails = () => {
               name="rate"
               id="star5"
               type="radio"
-              checked={rating == 5}
+              checked={rating === 5}
               onChange={() => setRating(5)}
             />
             <label title="text" htmlFor="star5"></label>
@@ -143,7 +143,7 @@ const MovieDetails = () => {
               name="rate"
               id="star4"
               type="radio"
-              checked={rating == 4}
+              checked={rating === 4}
               onChange={() => setRating(4)}
             />
             <label title="text" htmlFor="star4"></label>
@@ -152,7 +152,7 @@ const MovieDetails = () => {
               name="rate"
               id="star3"
               type="radio"
-              checked={rating == 3}
+              checked={rating === 3}
               onChange={() => setRating(3)}
             />
             <label title="text" htmlFor="star3"></label>
@@ -161,7 +161,7 @@ const MovieDetails = () => {
               name="rate"
               id="star2"
               type="radio"
-              checked={rating == 2}
+              checked={rating === 2}
               onChange={() => setRating(2)}
             />
             <label title="text" htmlFor="star2"></label>
@@ -170,7 +170,7 @@ const MovieDetails = () => {
               name="rate"
               id="star1"
               type="radio"
-              checked={rating == 1}
+              checked={rating === 1}
               onChange={() => setRating(1)}
             />
             <label title="text" htmlFor="star1"></label>

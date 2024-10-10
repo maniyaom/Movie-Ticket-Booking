@@ -75,7 +75,7 @@ const AddMovie = () => {
                 const uid = user.uid;
                 try {
                     const userDetails = await firebase.fetchUserDetails(uid);
-                    if (userDetails.isAdmin == false) {
+                    if (userDetails.isAdmin === false) {
                         navigate('/Home');
                     }
                     else {
@@ -94,11 +94,11 @@ const AddMovie = () => {
         });
 
         return () => getUserData();
-    }, [auth]);
+    }, [auth, firebase, navigate]);
 
     const handleSubmit = async () => {
         setIsLoading(true);
-        if (validateForm() == true){
+        if (validateForm() === true){
             try {
                 const [hours, minutes,seconds] = movieDuration.split(':');
                 const formattedMovieDuration = `${hours}h ${minutes}m ${seconds}s`;
@@ -106,7 +106,7 @@ const AddMovie = () => {
                 console.log(releaseDate)
     
                 const movieTiming12hrs = convertTo12Hour(movieTiming);
-                if (isAdmin == true) {
+                if (isAdmin === true) {
                     await firebase.addMovie({ movieTitle, movieLanguage, movieDuration: formattedMovieDuration, movieGenre, movieReleaseDate: releaseDate, aboutMovie, movieCast, ticketPrice, movieTiming: movieTiming12hrs, theaterSeats, theaterName, theaterAddress, creatorId }, moviePoster);
 
                     clearForm();
@@ -133,39 +133,39 @@ const AddMovie = () => {
 
     const validateForm = () => {
         let isValid = true;
-        if (movieTitle == ""){
+        if (movieTitle === ""){
             setMovieTitleError("(Required Field)");
             isValid = false;
         }
-        if (movieLanguage == ""){
+        if (movieLanguage === ""){
             setMovieLanguageError("(Required Field)");
             isValid = false;
         }
-        if (movieDuration == ""){
+        if (movieDuration === ""){
             setMovieDurationError("(Required Field)");
             isValid = false;
         }
-        if (movieGenre == ""){
+        if (movieGenre === ""){
             setMovieGenreError("(Required Field)");
             isValid = false;
         }
-        if (movieReleaseDate == ""){
+        if (movieReleaseDate === ""){
             setMovieReleaseDateError("(Required Field)");
             isValid = false;
         }
-        if (movieTiming == ""){
+        if (movieTiming === ""){
             setMovieTimingError("(Required Field)");
             isValid = false;
         }
-        if (aboutMovie == ""){
+        if (aboutMovie === ""){
             setAboutMovieError("(Required Field)");
             isValid = false;
         }
-        if (movieCast == ""){
+        if (movieCast === ""){
             setMovieCastError("(Required Field)");
             isValid = false;
         }
-        if (ticketPrice == ""){
+        if (ticketPrice === ""){
             setTicketPriceError("(Required Field)");
             isValid = false;
         }

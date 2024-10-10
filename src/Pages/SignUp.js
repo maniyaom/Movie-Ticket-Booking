@@ -45,7 +45,7 @@ const SignUp = () => {
     document.title = 'Sign Up';
   },[auth,navigate]);
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignUp = async () => {
     try {
       setIsLoading(true);
       const result = await signInWithPopup(auth, provider);
@@ -196,7 +196,7 @@ const SignUp = () => {
           
           {/* Google Signup Option*/}
           <div className="google-signup">
-            <button onClick={handleGoogleSignIn} className="google-btn">
+            <button onClick={handleGoogleSignUp} className="google-btn">
               <img src="googleLogo.png" alt="Google Logo" />
                 Sign up with Google
             </button>
@@ -253,9 +253,9 @@ const SignUp = () => {
 
           <div className="flex align-center myb-20">
             <input type="radio" name="isAdmin" id="admin-yes" value="true" className="mxl-10"
-              onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-yes" style={{marginLeft:'3px'}}>Yes</label>
+              onChange={(e) => setIsAdmin(e.target.value === 'true')} /><label htmlFor="admin-yes" style={{marginLeft:'3px'}}>Yes</label>
             <input type="radio" name="isAdmin" id="admin-no" value="false" className="mxl-10"
-              onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-no" style={{marginLeft: '3px'}}>No</label>
+              onChange={(e) => setIsAdmin(e.target.value === 'true')} /><label htmlFor="admin-no" style={{marginLeft: '3px'}}>No</label>
           </div>
 
           <div name='theater' className={isAdmin ? '' : 'hide-div'}>
@@ -343,7 +343,7 @@ const SignUp = () => {
           <div className="terms-condition">
             By clicking the button, you are agreeing to our Terms and Services
           </div>
-          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Already have an account <Link to="/Login" style={{color: '#f84464'}}>Login</Link></span>
+          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Already have an account?<Link to="/Login" style={{color: '#f84464'}}>Login</Link></span>
         </div>
       </div>
     </>

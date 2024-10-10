@@ -46,7 +46,7 @@ export default function Navbar() {
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
                     
-                    if(userDetails.isAdmin == false)
+                    if(userDetails.isAdmin === false)
                         setIsAdmin(false);
                     else
                         setIsAdmin(true);

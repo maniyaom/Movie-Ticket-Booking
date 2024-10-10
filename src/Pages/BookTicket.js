@@ -36,7 +36,7 @@ const BookTicket = () => {
                 setMovieData(movieData);
                 // console.log("Movie data : ", movieData);
 
-                const initialSeats = movieData.theaterSeats.map(row => row.map(seat => seat == 1));
+                const initialSeats = movieData.theaterSeats.map(row => row.map(seat => seat === 1));
                 // console.log(initialSeats);
                 setSeats(initialSeats);
             } catch (error) {
@@ -94,7 +94,7 @@ const BookTicket = () => {
     };
 
     const handleProceedToPay = () => {
-        if (seatList.length == 0)
+        if (seatList.length === 0)
             alert("Please select atleast one seat");
         else if (userData.wallet >= seatList.length * ticketPrice){
             setShowPopUp(true);

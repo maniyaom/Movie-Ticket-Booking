@@ -17,6 +17,8 @@ import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
 import MyTickets from './Pages/MyTickets';
 import Verify from './Pages/Verify';
+import CheckOut from './Pages/CheckOut';
+import { BookingProvider } from './context/Booking';
 
 function App() {
   const location = useLocation();
@@ -42,6 +44,7 @@ function App() {
         <Route path="/Account" element={<Account />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
         <Route path="/Verify" element={<Verify/>}/>
+        <Route path="/Checkout/:ticketId" element={<CheckOut/>} />
         <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>
@@ -52,7 +55,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <FirebaseProvider>
-      <App />
+      <BookingProvider>
+        <App />
+      </BookingProvider>
     </FirebaseProvider>
   </BrowserRouter>
 );

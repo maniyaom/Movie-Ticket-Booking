@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
-import "./utils.css";
-import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "../components/Navbar.css";
 
 const Login = () => {
   const firebase = useFirebase();
@@ -15,16 +11,14 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const [error, setError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [alerts, setAlerts] = useState({});
+  const [authError, setAuthError] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && user.emailVerified) {
         navigate("/Home");
       }
     });
@@ -32,56 +26,44 @@ const Login = () => {
   }, [auth]);
 
   const resetErrors = () => {
-    setError("");
-    setEmailError("");
-    setPasswordError("");
-  };
-
-  const validateEmailFormat = (email) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
+    setAuthError("");
   };
 
   const validateForm = () => {
     let isValid = true;
-    if (email === "") {
-      setEmailError("(Required Field)");
-      isValid = false;
-    } else if (!validateEmailFormat(email)) {
-      setEmailError("(Invalid Email Format)");
-      isValid = false;
-    }
-    if (password === "") {
-      setPasswordError("(Required Field)");
+    if (email === "" || password === "") {
+      setAuthError("Email and password are required.");
       isValid = false;
     }
     return isValid;
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async (event) => {
+    event.preventDefault();
     resetErrors();
-    let isValid = validateForm();
-    if (isValid) {
-      setIsLoading(true);
-      setError("");
-      firebase
-        .loginUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log("User logged in successfully!");
-          setEmail("");
-          setPassword("");
-          setError("");
-        })
-        .catch((error) => {
-          if (error.message === "Firebase: Error (auth/invalid-credential).")
-            setError("Incorrect email or password");
-          else if (error.message === "Firebase: Error (auth/invalid-email).")
-            setEmailError("(Invalid Email)");
-          else setError("Can't Sign In, Unexpected error occurred!");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+    if (validateForm()) {
+      setAlerts({ alertProcess: true });
+      try {
+        const userCredential = await firebase.loginUserWithEmailAndPassword(email, password);
+        if (userCredential && userCredential.user.emailVerified) {
+          setAlerts({ alertSuccess: true, success: true });
+          setTimeout(() => {
+            navigate("/Home");
+            setAlerts({});
+          }, 1000);
+        } else {
+          setAuthError("Please verify your email.");
+        }
+      } catch (error) {
+        setAlerts({});
+        if (error.code === "auth/invalid-credential") {
+          setAuthError("Invalid email or password.");
+        } else if (error.code === "auth/too-many-requests") {
+          setAuthError("Too many attempts! Please try again later.");
+        } else {
+          setAuthError("An unexpected error occurred.");
+        }
+      }
     }
   };
 
@@ -91,72 +73,84 @@ const Login = () => {
 
   return (
     <>
-      <div
-        className="flex justify-center align-center"
-        style={{ marginTop: "70px" }}
-      >
-        <div className="signup-card">
-          <div className="signup-heading text-center myb-20">Login</div>
-          <div className="signup-subheading myb-20">
-            Please provide your email address and password.
-          </div>
+      <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 text-gray-600">
+        <div className="relative flex flex-col sm:w-[30rem] rounded-lg bg-white shadow-lg px-4">
+          <div className="flex-auto p-6">
+            <div className="mb-10 flex items-center justify-center">
+              <a
+                href="#"
+                className="flex items-center gap-2 text-[#F84464] font-black tracking-tight text-3xl"
+              >
+                Password Manager
+              </a>
+            </div>
+            <h4 className="mb-2 text-xl font-medium text-gray-700">Welcome to Password Manager</h4>
+            <p className="mb-6 text-gray-500">Please sign in to access your account.</p>
 
-          <label htmlFor="email" className="label-text">
-            Email <span className="error-inline mxl-10">{emailError}</span>
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={`input-field ${
-              emailError !== "" ? "error-input-field" : ""
-            }`}
-            placeholder="e.g. example@gmail.com"
-          />
+            <form onSubmit={handleSignIn}>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="mb-2 inline-block text-sm font-medium text-gray-700"
+                >
+                  Email or Username
+                </label>
+                <input
+                  type="text"
+                  className="block w-full border rounded-md p-3 text-sm border-gray-400 focus:border-[#F84464] focus:shadow"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
 
-          <label htmlFor="password" className="label-text">
-            Password{" "}
-            <span className="error-inline mxl-10">{passwordError}</span>
-          </label>
-          <div className="input-wrapper">
-            <input
-              type={isPasswordVisible ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className={`input-field ${
-                passwordError !== "" ? "error-input-field" : ""
-              }`}
-            />
-            <button
-              type="button"
-              className="password-toggle"
-              onClick={togglePasswordVisibility}
-            >
-              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-          <div className={isLoading ? "show-loader" : "hide-div"}>
-            <img src={loader_icon} alt="Loader Icon" />
-          </div>
-          <span className="error">{error}</span>
+              <div className="mb-4">
+                <div className="flex justify-between">
+                  <label
+                    htmlFor="password"
+                    className="mb-2 text-sm font-medium text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <Link
+                    to="/ForgotPassword"
+                    className="text-[#F84464] hover:underline"
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
+                <div className="relative flex items-stretch">
+                  <input
+                    type={isPasswordVisible ? "text" : "password"}
+                    className="w-full border rounded-md p-3 text-sm border-gray-400 focus:border-[#F84464] focus:shadow"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span
+                    onClick={togglePasswordVisibility}
+                    className="absolute right-3 top-3 cursor-pointer"
+                  >
+                    {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-red-600">{authError}</p>
+              </div>
 
-          <button className="btn" onClick={handleSignIn}>
-            Login
-          </button>
-          <span
-            style={{
-              marginTop: "20px",
-              fontSize: "15px",
-              display: "block",
-              textAlign: "center",
-            }}
-          >
-            Don't have an account{" "}
-            <Link to="/SignUp" style={{ color: "#f84464" }}>
-              Sign Up
-            </Link>
-          </span>
+              <button
+                type="submit"
+                className="w-full bg-[#F84464] text-white rounded-md py-2 px-4 hover:bg-indigo-600"
+              >
+                Login
+              </button>
+            </form>
+            <p className="text-center mt-4">
+          Don't have an account?{" "}
+          <Link to="/SignUp" className="text-blue-500 hover:underline">Sign Up</Link>
+        </p>
+          </div>
         </div>
       </div>
     </>

@@ -44,7 +44,7 @@ const Account = () => {
                 navigate('/Login');
             }
         });
-    }, [auth])
+    }, [auth, firebase, navigate])
 
     if (!userData || !transactionData)
         return <p>Loading...</p>
@@ -76,8 +76,8 @@ const Account = () => {
                     {transactionData.map((transaction, index) => {
                         const { movieTitle, ticketId, bookedSeats, subtotal, paidBy, transactionTime } = transaction;
 
-                        let amount = paidBy == userData.uid ? `- ${subtotal}` : `+ ${subtotal}`;
-                        let color = paidBy == userData.uid ? 'color-red' : 'color-green';
+                        let amount = paidBy === userData.uid ? `- ${subtotal}` : `+ ${subtotal}`;
+                        let color = paidBy === userData.uid ? 'color-red' : 'color-green';
 
                         return (
                             <TransactionDetail key={index} ticketId={ticketId} title={movieTitle} transactionId={ticketId} bookedSeats={bookedSeats.join(', ')} amount={amount} date={transactionTime} color={color} />

@@ -30,9 +30,12 @@ code {
 ::-webkit-scrollbar-thumb{
   background: linear-gradient(rgb(247, 133, 154),rgba(248, 68, 100, 1.0));
   border-radius: 100vw;
-} 
-@supports (scrollbar-color:#ba9bf4,#6967d8){
-  *{
-      scrollbar-color:#ba9bf4 #6967d8;
+}
+@supports (scrollbar-color: #ba9bf4 #6967d8) {
+  ::-webkit-scrollbar {
+    background: #6967d8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #ba9bf4;
   }
 }

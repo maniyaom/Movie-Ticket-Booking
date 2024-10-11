@@ -37,10 +37,18 @@ const Login = () => {
     setPasswordError("");
   };
 
+  const validateEmailFormat = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
   const validateForm = () => {
     let isValid = true;
     if (email === "") {
       setEmailError("(Required Field)");
+      isValid = false;
+    } else if (!validateEmailFormat(email)) {
+      setEmailError("(Invalid Email Format)");
       isValid = false;
     }
     if (password === "") {

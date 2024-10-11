@@ -76,7 +76,7 @@ const MovieDetails = () => {
           <div className="row" style={{ width: "50rem" }}>
             <img src={moviePosterUrl} className="poster" />
             <div className="column">
-              <h2 name="title" className="text">
+              <h2 name="title" className="text font-bold text-2xl">
                 {movieDetails.movieTitle}
               </h2>
 
@@ -114,12 +114,12 @@ const MovieDetails = () => {
 
       <div className="column" style={{ backgroundColor: 'white' }}>
         <div style={{ color: "black", margin: '1.5rem 13.5rem' }}>
-          <h3 style={{ marginBottom: '5px' }}>About the movie</h3>
+          <h3 style={{ marginBottom: '5px' }} className="text-lg font-bold">About the movie</h3>
           <p>{movieDetails.aboutMovie}</p>
           <br></br>
           <hr style={{ color: 'skyblue', opacity: 0.3 }}></hr>
           <br></br>
-          <h3 style={{ marginBottom: '5px' }}>Cast</h3>
+          <h3 style={{ marginBottom: '5px' }} className="text-lg font-bold">Cast</h3>
           <p>{movieDetails.movieCast}</p>
         </div>
       </div>

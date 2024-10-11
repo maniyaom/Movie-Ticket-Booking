@@ -80,6 +80,11 @@ const SignUp = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
 
+  const validateEmailFormat = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
   const validateForm = () => {
     let isValid = true;
     if (name === "") {
@@ -89,6 +94,9 @@ const SignUp = () => {
 
     if (email === "") {
       setEmailError("(Required Field)");
+      isValid = false;
+    } else if (!validateEmailFormat(email)) {
+      setEmailError("(Invalid Email Format)");
       isValid = false;
     }
     if (!phone.match(/^(\+\d{1,3}[- ]?)?\d{10}$/) || phone.match(/0{5,}/)) {

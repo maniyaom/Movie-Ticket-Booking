@@ -4,13 +4,17 @@ import './Home.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import Footer from '../components/Footer';
+import Search from '../components/Search';
 
 const Home = () => {
   const firebase = useFirebase();
   const [allMovies, setAllMovies] = useState([]);
   const [posterPaths, setPosterPaths] = useState({});
-
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("All");
+
+  const genres = ["All", "Horror", "Comedy", "Adventure", "Action", "Drama"]; 
 
   const navigate = useNavigate();
   const auth = getAuth();
@@ -25,11 +29,23 @@ const Home = () => {
     setIsImageLoaded(true);
   }
 
+  // Filter movies based on selected genre
+  const filterMoviesByGenre = (genre) => {
+    setSelectedGenre(genre);
+    if (genre === "All") {
+      setFilteredMovies(allMovies);
+    } else {
+      const filtered = allMovies.filter(movie => movie.movieGenre.toLowerCase().includes(genre.toLowerCase()));
+      setFilteredMovies(filtered);
+    }
+  }
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const movies = await firebase.fetchAllMovies();
         setAllMovies(movies);
+        setFilteredMovies(movies); // Initialize with all movies
         // Fetch poster paths for all movies
         const paths = await Promise.all(movies.map(movie => firebase.fetchMoviePoster(movie.movieId)));
         // Create an object with movie IDs as keys and poster paths as values
@@ -48,17 +64,32 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      <div className="poster-container">
-        {allMovies.map((movie, index) => {
-          const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;
-          const posterPath = posterPaths[movie.movieId];
-          return (
-            <Link to={"/MovieDetails/" + movieId} key={index}>
-              <div className="poster">
-                <div className="placeholder shimmer" style={{ width: '222px', height: '340px' }}>
-                  <style>
-                    {`
+      <>
+        <Search movies={allMovies} />
+
+        {/* Genre Filter Buttons */}
+        <div className="genre-buttons">
+          {genres.map((genre, index) => (
+              <button
+                  key={index}
+                  className={`genre-button ${selectedGenre === genre ? 'active' : ''}`}
+                  onClick={() => filterMoviesByGenre(genre)}
+              >
+                {genre}
+              </button>
+          ))}
+        </div>
+
+        <div className="poster-container">
+          {filteredMovies.map((movie, index) => {
+            const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;
+            const posterPath = posterPaths[movie.movieId];
+            return (
+                <Link to={"/MovieDetails/" + movieId} key={index}>
+                  <div className="poster">
+                    <div className="placeholder shimmer" style={{ width: '222px', height: '340px' }}>
+                      <style>
+                        {`
                       .shimmer::before {
                         content: "";
                         position: absolute;
@@ -74,24 +105,24 @@ const Home = () => {
                         ${isImageLoaded ? 'z-index: -1;' : ''}
                        }
                      `}
-                  </style>
-                  <div className="faux-image-wrapper">
-                    <div className="faux-image">
-                      <img src={posterPath}
-                        onLoad={handleImageLoad} />
+                      </style>
+                      <div className="faux-image-wrapper">
+                        <div className="faux-image">
+                          <img src={posterPath}
+                               onLoad={handleImageLoad} />
+                        </div>
+                      </div>
                     </div>
+                    <div className="timestamp myt-10" style={{ fontWeight: 500 }}>{movieReleaseDate}</div>
+                    <div className="movie-name myt-5" style={{ fontWeight: 600 }}>{movieTitle}</div>
+                    <div className="movie-genre myt-5" style={{ opacity: 0.8, fontSize: 15 }}>{movieGenre}</div>
                   </div>
-                </div>
-                <div className="timestamp myt-10" style={{ fontWeight: 500 }}>{movieReleaseDate}</div>
-                <div className="movie-name myt-5" style={{ fontWeight: 600 }}>{movieTitle}</div>
-                <div className="movie-genre myt-5" style={{ opacity: 0.8, fontSize: 15 }}>{movieGenre}</div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-      <Footer />
-    </>
+                </Link>
+            );
+          })}
+        </div>
+        <Footer />
+      </>
   );
 };
 

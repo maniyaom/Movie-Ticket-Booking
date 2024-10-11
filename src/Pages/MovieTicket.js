@@ -1,10 +1,10 @@
 import "./MovieTicket.css";
-import qrCode from "../assets/images/qr.png";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {QRCodeSVG} from 'qrcode.react';
 
 function Ticket({ seat }) {
   return (
@@ -26,7 +26,6 @@ function MovieTicket() {
 
   const [ticketData, setTicketData] = useState(null);
   const [userData, setUserData] = useState(null);
-
 
   useEffect(() => {
     async function fetchTicketDetails() {
@@ -52,7 +51,9 @@ function MovieTicket() {
         navigate('/Login');
       }
     });
-
+    console.log(ticketData);
+    console.log(toString(ticketData));
+    
     fetchTicketDetails();
   }, [ticketId]);
 
@@ -116,10 +117,9 @@ function MovieTicket() {
             <h4>Seat: {ticketData.bookedSeats.join(', ')}</h4>
             <hr />
             <h4>Time: {ticketData.movieTiming}</h4>
-            <img
-              src={qrCode}
-              style={{ width: "8rem", height: "6rem", marginBottom: "0.5rem" }}
-            ></img>
+            <div>
+            <QRCodeSVG value={JSON.stringify(ticketData.ticketId)}/>,
+            </div>
           </div>
         </div>
       </div>

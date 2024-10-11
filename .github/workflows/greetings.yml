@@ -1,0 +1,37 @@
+
+name: Greetings
+on:
+  issues:
+    types:
+      - opened
+  pull_request_target:
+    types:
+      - opened
+
+jobs:
+  Greetings:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "${{ github.event_name }}" == "issues" ]]; then
+            gh issue comment ${{ github.event.issue.html_url }} --body "@${{ github.event.issue.user.login }}
+            
+            Thank you for raising this issue! 🎉🙌
+            
+            We truly appreciate your contribution to this project and will review the details shortly. 🛠️✨
+            We will get back to you soon!
+            
+            Thank you for your patience! 🙏"
+          elif [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
+            gh pr comment ${{ github.event.pull_request.html_url }} --body "@${{ github.event.pull_request.user.login }}
+            
+            Thank you for your Pull Request!
+            
+            We truly appreciate your contribution! 🙌
+            We will review the changes and provide feedback or merge the PR soon. 🔍
+            Please stay tuned for updates! 🔔
+            
+            🌟 Thank you for your efforts in improving the project! 🙏"
+          fi

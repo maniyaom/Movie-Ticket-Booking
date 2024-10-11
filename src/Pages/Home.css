@@ -82,3 +82,29 @@ a{
       transform: translateX(100%);
     }
   }
+
+.genre-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.genre-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: lightgray;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 600;
+}
+
+.genre-button:hover {
+    background-color: #ddd;
+}
+
+.genre-button.active {
+    background-color: #ff4747;
+    color: white;
+}

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import "./style.css";
+import "./utils.css";
+import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "../components/Navbar.css";
 
 const Login = () => {
   const firebase = useFirebase();
@@ -11,14 +15,16 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const [alerts, setAlerts] = useState({});
-  const [authError, setAuthError] = useState("");
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user && user.emailVerified) {
+      if (user) {
         navigate("/Home");
       }
     });
@@ -26,44 +32,56 @@ const Login = () => {
   }, [auth]);
 
   const resetErrors = () => {
-    setAuthError("");
+    setError("");
+    setEmailError("");
+    setPasswordError("");
+  };
+
+  const validateEmailFormat = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
   };
 
   const validateForm = () => {
     let isValid = true;
-    if (email === "" || password === "") {
-      setAuthError("Email and password are required.");
+    if (email === "") {
+      setEmailError("(Required Field)");
+      isValid = false;
+    } else if (!validateEmailFormat(email)) {
+      setEmailError("(Invalid Email Format)");
+      isValid = false;
+    }
+    if (password === "") {
+      setPasswordError("(Required Field)");
       isValid = false;
     }
     return isValid;
   };
 
-  const handleSignIn = async (event) => {
-    event.preventDefault();
+  const handleSignIn = () => {
     resetErrors();
-    if (validateForm()) {
-      setAlerts({ alertProcess: true });
-      try {
-        const userCredential = await firebase.loginUserWithEmailAndPassword(email, password);
-        if (userCredential && userCredential.user.emailVerified) {
-          setAlerts({ alertSuccess: true, success: true });
-          setTimeout(() => {
-            navigate("/Home");
-            setAlerts({});
-          }, 1000);
-        } else {
-          setAuthError("Please verify your email.");
-        }
-      } catch (error) {
-        setAlerts({});
-        if (error.code === "auth/invalid-credential") {
-          setAuthError("Invalid email or password.");
-        } else if (error.code === "auth/too-many-requests") {
-          setAuthError("Too many attempts! Please try again later.");
-        } else {
-          setAuthError("An unexpected error occurred.");
-        }
-      }
+    let isValid = validateForm();
+    if (isValid) {
+      setIsLoading(true);
+      setError("");
+      firebase
+        .loginUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log("User logged in successfully!");
+          setEmail("");
+          setPassword("");
+          setError("");
+        })
+        .catch((error) => {
+          if (error.message === "Firebase: Error (auth/invalid-credential).")
+            setError("Incorrect email or password");
+          else if (error.message === "Firebase: Error (auth/invalid-email).")
+            setEmailError("(Invalid Email)");
+          else setError("Can't Sign In, Unexpected error occurred!");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 
@@ -73,83 +91,70 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex min-h-screen w-screen items-center justify-center bg-gray-50 text-gray-600">
-        <div className="relative flex flex-col sm:w-[30rem] rounded-lg bg-white shadow-lg px-4">
-          <div className="flex-auto p-6">
-            <div className="mb-10 flex items-center justify-center">
-              <a
-                href="#"
-                className="flex items-center gap-2 text-[#F84464] font-black tracking-tight text-3xl"
-              >
-                Password Manager
-              </a>
-            </div>
-            <h4 className="mb-2 text-xl font-medium text-gray-700">Welcome to Password Manager</h4>
-            <p className="mb-6 text-gray-500">Please sign in to access your account.</p>
+      <div className="flex min-h-screen w-screen w-full items-center justify-center text-gray-600 bg-gray-50">
+        <div className="relative">
 
-            <form onSubmit={handleSignIn}>
+          <div className="hidden sm:block h-56 w-56 text-indigo-300 absolute a-z-10 -left-20 -top-20">
+            <svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(0.6) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='none' /><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5' strokeWidth='1' stroke='none' fill='#f43f5e' /></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(#a)' /></svg>
+          </div>
+          <div className="hidden sm:block h-28 w-28 text-indigo-300 absolute a-z-10 -right-20 -bottom-20">
+            <svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='b' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='scale(0.5) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='none' /><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5' strokeWidth='1' stroke='none' fill='#f43f5e' /></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(#b)' /></svg>
+          </div>
+          <div className="relative flex flex-col sm:w-[30rem] rounded-lg border-gray-400 bg-white shadow-lg px-4">
+            <div className="flex-auto p-6">
+              <div className="mb-10 flex flex-shrink-0 flex-grow-0 items-center justify-center overflow-hidden">
+                <a href="#" className="flex cursor-pointer items-center gap-2 text-rose-500 no-underline hover:text-indigo-500">
+                  <span className="flex-shrink-0 text-3xl font-black tracking-tight opacity-100">Ticketify</span>
+                </a>
+              </div>
+              <h4 className="mb-2 font-medium text-gray-700 xl:text-xl">Welcome to Ticketify</h4>
+              <p className="mb-6 text-gray-500">Please provide your email address and password.</p>
+
               <div className="mb-4">
-                <label
-                  htmlFor="email"
-                  className="mb-2 inline-block text-sm font-medium text-gray-700"
-                >
-                  Email or Username
-                </label>
-                <input
-                  type="text"
-                  className="block w-full border rounded-md p-3 text-sm border-gray-400 focus:border-[#F84464] focus:shadow"
-                  name="email"
-                  placeholder="Enter your email"
+                <label htmlFor="email" className="mb-2 inline-block text-sm font-medium text-gray-700">Email or Username<span className="text-red-600 ml-2.5">{emailError}</span></label>
+                <input type="text" className={`block w-full cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow ${emailError !== "" ? "border border-red-600" : ""
+                  }`} name="email" placeholder="Enter your email" autoFocus=""
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-
               <div className="mb-4">
-                <div className="flex justify-between">
-                  <label
-                    htmlFor="password"
-                    className="mb-2 text-sm font-medium text-gray-700"
-                  >
-                    Password
-                  </label>
-                  <Link
-                    to="/ForgotPassword"
-                    className="text-[#F84464] hover:underline"
-                  >
-                    Forgot Password?
+                <div className="flex justify-between align-center">
+                  <label className="mb-2 inline-block text-sm font-medium text-gray-700" htmlFor="password">Password<span className="text-red-600 ml-2.5">{passwordError}</span></label>
+                  <Link to="/ForgotPassword" className="cursor-pointer text-gray-500 no-underline">
+                    <small>Forgot Password?</small>
                   </Link>
                 </div>
-                <div className="relative flex items-stretch">
-                  <input
-                    type={isPasswordVisible ? "text" : "password"}
-                    className="w-full border rounded-md p-3 text-sm border-gray-400 focus:border-[#F84464] focus:shadow"
-                    name="password"
-                    placeholder="Enter your password"
+                <div className="relative flex w-full flex-wrap items-stretch">
+                  <input type={isPasswordVisible ? "text" : "password"} className={`relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:shadow ${passwordError !== "" ? "border border-red-600" : ""
+                    }`} name="password" placeholder="Enter your Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <span
+                    onChange={(e) => setPassword(e.target.value)} />
+
+                  <button
+                    type="button"
+                    className="password-toggle mt-0.5"
                     onClick={togglePasswordVisibility}
-                    className="absolute right-3 top-3 cursor-pointer"
                   >
                     {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                  </span>
+                  </button>
                 </div>
-                <p className="mt-2 text-sm text-red-600">{authError}</p>
+                <p className="mt-2 text-sm text-red-600 dark:text-red-500">{error}</p>
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-[#F84464] text-white rounded-md py-2 px-4 hover:bg-indigo-600"
-              >
-                Login
-              </button>
-            </form>
-            <p className="text-center mt-4">
-          Don't have an account?{" "}
-          <Link to="/SignUp" className="text-blue-500 hover:underline">Sign Up</Link>
-        </p>
+              <div className={isLoading ? "flex justify-center mb-1" : "hidden"}>
+                <img src={loader_icon} className="w-12 h-12" alt="Loader Icon" />
+              </div>
+
+              <div className="mb-4">
+                <button className="grid w-full cursor-pointer select-none rounded-md border border-rose-500 bg-rose-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-rose-600 hover:bg-rose-600 hover:text-white focus:border-rose-600 focus:bg-rose-600 focus:text-white focus:shadow-none" onClick={handleSignIn}>Sign in</button>
+              </div>
+
+              <p className="mb-4 text-center">
+                New on Ticketify?
+                <Link to="/SignUp" className="cursor-pointer text-rose-500 no-underline">Create an account </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>

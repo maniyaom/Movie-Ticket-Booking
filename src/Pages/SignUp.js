@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useFirebase } from "../context/firebase";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { Link, useNavigate } from 'react-router-dom'
-import { getAuth,GoogleAuthProvider,signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import google_logo from '../assets/icons/google-logo.png';
 import './utils.css'
 import '../components/Navbar.css';
 
@@ -12,7 +13,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const firebase = useFirebase();
   const auth = getAuth();
-  const provider = new GoogleAuthProvider(); 
+  const provider = new GoogleAuthProvider();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +26,7 @@ const SignUp = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -33,8 +35,8 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState("");
   const [isCreatePasswordVisible, setIsCreatePasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-  
-  
+
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -43,7 +45,7 @@ const SignUp = () => {
       }
     });
     document.title = 'Sign Up';
-  },[auth,navigate]);
+  }, [auth, navigate]);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -86,54 +88,46 @@ const SignUp = () => {
   };
 
   const validateForm = () => {
-    let isValid = true;
+    let error = {};
     if (name === "") {
-      setNameError("(Required Field)");
-      isValid = false;
+      error.name = "(Required Field)";
     }
 
     if (email === "") {
-      setEmailError("(Required Field)");
-      isValid = false;
+      error.email = "(Required Field)";
     } else if (!validateEmailFormat(email)) {
-      setEmailError("(Invalid Email Format)");
-      isValid = false;
+      error.email = "(Invalid Email Format)";
     }
     if (!phone.match(/^(\+\d{1,3}[- ]?)?\d{10}$/) || phone.match(/0{5,}/)) {
-      setPhoneError("(Invalid Phone Number)");
-      isValid = false;
+      error.phone = "(Invalid Phone Number)";
     }
 
     if (isAdmin === true) {
       if (theaterName === "") {
-        setTheaterNameError("(Invalid Theater name)");
-        isValid = false;
+        error.theaterName = "(Invalid Theater name)";
       }
       if (theaterAddress === "") {
-        setTheaterAddressError("(Invalid Theater address)");
-        isValid = false;
+        error.theaterAddress = "(Invalid Theater address)";
       }
     }
 
     if (createPassword !== confirmPassword) {
-      setPasswordError("(Passwords are not matching)")
-      isValid = false;
+      error.confirmPassword = "(Passwords are not matching)";
     } else {
       if (createPassword.length < 8) {
-        setPasswordError("(Password must be more than 8 characters)");
-        isValid = false;
+        error.createPassword = "(Password must be more than 8 characters)";
       }
       else if (!createPassword.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!#%&*?])[A-Za-z\d@!#%&*?]{8,}$/)) {
-        setPasswordError('(Please include lowercase, uppercase, special characters)');
-        isValid = false;
+        error.createPassword = "(Please include lowercase, uppercase, special characters)";
       }
     }
-    return isValid;
+    setErrors(error);
+    return Object.keys(error).length === 0;
   }
 
   const handleSignUp = () => {
     resetErrors();
-    let isValid = validateForm()
+    let isValid = validateForm();
     if (isValid === true) {
       setIsLoading(true);
       setError("")
@@ -141,7 +135,7 @@ const SignUp = () => {
         .then((userCredential) => {
           console.log("User signed up successfully!");
           if (isAdmin === true) {
-            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet:2000 })
+            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, theaterName, theaterAddress, wallet: 2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
                 navigate("/Login");
@@ -157,7 +151,7 @@ const SignUp = () => {
               });
           }
           else {
-            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, wallet:2000 })
+            firebase.addUser(userCredential.user.uid, { name, email, phone, isAdmin, wallet: 2000 })
               .then(() => {
                 console.log("User data successfully stored in Firebase");
                 navigate('/Login');
@@ -176,11 +170,11 @@ const SignUp = () => {
         .catch(error => {
           console.error("Error signing up:", error.message);
           if (error.message === "Firebase: Error (auth/email-already-in-use).")
-            setError("Can't Sign Up, Email address already in use");
+            setErrors({ authError: "Can't Sign Up, Email address already in use" });
           else if (error.message === "Firebase: Error (auth/invalid-email).")
-            setError("Can't Sign Up, Invalid email");
+            setErrors({ authError: "Can't Sign Up, Invalid email" });
           else
-            setError("Can't Sign Up, Unexpected error occured !!");
+            setErrors({ authErrors: "Can't Sign Up, Unexpected error occured !!" });
         })
         .finally(() => {
           setIsLoading(false);
@@ -188,162 +182,159 @@ const SignUp = () => {
     };
   }
 
-  return (  
+  const tempmethod = (value) => {
+    console.log(value);
+    setIsAdmin(value == 'true');
+  }
+
+  return (
     <>
-      <div className="flex justify-center align-center" style={{ marginTop: '30px' }}>
-        <div className="signup-card">
-          <div className="signup-heading text-center myb-20">Sign Up</div>
-          
-          {/* Google Signup Option*/}
-          <div className="google-signup">
-            <button onClick={handleGoogleSignIn} className="google-btn">
-              <img src="googleLogo.png" alt="Google Logo" />
-                Sign up with Google
+      <div className="flex justify-center align-center h-screen w-screen flex-wrap text-slate-800">
+        <div className="flex w-full flex-col md:w-1/2">
+          <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]">
+            <p className="text-center text-3xl font-bold md:text-left md:leading-tight">Create your account</p>
+            <p className="mt-6 text-center font-medium md:text-left">
+              Already using password manager?
+              <Link to="/Login" className="whitespace-nowrap font-semibold text-blue-700 mx-1">Login here</Link>
+            </p>
+            <button className="mt-8 flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
+              onClick={handleGoogleSignIn}>
+              <img className="mr-2 h-5 w-5" src={google_logo} alt="Google logo" />
+              Sign Up with Google
             </button>
-          </div>
-        
-          <div className="signup-subheading myb-20">
-            Please provide your name, email address, and phone number.
-          </div>
+            <div className="relative mt-8 mb-6 flex h-px place-items-center bg-gray-200">
+              <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">Or use email instead</div>
+            </div>
+            <div className="mb-4 flex flex-col w-full">
+              <label htmlFor="nameOfTheUser" className="mb-2 inline-block text-sm font-medium text-gray-700">Name <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.name}</span></label>
+              <input type="text" className="block w-full cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" id="nameOfTheUser" name="nameOfTheUser" placeholder="Enter Your Name" autoFocus=""
+                value={name}
+                onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between align-center">
+                <label className="mb-2 inline-block text-sm font-medium text-gray-700" htmlFor="email">Email <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.email}</span></label>
+              </div>
+              <div className="relative flex flex-col w-full flex-wrap items-stretch">
+                <input type="email" id="email" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" name="email" placeholder="Enter your Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
+              </div>
+            </div>
 
-          <label htmlFor="username" className="label-text">
-            Name
-            <span className="error-inline">{nameError}</span>
-          </label>
-          <input
-            type="text"
-            id="username"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={`input-field ${nameError !== "" ? 'error-input-field' : ''}`}
-            placeholder="e.g. John Doe"
-          />
+            <div className="mb-4">
+              <div className="flex justify-between align-center">
+                <label className="mb-2 inline-block text-sm font-medium text-gray-700" htmlFor="phone">Phone <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.phone}</span></label>
+              </div>
+              <div className="relative flex flex-col w-full flex-wrap items-stretch">
+                <input type="number" id="phone" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" name="email" placeholder="Enter your Email"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)} />
+              </div>
+            </div>
 
-          <label htmlFor="email" className="label-text">
-            Email 
-            <br/>
-            <span className="error-inline">{emailError}</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={`input-field ${emailError !== "" ? 'error-input-field' : ''}`}
-            placeholder="e.g. example@gmail.com"
-          />
+            <div>
+              <div className="flex justify-between align-center">
+                <label className="mb-2 inline-block text-sm font-medium text-gray-700">Want to list your show?</label>
+              </div>
 
-          <label htmlFor="phone" className="label-text">
-            Phone Number 
-            <br/>
-            <span className="error-inline">{phoneError}</span>
-          </label>
-          <input
-            type="text"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className={`input-field ${phoneError !== "" ? 'error-input-field' : ''}`}
-            placeholder="e.g. 1234567890"
-          />
+              <div className="flex items-center mb-5">
+                <input type="radio" name="isAdmin" id="admin-yes" value="true" className="mxl-10"
+                  onChange={(e) => setIsAdmin(true)}
+                  checked={isAdmin === true} 
+                  /><label htmlFor="admin-yes" style={{ marginLeft: '3px' }}>Yes</label>
+                <input type="radio" name="isAdmin" id="admin-no" value="false" className="mxl-10"
+                  onChange={(e) => setIsAdmin(false)}
+                  checked={isAdmin === false} 
+                /><label htmlFor="admin-no" style={{ marginLeft: '3px' }}>No</label>
+              </div>
+            </div>
 
-          <label className="label-text">
-            Want to list your show?
-          </label>
+            <div name='theater' className={isAdmin ? '' : 'hidden'}>
+              <div className="mb-4">
+                <div className="flex justify-between align-center">
+                  <label className="mb-2 inline-block text-sm font-medium text-gray-700">Theater Name <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.theaterName}</span></label>
+                </div>
 
-          <div className="flex align-center myb-20">
-            <input type="radio" name="isAdmin" id="admin-yes" value="true" className="mxl-10"
-              onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-yes" style={{marginLeft:'3px'}}>Yes</label>
-            <input type="radio" name="isAdmin" id="admin-no" value="false" className="mxl-10"
-              onChange={(e) => setIsAdmin(e.target.value == 'true')} /><label htmlFor="admin-no" style={{marginLeft: '3px'}}>No</label>
-          </div>
+                <div className="relative flex flex-col w-full flex-wrap items-stretch">
+                  <input type="text" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" placeholder="e.g. Rahulraj PVR"
+                    value={theaterName}
+                    onChange={(e) => setTheaterName(e.target.value)} />
+                </div>
+              </div>
 
-          <div name='theater' className={isAdmin ? '' : 'hide-div'}>
-            <label className="label-text">
-              Theater Name 
-              <br/>
-              <span className="error-inline">{theaterNameError}</span>
-            </label>
-            <input
-              type="text"
-              value={theaterName}
-              onChange={(e) => setTheaterName(e.target.value)}
-              className={`input-field ${theaterNameError !== "" ? 'error-input-field' : ''}`}
-              placeholder="e.g. Rahulraj PVR"
-            />
+              <div className="mb-4">
+                <div className="flex justify-between align-center">
+                  <label className="mb-2 inline-block text-sm font-medium text-gray-700">Theater Address <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.theaterAddress}</span></label>
+                </div>
 
-            <label className="label-text">
-              Theater Address
-              <br/>
-               <span className="error-inline">{theaterAddressError}</span>
-            </label>
-            <textarea
-              value={theaterAddress}
-              onChange={(e) => setTheaterAddress(e.target.value)}
-              className={`input-field ${theaterAddressError !== "" ? 'error-input-field' : ''}`}
-              placeholder="e.g. Robert Robertson, 1234 NW Bobcat Lane"
-            />
-          </div>
-          
+                <div className="relative flex flex-col w-full flex-wrap items-stretch">
+                  <textarea className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" placeholder="e.g. Robert Robertson, 1234 NW Bobcat Lane"
+                    value={theaterAddress}
+                    onChange={(e) => setTheaterAddress(e.target.value)} />
+                </div>
+              </div>
+            </div>
 
-          <label htmlFor="createPassword" className="label-text">
-              Create Password 
-              <br />
-              <span className="error-inline">{passwordError}</span>
-          </label>
-          <div className="input-wrapper create-password-wrapper">
-              <input
+            <div className="mb-4">
+              <div className="flex justify-between align-center">
+                <label className="mb-2 inline-block text-sm font-medium text-gray-700" htmlFor="createPassword">Create Password <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.createPassword}</span></label>
+              </div>
+              <div className="relative flex flex-col w-full flex-wrap items-stretch">
+                <input id="createPassword" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" name="createPassword" placeholder="Create Password"
                   type={isCreatePasswordVisible ? "text" : "password"}
-                  id="createPassword"
                   value={createPassword}
                   onChange={(e) => setCreatePassword(e.target.value)}
-                  placeholder="Create Password"
-                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-              />
-              <button
+                />
+
+                <button
                   type="button"
-                  className="password-toggle"
-                  onClick={toggleCreatePasswordVisibility} 
-              >
+                  className="password-toggle mt-1"
+                  onClick={toggleCreatePasswordVisibility}
+                >
                   {isCreatePasswordVisible ? <FaEyeSlash /> : <FaEye />}
-              </button>
-          </div>
+                </button>
 
-          <label htmlFor="confirmPassword" className="label-text">
-              Confirm Password
-              <br />
-              <span className="error-inline">{passwordError}</span>
-          </label>
-          <div className="input-wrapper confirm-password-wrapper">
-              <input
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <div className="flex justify-between align-center">
+                <label className="mb-2 inline-block text-sm font-medium text-gray-700" htmlFor="confirmPassword">Confirm Password <span className="mt-2 text-sm text-red-600 dark:text-red-500">{errors.confirmPassword}</span></label>
+              </div>
+              <div className="relative flex flex-col w-full flex-wrap items-stretch">
+                <input id="confirmPassword" className="relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow" name="confirmPassword" placeholder="Confirm Password"
                   type={isConfirmPasswordVisible ? "text" : "password"}
-                  id="confirmPassword"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm Password"
-                  className={`input-field ${passwordError !== "" ? 'error-input-field' : ''}`}
-              />
-              <button
+                  onChange={(e) => setConfirmPassword(e.target.value)} />
+                <button
                   type="button"
-                  className="password-toggle"
-                  onClick={toggleConfirmPasswordVisibility} // Call the correct function
-              >
+                  className="password-toggle mt-1"
+                  onClick={toggleConfirmPasswordVisibility}
+                >
                   {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-              </button>
+                </button>
+              </div>
+            </div>
+
+            <div className={isLoading ? 'show-loader' : 'hide-div'}>
+              <img src={loader_icon} alt="Loader Icon" />
+            </div>
+
+            <p className="mb-3 text-sm text-red-600 dark:text-red-500">{errors.authError}</p>
+
+            <div className="mb-2">
+              <button className="grid w-full cursor-pointer select-none rounded-md border border-rose-500 bg-rose-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-rose-600 hover:bg-rose-600 hover:text-white focus:border-rose-600 focus:bg-rose-600 focus:text-white focus:shadow-none" onClick={() => { handleSignUp(); }}>Sign Up</button>
+            </div>
+
+            <div className="mb-4">
+              <div className="block">
+                <div className="inline">
+                  <label className="inline-block text-xs" htmlFor="agree-terms-and-conditions"> By clicking the button, you are agreeing to our<a className="underline ml-1" href="#">Terms & Conditions</a></label>
+                </div>
+              </div>
+            </div>
           </div>
-
-
-          <div className={isLoading ? 'show-loader' : 'hide-div'}>
-            <img src={loader_icon} alt="Loader Icon" />
-          </div>
-
-          <span className="error">{error}</span>
-
-          <button className="btn" onClick={() => { handleSignUp(); }}>Sign Up</button>
-          <div className="terms-condition">
-            By clicking the button, you are agreeing to our Terms and Services
-          </div>
-          <span style={{marginTop: '20px', fontSize: '15px', display: 'block', textAlign: 'center'}}>Already have an account <Link to="/Login" style={{color: '#f84464'}}>Login</Link></span>
         </div>
       </div>
     </>

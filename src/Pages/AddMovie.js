@@ -143,7 +143,19 @@ const AddMovie = () => {
     }
 
     const handlePosterChange = (e) => {
-        setMoviePoster(e.target.files[0]);
+        const file = e.target.files[0];
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']; // List of valid image types
+
+        if (file && validImageTypes.includes(file.type)) {
+            // Clear any previous errors
+            setMoviePosterError('');
+            // Proceed with the valid image file
+            setMoviePoster(file);
+        } else {
+            // Set an error if the file is not a valid image
+            setMoviePosterError('Please upload a valid image (JPEG, PNG, or GIF).');
+            setMoviePoster(null); // Reset the movie poster value
+        }
     };
 
     const validateForm = () => {
@@ -182,6 +194,11 @@ const AddMovie = () => {
         }
         if (ticketPrice == ""){
             setTicketPriceError("(Required Field)");
+            isValid = false;
+        }
+        if(!moviePoster){
+            if(moviePosterError==null)
+            setMoviePosterError("Poster is Required");
             isValid = false;
         }
         return isValid;
@@ -423,6 +440,7 @@ const AddMovie = () => {
                 type="file"
                 accept="image/*"
                 onChange={handlePosterChange}
+                required
             />
 
             <div className={isLoading ? 'show-loader' : 'hide-div'}>

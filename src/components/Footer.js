@@ -21,6 +21,7 @@ export default function Footer() {
                         </div>
                         <div className='footer-links flex justify-start max-md:justify-center'>
                             <Link className='mr-3 text-white transform transition-transform duration-[380ms] ease-in-out hover:text-opacity-80 hover:scale-125 ' to="/">Home</Link>
+                            <Link className='mr-3 text-white transform transition-transform duration-[380ms] ease-in-out hover:text-opacity-80 hover:scale-125 ' to="/">Offers</Link>
                             <Link className='mr-3 text-white transform transition-transform duration-[380ms] ease-in-out hover:text-opacity-80 hover:scale-125 '  to="/AboutUs">About Us</Link>
                             <Link className='mr-3 text-white transform transition-transform duration-[380ms] ease-in-out hover:text-opacity-80 hover:scale-125 '  to="/ContactUs">Contact Us</Link>
                             <Link className='mr-3 text-white transform transition-transform duration-[380ms] ease-in-out hover:text-opacity-80 hover:scale-125 '  to="/Login">Login</Link>

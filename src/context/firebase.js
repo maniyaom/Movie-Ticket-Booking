@@ -7,20 +7,13 @@ import { Link, useNavigate,} from 'react-router-dom'
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDbTOCwzHCkNEYoNNIEa7pkKK724kpa1nM",
-  authDomain: "fir-auth-d0dfe.firebaseapp.com",
-  projectId: "fir-auth-d0dfe",
-  storageBucket: "fir-auth-d0dfe.appspot.com",
-  messagingSenderId: "705929873228",
-  appId: "1:705929873228:web:03e3bb13e848591e17b1e9",
-  measurementId: "G-S9CFS2WNDC",
-    // apiKey: process.env.REACT_APP_API_KEY,
-    // authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    // projectId: process.env.REACT_APP_PROJECT_ID,
-    // storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    // messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    // appId: process.env.REACT_APP_ID,
-    // measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
     databaseUrl: process.env.REACT_APP_DATABASE_URL
 };
 

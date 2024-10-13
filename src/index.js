@@ -17,7 +17,6 @@ import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
 import MyTickets from './Pages/MyTickets';
 import Verify from './Pages/Verify';
-import NotFound from './Pages/NotFound';
 
 function App() {
   const location = useLocation();
@@ -43,7 +42,7 @@ function App() {
         <Route path="/Account" element={<Account />} />
         <Route path="/MovieTicket/:ticketId" element={<MovieTicket />} />
         <Route path="/Verify" element={<Verify/>}/>
-        <Route path='/*' element={<NotFound/>} />
+        <Route path='/*' element={<Navigate to="/" />} />
       </Routes>
     </>
   );

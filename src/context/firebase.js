@@ -6,7 +6,7 @@ import { getDownloadURL as getStorageDownloadURL, getStorage, ref as storageRef,
 import { Link, useNavigate,} from 'react-router-dom' 
 
 
-const firebaseConfig = {
+const firebaseConfig = { 
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_PROJECT_ID,

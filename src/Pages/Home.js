@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Footer from '../components/Footer';
 import Search from '../components/Search';
 
-const Home = () => {
+const Home = ({setTotalMovies}) => {
   const firebase = useFirebase();
   const [allMovies, setAllMovies] = useState([]);
   const [posterPaths, setPosterPaths] = useState({});
@@ -54,6 +54,7 @@ const Home = () => {
       try {
         const movies = await firebase.fetchAllMovies();
         setAllMovies(movies);
+        setTotalMovies(movies);
         setFilteredMovies(movies); // Initialize with all movies
         // Fetch poster paths for all movies
         const paths = await Promise.all(movies.map(movie => firebase.fetchMoviePoster(movie.movieId)));
@@ -74,9 +75,9 @@ const Home = () => {
 
   return (
     <div className='dark:bg-slate-900'>
-      <div className='pt-[7vh] grid place-items-center'>
-        <Search movies={allMovies} />
-      </div>
+
+      {/* removed search box from home and added it to navbar */}
+      
 
       {/* Genre Filter Buttons */}
       <div className="flex justify-center my-5 ">

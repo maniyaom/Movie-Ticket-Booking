@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import './index.css';
@@ -21,14 +21,16 @@ import Verify from './Pages/Verify';
 function App() {
   const location = useLocation();
   const hideNavbarRoutes = ['/BookTicket'];
+  //created a prop inside index.js to pass this to navbar
+  const [totalMovies,setTotalMovies] = useState([]);
 
   const shouldHideNavbar = hideNavbarRoutes.some(route => location.pathname.startsWith(route));
 
   return (
     <>
-      {!shouldHideNavbar && <Navbar />}
+      {!shouldHideNavbar && <Navbar totalMovies={totalMovies} />}
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/" element={<Home setTotalMovies={setTotalMovies} />} />
         <Route exact path="/Home" element={<Home />} />
         <Route path="/MyTickets/:uid" element={<MyTickets />} />
         <Route path="/AboutUs" element={<AboutUs />} />

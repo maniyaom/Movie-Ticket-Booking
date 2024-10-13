@@ -5,8 +5,9 @@ import useThemeSwitcher from './useThemeSwitcher';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import {  FiMoon, FiSun } from 'react-icons/fi';
 import './Navbar.css';
+import Search from './Search';
 
-export default function Navbar() {
+export default function Navbar({totalMovies}) {
     const firebase = useFirebase();  
     const auth = getAuth(); 
     const detailsRef = useRef(null); 
@@ -83,7 +84,7 @@ export default function Navbar() {
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
 
-
+                <Search totalMovies={totalMovies} />
                 <ul className="nav-links ">
                     <li >
                       <NavLink

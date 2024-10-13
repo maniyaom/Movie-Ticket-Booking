@@ -28,6 +28,8 @@ const AddMovie = () => {
     const auth = getAuth();
     const navigate = useNavigate();
     const theaterSeats = new Array(11).fill(null).map(() => new Array(8).fill(false));
+    // Predefined show times
+    const showTimes = ['11:00 AM', '2:30 PM', '6:00 PM', '9:30 PM'];
 
     const [isAdmin, setIsAdmin] = useState("");
     const [theaterName, setTheaterName] = useState("");
@@ -68,6 +70,19 @@ const AddMovie = () => {
         releaseDate = date[2] + ' ' + month[date[1]-1] + ' ' + date[0]
         return releaseDate;
     }
+    
+    const convertTo24HourFormat = (time12h) => {
+        const [time, modifier] = time12h.split(' ');
+        let [hours, minutes] = time.split(':');
+
+        if (hours === '12') {
+        hours = modifier === 'AM' ? '00' : '12';
+        } else {
+        hours = modifier === 'PM' ? String(parseInt(hours, 10) + 12).padStart(2, '0') : hours;
+        }
+
+        return `${hours}:${minutes}`;
+    };
     
     useEffect(() => {
         const getUserData = onAuthStateChanged(auth, async (user) => {
@@ -128,7 +143,19 @@ const AddMovie = () => {
     }
 
     const handlePosterChange = (e) => {
-        setMoviePoster(e.target.files[0]);
+        const file = e.target.files[0];
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']; // List of valid image types
+
+        if (file && validImageTypes.includes(file.type)) {
+            // Clear any previous errors
+            setMoviePosterError('');
+            // Proceed with the valid image file
+            setMoviePoster(file);
+        } else {
+            // Set an error if the file is not a valid image
+            setMoviePosterError('Please upload a valid image (JPEG, PNG, or GIF).');
+            setMoviePoster(null); // Reset the movie poster value
+        }
     };
 
     const validateForm = () => {
@@ -169,6 +196,11 @@ const AddMovie = () => {
             setTicketPriceError("(Required Field)");
             isValid = false;
         }
+        if(!moviePoster){
+            if(moviePosterError==null)
+            setMoviePosterError("Poster is Required");
+            isValid = false;
+        }
         return isValid;
     }
 
@@ -186,6 +218,81 @@ const AddMovie = () => {
         setMoviePoster(null);
     }
 
+    const handleTimeClick = (time) => {
+        const convertedTime = convertTo24HourFormat(time); // Convert to 24-hour format
+        setMovieTiming(convertedTime); // Set it in state
+      };
+    
+    function handleMovieTextValidation(e){
+        if(e.target.name.includes('title')){
+            const value = e.target.value;
+            const regex = /^[A-Za-z0-9 ,]+$/;  
+
+            if (regex.test(value) || value === "") {
+                setMovieTitle(value);  
+                setMovieTitleError(""); 
+            } else {
+                setMovieTitleError("Only alphanumeric characters, commas, and spaces are allowed");
+            }
+        }
+        if(e.target.name.includes('language')){
+            const value = e.target.value;
+            const regex = /^[A-Za-z ,]+$/;  
+
+            if (regex.test(value) || value === "") {
+                setMovieLanguage(value);  
+                setMovieLanguageError(""); 
+            } else {
+                setMovieLanguageError("Only alphabetic characters, commas, and spaces are allowed");
+            }
+        }
+        if(e.target.name.includes('cast')){
+            const value = e.target.value;
+            const regex = /^[A-Za-z ,]+$/;  
+
+            if (regex.test(value) || value === "") {
+                setMovieCast(value);  
+                setMovieCastError(""); 
+            } else {
+                setMovieCastError("Only alphabetic characters, commas, and spaces are allowed");
+            }
+        }
+        if(e.target.name.includes('genre')){
+            const value = e.target.value;
+            const regex = /^[A-Za-z ,\/]+$/;  
+
+            if (regex.test(value) || value === "") {
+                setMovieGenre(value);  
+                setMovieGenreError(""); 
+            } else {
+                setMovieGenreError("Only alphabetic characters, commas, and spaces are allowed");
+            }
+        }
+        if(e.target.name.includes('price')){
+            const value = e.target.value;
+            const regex = /^\d{1,4}$/;  
+
+            if (regex.test(value) || value === "") {
+                setTicketPrice(value);  
+                setTicketPriceError(""); 
+            } else {
+                setTicketPriceError("Only numbers less than 10000 are allowed");
+            }
+        }
+        if(e.target.name.includes('about')){
+            const value = e.target.value;
+            const regex = /^(?=.*[a-zA-Z]).*$/;  
+
+            if (regex.test(value) || value === "") {
+                setAboutMovie(value);  
+                setAboutMovieError(""); 
+            } else {
+                setAboutMovieError("Enter atleast an alphabet");
+            }
+        }
+        
+
+    }
     if (!isAdmin)
         return <p>Loading...</p>
 
@@ -201,26 +308,28 @@ const AddMovie = () => {
             
             
 
-            <label className="label-text">
+            <label htmlFor="movie-title" className="label-text">
                 Movie Title <span className="error-inline mxl-10">{movieTitleError}</span>
             </label>
             <input
                 type="text"
                 value={movieTitle}
-                onChange={(e) => setMovieTitle(e.target.value)}
+                onChange={handleMovieTextValidation}
                 className="input-field"
                 placeholder="e.g. Sholay"
+                name="movie-title"
             />
 
-            <label className="label-text">
+            <label htmlFor="movie-language" className="label-text">
                 Movie Languages <span className="error-inline mxl-10">{movieLanguageError}</span>
             </label>
             <input
                 type="text"
                 value={movieLanguage}
-                onChange={(e) => setMovieLanguage(e.target.value)}
+                onChange={handleMovieTextValidation}
                 placeholder="e.g. English"
                 className="input-field"
+                name="movie-language"
             />
 
             <label className="label-text">
@@ -234,15 +343,16 @@ const AddMovie = () => {
                 className="input-field"
             />
 
-            <label className="label-text">
+            <label htmlFor="movie-genre" className="label-text">
                 Movie Genre <span className="error-inline mxl-10">{movieGenreError}</span>
             </label>
             <input
                 type="text"
                 value={movieGenre}
-                onChange={(e) => setMovieGenre(e.target.value)}
+                onChange={handleMovieTextValidation}
                 placeholder="e.g. Action/Horror"
                 className="input-field"
+                name="movie-genre"
             />
             <label className="label-text">
                 Movie Release Date <span className="error-inline mxl-10">{movieReleaseDateError}</span>
@@ -262,44 +372,65 @@ const AddMovie = () => {
             <label className="label-text">
                 Show Time (HH:MM) <span className="error-inline mxl-10">{movieTimingError}</span>
             </label>
-            <input
+            {/* Predefined show time buttons */}
+            <div className="predefined-times">
+                {showTimes.map((time) => (
+                <button 
+                    key={time} 
+                    onClick={() => handleTimeClick(time)} 
+                    className={`btn-time input-field ${movieTiming === time ? 'selected' : ''}`}
+                    style={{width:'20%',}}
+                >
+                    {time}
+                </button>
+                ))}
+            </div>
+            
+            {/* Custom time input */}
+            <div className="custom-time">
+                <label className="label-text">Or enter custom time (HH:MM):</label>
+                <input
                 type="time"
-                value={movieTiming}
+                value={movieTiming.includes(':') ? movieTiming : ''}
                 onChange={(e) => setMovieTiming(e.target.value)}
                 className="input-field"
-            />
-
-            <label className="label-text">
+                />
+            </div>
+            
+            <label htmlFor="about-movie" className="label-text">
                 About Movie <span className="error-inline mxl-10">{aboutMovieError}</span>
             </label>
             <input
                 type="text"
                 value={aboutMovie}
-                onChange={(e) => setAboutMovie(e.target.value)}
+                onChange={handleMovieTextValidation}
                 placeholder="e.g. Description"
                 className="input-field"
+                name="about-movie"
             />
 
-            <label className="label-text">
+            <label htmlFor="movie-cast" className="label-text">
                 Movie Cast <span className="error-inline mxl-10">{movieCastError}</span>
             </label>
             <input
                 type="text"
                 value={movieCast}
-                onChange={(e) => setMovieCast(e.target.value)}
+                onChange={handleMovieTextValidation}
                 placeholder="e.g. Rajnikant, Amitabh Bachhan, etc."
                 className="input-field"
+                name="movie-cast"
             />
 
-            <label className="label-text">
+            <label htmlFor="ticket-price" className="label-text">
                 Ticket Price (In Rs.) <span className="error-inline mxl-10">{ticketPriceError}</span>
             </label>
             <input
                 type="text"
                 value={ticketPrice}
-                onChange={(e) => setTicketPrice(e.target.value)}
+                onChange={handleMovieTextValidation}
                 placeholder="e.g. 250"
                 className="input-field"
+                name="ticket-price"
             />
 
             <label className="label-text">
@@ -309,6 +440,7 @@ const AddMovie = () => {
                 type="file"
                 accept="image/*"
                 onChange={handlePosterChange}
+                required
             />
 
             <div className={isLoading ? 'show-loader' : 'hide-div'}>

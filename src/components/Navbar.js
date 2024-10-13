@@ -9,12 +9,14 @@ import './Navbar.css';
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
+    const detailsRef = useRef(null);
+
     const detailsRef = useRef(null); 
 
     
 	const [activeTheme, setTheme] = useThemeSwitcher();
 
-    // Function to close the dropdown when an item is clicked
+
     const handleDropdownClose = () => {
       if (detailsRef.current) {
         detailsRef.current.removeAttribute('open');
@@ -50,21 +52,16 @@ export default function Navbar() {
                     setName(userDetails.name);
                     setEmail(userDetails.email);
                     setIsLoggedIn(true);
-                    
-                    if(userDetails.isAdmin == false)
-                        setIsAdmin(false);
-                    else
-                        setIsAdmin(true);
+                    setIsAdmin(userDetails.isAdmin);
                 } catch (error) {
                     console.error("Error fetching user details:", error);
                 }
-            }
-            else{
+            } else {
                 setIsLoggedIn(false);
                 setUserId(null);
             }
         });
-    
+
         return () => getUserData();
     }, [auth]);
 
@@ -72,7 +69,6 @@ export default function Navbar() {
         signOut(auth);
     };
 
-    
 
     return (
         <>
@@ -82,6 +78,81 @@ export default function Navbar() {
 
             <nav className="nav">
                 <a href="/" className="logo">Ticketify</a>
+                <ul className="nav-links">
+                    <li>
+                        <NavLink
+                            exact
+                            to="/"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    {isLoggedIn && (
+                        <li>
+                            <NavLink
+                                to={`/MyTickets/${userId}`}
+                                className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                            >
+                                My Tickets
+                            </NavLink>
+                        </li>
+                    )}
+                    <li>
+                        <NavLink
+                            to="/Offers"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            Offers
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/AboutUs"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            About Us
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/ContactUs"
+                            className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                        >
+                            Contact Us
+                        </NavLink>
+                    </li>
+                    {!isLoggedIn && (
+                        <li>
+                            <NavLink
+                                to="/Login"
+                                className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                            >
+                                Login
+                            </NavLink>
+                        </li>
+                    )}
+                    {isAdmin && (
+                        <>
+                            <li>
+                                <NavLink
+                                    to="/AddMovie"
+                                    className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                                >
+                                    List Your Show
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/Verify"
+                                    className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                                >
+                                    Verify
+                                </NavLink>
+                            </li>
+                        </>
+                    )}
+                </ul>
 
 
                 <ul className="nav-links ">
@@ -157,6 +228,7 @@ export default function Navbar() {
                 </ul>
 
 
+
                 <div className={isLoggedIn ? 'dropdown-container' : 'hide-div'}>
                     <details className="dropdown right" ref={detailsRef}>
                         <summary className="avatar">
@@ -169,7 +241,6 @@ export default function Navbar() {
                                     <span className="block italic">{email}</span>
                                 </p>
                             </li>
-
                             <li>
                                 <Link to={'/Account'} onClick={handleDropdownClose}>
                                     <span className="material-symbols-outlined">account_circle</span> Account
@@ -180,7 +251,6 @@ export default function Navbar() {
                                     <span className="material-symbols-outlined">help</span> Help
                                 </Link>
                             </li>
-                            
                             <li className="divider"></li>
                             <li>
                                 <a onClick={() => { handleLogout(); handleDropdownClose(); }}>
@@ -203,5 +273,9 @@ export default function Navbar() {
                   </div>
             </nav>
         </>
+    );
+}
+
     )
 }
+

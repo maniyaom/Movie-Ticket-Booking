@@ -64,6 +64,9 @@ To get started with the Ticketify app, follow these steps:
     REACT_APP_ID=1:480290325284:web:750d2da0cfb20ee2cc69b1
     REACT_APP_MEASUREMENT_ID=G-8T1RK8L238
     REACT_APP_DATABASE_URL=https://sample-82968-default-rtdb.firebaseio.com
+    REACT_APP_EMAIL_SERVICE_ID=YOUR_EMAILJS_SERVICE_ID
+    REACT_APP_EMAIL_TEMPLATE_ID=YOUR_EMAILJS_TEMPLATE_ID
+    REACT_APP_EMAIL_PUBLIC_KEY=YOUR_EMAILJS_PUBLIC_KEY
     ```
 5. **Install the dependencies:**
     ```

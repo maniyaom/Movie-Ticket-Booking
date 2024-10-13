@@ -8,6 +8,7 @@ import google_logo from '../assets/icons/google-logo.png';
 import './utils.css'
 import '../components/Navbar.css';
 
+
 const SignUp = () => {
 
   const navigate = useNavigate();

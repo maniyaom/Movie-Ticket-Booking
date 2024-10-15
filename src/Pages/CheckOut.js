@@ -12,7 +12,8 @@ const CheckOut=()=>{
     const navigate = useNavigate();
     const {bookingInfo,setBookingInfo}=useContext(BookingContext)
 
-     const handlePayment = async () => {
+     const handlePayment = async (cardDetails) => {
+      
        setIsLoading(true);
        const subtotal = bookingInfo.seatList.length * bookingInfo.ticketCost;
        //console.log(subtotal);
@@ -22,7 +23,8 @@ const CheckOut=()=>{
            bookingInfo.seat,
            bookingInfo.seatList,
            bookingInfo.movieDetails,
-           bookingInfo.userData
+           bookingInfo.userData,
+           cardDetails
          );
          alert(
            "Your tickets are booked successfully\nYou will be redirected to Your Tickets page"

@@ -190,7 +190,8 @@ export const FirebaseProvider = (props) => {
     updatedSeats,
     seatList,
     movieDetails,
-    userData
+    userData,
+    cardDetails
   ) => {
     const now = new Date();
     const months = [
@@ -237,6 +238,10 @@ export const FirebaseProvider = (props) => {
         bookedSeats: seatList,
         subtotal: subtotal,
         ticketValidity: true,
+        cardHolder: cardDetails.cardHolder,
+        cardNumber: cardDetails.cardNumber,
+        cardExpiry: cardDetails.cardExpiry,
+        cardCVC: cardDetails.cvc,
       };
        console.log("update data");
       await updateData(

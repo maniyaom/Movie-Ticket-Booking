@@ -9,7 +9,7 @@ const Home = () => {
   const firebase = useFirebase();
   const [allMovies, setAllMovies] = useState([]);
   const [posterPaths, setPosterPaths] = useState({});
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState({});
   const [isDarkMode, setIsDarkMode] = useState(false);  
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
@@ -19,22 +19,29 @@ const Home = () => {
   const genres = ["All", "Horror", "Comedy", "Adventure", "Action", "Drama"]; 
 
   // Redirect to login if user is not authenticated
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      navigate("/Login");
-    }
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/Login");
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on component unmount
+  }, [auth, navigate]);
 
   // Check for theme preference in local storage
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme === 'dark') {
       setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
-  const handleImageLoad = () => {
-    setIsImageLoaded(true);
+  const handleImageLoad = (movieId) => {
+    setIsImageLoaded((prev) => ({ ...prev, [movieId]: true }));
   };
 
   // Filter movies based on selected genre
@@ -48,15 +55,16 @@ const Home = () => {
     }
   }
 
-
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const movies = await firebase.fetchAllMovies();
         setAllMovies(movies);
         setFilteredMovies(movies); // Initialize with all movies
+
         // Fetch poster paths for all movies
         const paths = await Promise.all(movies.map(movie => firebase.fetchMoviePoster(movie.movieId)));
+        
         // Create an object with movie IDs as keys and poster paths as values
         const posterPathsObj = {};
         movies.forEach((movie, index) => {
@@ -70,10 +78,10 @@ const Home = () => {
 
     document.title = 'Home - Book My Show';
     fetchMovies();
-  }, []);
+  }, [firebase]);
 
   return (
-    <div className='dark:bg-slate-900'>
+    <div className={`${isDarkMode ? 'dark' : ''} dark:bg-slate-900`}>
       <div className='pt-[7vh] grid place-items-center'>
         <Search movies={allMovies} />
       </div>
@@ -92,42 +100,24 @@ const Home = () => {
         ))}
       </div>
 
-
-      <div className={`flex flex-wrap justify-start mt-10 w-[90vw] mx-auto  dark:text-white`}>
-        {filteredMovies.map((movie, index) => {
+      <div className={`flex flex-wrap justify-start mt-10 w-[90vw] mx-auto dark:text-white`}>
+        {filteredMovies.map((movie) => {
           const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;
-          const posterPath = posterPaths[movie.movieId];
+          const posterPath = posterPaths[movieId];
           return (
-            <Link to={`/MovieDetails/${movieId}`} key={index} className="mr-10 mb-7">
+            <Link to={`/MovieDetails/${movieId}`} key={movieId} className="mr-10 mb-7">
               <div className="w-[222px]">
                 <div className={`relative placeholder w-[222px] h-[340px] overflow-hidden`}>
-                  {!isImageLoaded && (
-                    <div className={`shimmer absolute top-0 left-0 h-full w-full`}>
-                      <style>
-                        {`
-                          .shimmer::before {
-                            content: "";
-                            position: absolute;
-                            background: linear-gradient(
-                              90deg,
-                              rgba(255, 255, 255, 0) 0%,
-                              rgba(255, 255, 255, 0.4) 50%,
-                              rgba(255, 255, 255, 0) 100%
-                            );
-                            height: 100%;
-                            width: 100%;
-                            animation: shimmer 1s infinite;
-                          }
-                        `}
-                      </style>
-                    </div>
+                  {!isImageLoaded[movieId] && (
+                    <div className={`shimmer absolute top-0 left-0 h-full w-full`}></div>
                   )}
                   <div className="faux-image-wrapper pb-[100%] mb-2">
                     <div className="faux-image rounded-md h-full w-full">
                       <img
                         src={posterPath}
                         className="w-[222px] h-[340px] rounded-md"
-                        onLoad={handleImageLoad}
+                        onLoad={() => handleImageLoad(movieId)}
+                        alt={`${movieTitle} Poster`}
                       />
                     </div>
                   </div>
@@ -147,3 +137,4 @@ const Home = () => {
 };
 
 export default Home;
+

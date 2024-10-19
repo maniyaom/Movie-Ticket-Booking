@@ -282,7 +282,7 @@ const SignUp = () => {
                 htmlFor="nameOfTheUser"
                 className="mb-2 inline-block text-sm font-medium text-gray-700"
               >
-                Name{" "}
+                Name
                 <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                   {errors.name}
                 </span>
@@ -304,7 +304,7 @@ const SignUp = () => {
                   className="mb-2 inline-block text-sm font-medium text-gray-700"
                   htmlFor="email"
                 >
-                  Email{" "}
+                  Email
                   <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                     {errors.email}
                   </span>
@@ -329,7 +329,7 @@ const SignUp = () => {
                   className="mb-2 inline-block text-sm font-medium text-gray-700"
                   htmlFor="phone"
                 >
-                  Phone{" "}
+                  Phone
                   <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                     {errors.phone}
                   </span>
@@ -387,7 +387,7 @@ const SignUp = () => {
               <div className="mb-4">
                 <div className="flex justify-between align-center">
                   <label className="mb-2 inline-block text-sm font-medium text-gray-700">
-                    Theater Name{" "}
+                    Theater Name
                     <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                       {errors.theaterName}
                     </span>
@@ -408,7 +408,7 @@ const SignUp = () => {
               <div className="mb-4">
                 <div className="flex justify-between align-center">
                   <label className="mb-2 inline-block text-sm font-medium text-gray-700">
-                    Theater Address{" "}
+                    Theater Address
                     <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                       {errors.theaterAddress}
                     </span>
@@ -432,7 +432,7 @@ const SignUp = () => {
                   className="mb-2 inline-block text-sm font-medium text-gray-700"
                   htmlFor="createPassword"
                 >
-                  Create Password{" "}
+                  Create Password
                   <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                     {errors.createPassword}
                   </span>
@@ -465,7 +465,7 @@ const SignUp = () => {
                   className="mb-2 inline-block text-sm font-medium text-gray-700"
                   htmlFor="confirmPassword"
                 >
-                  Confirm Password{" "}
+                  Confirm Password
                   <span className="mt-2 text-sm text-red-600 dark:text-red-500">
                     {errors.confirmPassword}
                   </span>
@@ -501,10 +501,11 @@ const SignUp = () => {
 
             <div className="mb-2">
               <button
-                className="grid w-full cursor-pointer select-none rounded-md border border-rose-500 bg-rose-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-rose-600 hover:bg-rose-600 hover:text-white focus:border-rose-600 focus:bg-rose-600 focus:text-white focus:shadow-none"
+                className="grid w-full cursor-pointer select-none rounded-md border border-red-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-red-600 hover:bg-red-600 hover:text-white focus:border-red-600 focus:bg-red-600 focus:text-white focus:shadow-none"
                 onClick={() => {
                   handleSignUp();
                 }}
+                style={{ backgroundColor: "#f84464" }}
               >
                 Sign Up
               </button>
@@ -512,7 +513,7 @@ const SignUp = () => {
                 Already have account?
                 <Link
                   to="/Login"
-                  className="whitespace-nowrap font-semibold text-orange-700 mx-1"
+                  className="whitespace-nowrap font-semibold text-red-500 mx-1"
                 >
                   Login here
                 </Link>
@@ -527,9 +528,7 @@ const SignUp = () => {
                     htmlFor="agree-terms-and-conditions"
                   >
                     By clicking the button, you are agreeing to our
-                    <a className="underline ml-1" href="#">
-                      Terms & Conditions
-                    </a>
+                    <u>Terms & Conditions</u>
                   </label>
                 </div>
               </div>

@@ -187,7 +187,7 @@ const Login = () => {
                 <input
                   type="text"
                   className={`block w-full cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:bg-white focus:text-gray-600 focus:shadow ${
-                    emailError !== "" ? "border border-red-600" : ""
+                    emailError !== "" ? "border border-red-500" : ""
                   }`}
                   name="email"
                   placeholder="Enter your email"
@@ -249,8 +249,9 @@ const Login = () => {
 
               <div className="mb-4">
                 <button
-                  className="grid w-full cursor-pointer select-none rounded-md border border-rose-500 bg-rose-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-rose-600 hover:bg-rose-600 hover:text-white focus:border-rose-600 focus:bg-rose-600 focus:text-white focus:shadow-none"
+                  className="grid w-full cursor-pointer select-none rounded-md border border-red-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-rose-600 hover:bg-rose-600 hover:text-white focus:border-rose-600 focus:bg-rose-600 focus:text-white focus:shadow-none"
                   onClick={handleSignIn}
+                  style={{backgroundColor: "#f84464"}}
                 >
                   Sign in
                 </button>
@@ -260,9 +261,9 @@ const Login = () => {
                 New on Ticketify?
                 <Link
                   to="/SignUp"
-                  className="cursor-pointer text-rose-500 no-underline"
+                  className="cursor-pointer no-underline" style={{color: "#f84464"}}
                 >
-                  Create an account{" "}
+                  Create an account
                 </Link>
               </p>
             </div>

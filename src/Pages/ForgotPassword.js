@@ -93,8 +93,9 @@ const ForgotPassword = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-orange-600 text-white py-2 rounded-md hover:bg-orange-700 transition-colors duration-300 disabled:opacity-50"
+            className="w-full text-white py-2 rounded-md hover:bg-orange-700 transition-colors duration-300 disabled:opacity-50"
             disabled={isLoading}
+            style={{backgroundColor: "#f84464"}}
           >
             {isLoading ? (
               <img
@@ -107,9 +108,9 @@ const ForgotPassword = () => {
             )}
           </button>
         </form>
-        <p className="text-center text-gray-600 mt-4">
+        <p className="text-center mt-4" style={{color: "black"}}>
           Remembered your password?
-          <Link to="/Login" className="text-rose-500 hover:underline">
+          <Link to="/Login" className="text-red-500 hover:underline" style={{color: "#f84464"}}>
             Log In
           </Link>
         </p>

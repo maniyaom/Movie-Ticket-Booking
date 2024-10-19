@@ -120,6 +120,14 @@ export default function Navbar() {
                         Contact Us
                       </NavLink>
                     </li>
+                    <li>
+                      <NavLink
+                        to="/Feedback"
+                        className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+                      >
+                        Feedback 
+                      </NavLink>
+                    </li>
                     {!isLoggedIn && (
                       <li>
                         <NavLink

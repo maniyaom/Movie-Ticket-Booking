@@ -3,21 +3,21 @@ import "./style.css";
 import "./utils.css";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged,signInWithPopup,GoogleAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../components/Navbar.css";
+import google_logo from "../assets/icons/google-logo.png";
 
 const Login = () => {
   const firebase = useFirebase();
   const auth = getAuth();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
+  const provider = new GoogleAuthProvider();
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -85,6 +85,27 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Google sign-in successful!", user);
+      await firebase.addUser(user.uid, {
+        name: user.displayName,
+        email: user.email,
+        phone: user.phoneNumber || "",
+        isAdmin: false,
+        wallet: 2000,
+      });
+      navigate("/Home");
+    } catch (error) {
+      console.error("Google sign-in error:", error.message);
+      setError("Google sign-in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
@@ -255,6 +276,17 @@ const Login = () => {
                 >
                   Sign in
                 </button>
+                <button
+              className="mt-4 w-full flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
+              onClick={handleGoogleSignIn}
+            >
+              <img
+                className="mr-2 h-5 w-5"
+                src={google_logo}
+                alt="Google logo"
+              />
+              Sign In with Google
+            </button>
               </div>
 
               <p className="mb-4 text-center">

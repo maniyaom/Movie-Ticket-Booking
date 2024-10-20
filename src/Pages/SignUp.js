@@ -51,28 +51,28 @@ const SignUp = () => {
     document.title = "Sign Up";
   }, [auth, navigate]);
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setIsLoading(true);
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log("Google sign-in successful!", user);
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const result = await signInWithPopup(auth, provider);
+  //     const user = result.user;
+  //     console.log("Google sign-in successful!", user);
 
-      await firebase.addUser(user.uid, {
-        name: user.displayName,
-        email: user.email,
-        phone: user.phoneNumber || "",
-        isAdmin: false,
-        wallet: 2000,
-      });
-      navigate("/Home");
-    } catch (error) {
-      console.error("Google sign-in error:", error.message);
-      setError("Google sign-in failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     await firebase.addUser(user.uid, {
+  //       name: user.displayName,
+  //       email: user.email,
+  //       phone: user.phoneNumber || "",
+  //       isAdmin: false,
+  //       wallet: 2000,
+  //     });
+  //     navigate("/Home");
+  //   } catch (error) {
+  //     console.error("Google sign-in error:", error.message);
+  //     setError("Google sign-in failed. Please try again.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const resetErrors = () => {
     setNameError("");
@@ -261,7 +261,7 @@ const SignUp = () => {
               Create your account
             </p>
 
-            <button
+            {/* <button
               className="mt-8 flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
               onClick={handleGoogleSignIn}
             >
@@ -271,7 +271,7 @@ const SignUp = () => {
                 alt="Google logo"
               />
               Sign Up with Google
-            </button>
+            </button> */}
             <div className="relative mt-8 mb-6 flex h-px place-items-center bg-gray-200">
               <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">
                 Or use email instead

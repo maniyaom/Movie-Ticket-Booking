@@ -5,7 +5,7 @@ import useThemeSwitcher from './useThemeSwitcher';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import {  FiMoon, FiSun } from 'react-icons/fi';
 import './Navbar.css';
-
+import GoogleTranslate from './GoogleTranslate';
 export default function Navbar() {
     const firebase = useFirebase();  
     const auth = getAuth(); 
@@ -193,7 +193,7 @@ export default function Navbar() {
 
                 <div onClick={() => setTheme(activeTheme)}
                               aria-label="Theme Switcher"
-                              className="ml-8 bg-primary-light dark:bg-ternary-dark p-3 shadow-sm rounded-xl cursor-pointer"
+                              className="ml-2 bg-primary-light dark:bg-ternary-dark p-3 shadow-sm rounded-xl cursor-pointer"
                             >
                     {activeTheme === 'light' ? (
                       <FiMoon className="text-ternary-dark hover:text-gray-200 dark:text-ternary-light dark:hover:text-primary-light text-xl" />
@@ -201,6 +201,7 @@ export default function Navbar() {
                       <FiSun className="text-gray-200 hover:text-gray-50 text-xl" />
                     )}
                   </div>
+                  <GoogleTranslate />
             </nav>
         </>
     )

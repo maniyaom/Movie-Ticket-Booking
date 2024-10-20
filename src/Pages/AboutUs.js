@@ -7,7 +7,7 @@ import linkedin_icon from '../assets/icons/linkedin2.png'
 import twitter_icon from '../assets/icons/twitter.png'
 import join_our_community from '../assets/images/join-our-community.jpg'
 import our_mission from '../assets/images/our-mission.jpg'
-import who_we_are from '../assets/images/who-we-are.jpg'
+import who_we_are from '../assets/images/who-we-are.png'
 import Footer from '../components/Footer'
 
 // Sample data for FAQs and Testimonials

@@ -1,4 +1,3 @@
-/* General Card Styles */
 .card-image-div {
   width: 80vw;
   margin: 30px 10vw;
@@ -6,6 +5,7 @@
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 15px;
+  align-items: center;
 }
 
 .card-image-div > div {
@@ -18,8 +18,10 @@
 }
 
 .card-image-div > div > img {
-  width: 38vw;
-  height: 300px;
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
   border-radius: 8px;
 }
 
@@ -42,6 +44,7 @@
   padding-left: 10px;
   font-weight: 600;
 }
+
 
 .social-icons {
   display: flex;

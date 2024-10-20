@@ -18,6 +18,7 @@ import { FirebaseProvider } from './context/firebase';
 import MovieTicket from './Pages/MovieTicket';
 import MyTickets from './Pages/MyTickets';
 import Verify from './Pages/Verify';
+import ForgotPassword from './Pages/ForgotPassword';
 
 function App() {
   const location = useLocation();
@@ -38,6 +39,8 @@ function App() {
         <Route path="/feedback" element={<Feedback/>} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/ForgotPassword" element={<ForgotPassword />} />
+
         <Route path="/AddMovie" element={<AddMovie />} />
         <Route path="/MovieDetails/:movieId" element={<MovieDetails />} />
         <Route path="/BookTicket/:movieId" element={<BookTicket />} />

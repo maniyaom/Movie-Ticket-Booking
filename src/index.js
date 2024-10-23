@@ -5,6 +5,7 @@ import './index.css';
 import Home from './Pages/Home';
 import AboutUs from './Pages/AboutUs';
 import ContactUs from './Pages/ContactUs';
+import Feedback from './Feedback';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import AddMovie from './Pages/AddMovie';
@@ -35,6 +36,7 @@ function App() {
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/ContactUs/:name" element={<ContactUs />} />
+        <Route path="/feedback" element={<Feedback/>} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />

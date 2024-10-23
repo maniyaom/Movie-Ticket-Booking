@@ -103,7 +103,7 @@ nav ul a:hover:after {
 /* Styling the active link - Blue color when selected */
 .active-link {
     font-weight: 600;
-    color: blue;
+    color: #ff91a4;
     /* font-weight: bold;  */
 }
 

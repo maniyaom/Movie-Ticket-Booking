@@ -28,7 +28,7 @@ const FeedbackPage = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Feedback Form</h2>
+      <h2 style={styles.title}>We Value Your Feedback</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.inputGroup}>
           <label htmlFor="name" style={styles.label}>Name:</label>
@@ -57,7 +57,7 @@ const FeedbackPage = () => {
         </div>
 
         <div style={styles.inputGroup}>
-          <label htmlFor="feedback" style={styles.label}>Feedback:</label>
+          <label htmlFor="feedback" style={styles.label}>Your Feedback:</label>
           <textarea
             id="feedback"
             name="feedback"
@@ -77,7 +77,9 @@ const FeedbackPage = () => {
                 key={star}
                 style={{
                   ...styles.star,
-                  color: (hoverRating || formData.rating) >= star ? '#FFD700' : '#ccc',
+                  color: (hoverRating || formData.rating) >= star ? 'rgba(248, 68, 100, 1)' : '#ccc',
+                  transform: hoverRating >= star ? 'scale(1.2)' : 'scale(1)',
+                  transition: 'transform 0.2s',
                 }}
                 onMouseEnter={() => setHoverRating(star)}
                 onMouseLeave={() => setHoverRating(0)}
@@ -95,64 +97,78 @@ const FeedbackPage = () => {
   );
 };
 
-// Styles
+// Enhanced Styles with rgba(248, 68, 100, 0.5) color theme and better UI
 const styles = {
   container: {
-    maxWidth: '500px',
-    margin: '20px auto',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#f9f9f9',
+    maxWidth: '600px',
+    margin: '40px auto',
+    padding: '30px',
+    borderRadius: '15px',
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+    backgroundColor: 'rgba(248, 68, 100, 0.05)',
   },
   title: {
     textAlign: 'center',
-    marginBottom: '20px',
-    color: '#333',
+    marginBottom: '25px',
+    fontSize: '28px',
+    color: 'rgba(248, 68, 100, 1)',
+    fontWeight: 'bold',
+    letterSpacing: '1px',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
   },
   inputGroup: {
-    marginBottom: '15px',
+    marginBottom: '20px',
   },
   label: {
-    marginBottom: '5px',
-    fontSize: '16px',
-    color: '#555',
+    marginBottom: '8px',
+    fontSize: '18px',
+    color: 'rgba(248, 68, 100, 0.8)',
   },
   input: {
     width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ddd',
+    padding: '12px',
+    borderRadius: '8px',
+    border: '1px solid rgba(248, 68, 100, 0.3)',
     fontSize: '16px',
+    backgroundColor: '#fff',
+    transition: 'border-color 0.3s',
   },
   textarea: {
     width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ddd',
+    padding: '12px',
+    borderRadius: '8px',
+    border: '1px solid rgba(248, 68, 100, 0.3)',
     fontSize: '16px',
+    backgroundColor: '#fff',
+    transition: 'border-color 0.3s',
+  },
+  inputFocused: {
+    borderColor: 'rgba(248, 68, 100, 0.8)',
   },
   starContainer: {
     display: 'flex',
   },
   star: {
-    fontSize: '30px',
+    fontSize: '35px',
     cursor: 'pointer',
-    marginRight: '5px',
+    marginRight: '8px',
   },
   button: {
-    padding: '10px 15px',
-    backgroundColor: '#007BFF',
+    padding: '12px 18px',
+    backgroundColor: 'rgba(248, 68, 100, 0.8)',
     color: '#fff',
     border: 'none',
-    borderRadius: '5px',
-    fontSize: '16px',
+    borderRadius: '8px',
+    fontSize: '18px',
     cursor: 'pointer',
-    marginTop: '10px',
+    marginTop: '20px',
+    transition: 'background-color 0.3s',
+  },
+  buttonHover: {
+    backgroundColor: 'rgba(248, 68, 100, 1)',
   },
 };
 

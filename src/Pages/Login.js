@@ -3,9 +3,15 @@ import "./style.css";
 import "./utils.css";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import google_logo from "../assets/icons/google-logo.png";
 import "../components/Navbar.css";
 
 const Login = () => {
@@ -21,6 +27,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const provider = new GoogleAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -73,15 +80,44 @@ const Login = () => {
           setError("");
         })
         .catch((error) => {
-          if (error.message === "Firebase: Error (auth/invalid-credential).")
+          if (
+            error.message ===
+            "Firebase: Error (auth/invalid-credential)."
+          )
             setError("Incorrect email or password");
-          else if (error.message === "Firebase: Error (auth/invalid-email).")
+          else if (
+            error.message === "Firebase: Error (auth/invalid-email)."
+          )
             setEmailError("(Invalid Email)");
           else setError("Can't Sign In, Unexpected error occurred!");
         })
         .finally(() => {
           setIsLoading(false);
         });
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Check if the user already exists in your database
+      const existingUser = await firebase.fetchUserDetails(user.uid);
+
+      if (existingUser !== "User not found") {
+        // User already exists, just log them in
+        console.log("Existing user logged in with Google!");
+        navigate("/Home");
+      } else {
+        return "No users found";
+      }
+    } catch (error) {
+      console.error("Google sign-in error:", error.message);
+      setError("Google sign-in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,7 +144,13 @@ const Login = () => {
                   height="40"
                   patternTransform="scale(0.6) rotate(0)"
                 >
-                  <rect x="0" y="0" width="100%" height="100%" fill="none" />
+                  <rect
+                    x="0"
+                    y="0"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                  />
                   <path
                     d="M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5"
                     strokeWidth="1"
@@ -140,7 +182,13 @@ const Login = () => {
                   height="40"
                   patternTransform="scale(0.5) rotate(0)"
                 >
-                  <rect x="0" y="0" width="100%" height="100%" fill="none" />
+                  <rect
+                    x="0"
+                    y="0"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                  />
                   <path
                     d="M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5"
                     strokeWidth="1"
@@ -182,7 +230,9 @@ const Login = () => {
                   className="mb-2 inline-block text-sm font-medium text-gray-700"
                 >
                   Email or Username
-                  <span className="text-red-600 ml-2.5">{emailError}</span>
+                  <span className="text-red-600 ml-2.5">
+                    {emailError}
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -203,7 +253,9 @@ const Login = () => {
                     htmlFor="password"
                   >
                     Password
-                    <span className="text-red-600 ml-2.5">{passwordError}</span>
+                    <span className="text-red-600 ml-2.5">
+                      {passwordError}
+                    </span>
                   </label>
                   <Link
                     to="/ForgotPassword"
@@ -216,7 +268,9 @@ const Login = () => {
                   <input
                     type={isPasswordVisible ? "text" : "password"}
                     className={`relative block flex-auto cursor-text appearance-none rounded-md border border-gray-400 bg--100 py-3 px-3 text-sm outline-none focus:shadow ${
-                      passwordError !== "" ? "border border-red-600" : ""
+                      passwordError !== ""
+                        ? "border border-red-600"
+                        : ""
                     }`}
                     name="password"
                     placeholder="Enter your Password"
@@ -238,7 +292,9 @@ const Login = () => {
               </div>
 
               <div
-                className={isLoading ? "flex justify-center mb-1" : "hidden"}
+                className={
+                  isLoading ? "flex justify-center mb-1" : "hidden"
+                }
               >
                 <img
                   src={loader_icon}
@@ -251,9 +307,25 @@ const Login = () => {
                 <button
                   className="grid w-full cursor-pointer select-none rounded-md border border-red-500 py-2 px-5 text-center align-middle text-base font-semibold text-white shadow hover:border-rose-600 hover:bg-rose-600 hover:text-white focus:border-rose-600 focus:bg-rose-600 focus:text-white focus:shadow-none"
                   onClick={handleSignIn}
-                  style={{backgroundColor: "#f84464"}}
+                  style={{ backgroundColor: "#f84464" }}
                 >
                   Sign in
+                </button>
+                <div className="relative mt-8 mb-6 flex h-px place-items-center bg-gray-200">
+                  <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">
+                    Or use google instead
+                  </div>
+                </div>
+                <button
+                  className="w-full mt-4 flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
+                  onClick={handleGoogleSignIn}
+                >
+                  <img
+                    className="mr-2 h-5 w-5"
+                    src={google_logo}
+                    alt="Google logo"
+                  />
+                  Log In with Google
                 </button>
               </div>
 
@@ -261,7 +333,8 @@ const Login = () => {
                 New on Ticketify?
                 <Link
                   to="/SignUp"
-                  className="cursor-pointer no-underline" style={{color: "#f84464"}}
+                  className="cursor-pointer no-underline"
+                  style={{ color: "#f84464" }}
                 >
                   Create an account
                 </Link>

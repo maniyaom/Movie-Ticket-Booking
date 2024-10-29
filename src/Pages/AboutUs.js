@@ -30,11 +30,11 @@ const faqData = [
   }
 ];
 
-const testimonialsData = [
-  { feedback: 'I love how easy it is to book tickets! The interface is so simple and user-friendly.', author: 'John Doe' },
-  { feedback: 'Great service and excellent customer support. My go-to app for booking movie tickets!', author: 'Jane Smith' },
-  { feedback: 'Quick and reliable. I always use this platform to book tickets for my family.', author: 'Chris Lee' },
-];
+// const testimonialsData = [
+//   { feedback: 'I love how easy it is to book tickets! The interface is so simple and user-friendly.', author: 'John Doe' },
+//   { feedback: 'Great service and excellent customer support. My go-to app for booking movie tickets!', author: 'Jane Smith' },
+//   { feedback: 'Quick and reliable. I always use this platform to book tickets for my family.', author: 'Chris Lee' },
+// ];
 
 const AboutUs = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -112,21 +112,64 @@ const AboutUs = () => {
 
         {/* Testimonials Section */}
         <div className="testimonials-section">
-          <div className="title" style={{ textAlign: 'center' }}>What Our Customers Say</div>
-          <div className="testimonials">
-            {testimonialsData.map((testimonial, index) => (
-              <div className="testimonial-item" key={index}>
-                <div className="testimonial-content">
-                  <p className="testimonial-feedback">"{testimonial.feedback}"</p>
-                  <div className="testimonial-author">
-                    <span className="author-icon">👤</span>
-                    {testimonial.author}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="title" style={{ textAlign: "center" , fontWeight:"bold" }}>
+          What Our Customers Say
         </div>
+        <Row className="py-5 text-center">
+          <Col md="12">
+            <Carousel>
+              <Carousel.Item>
+                <p className="lead font-italic mx-4 mx-md-5">
+                  "I love how easy it is to book tickets! The interface is so simple and user-friendly."
+                </p>
+                <div className="mt-5 mb-4">
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp"
+                    className="rounded-circle img-fluid shadow-1-strong"
+                    alt="John Doe"
+                    width="100"
+                    height="100"
+                  />
+                </div>
+                <p className="text-muted mb-0">- John Doe</p>
+              </Carousel.Item>
+
+              <Carousel.Item>
+                <p className="lead font-italic mx-4 mx-md-5">
+                  "Great service and excellent customer support. My go-to app for booking movie tickets!"
+                </p>
+                <div className="mt-5 mb-4">
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp"
+                    className="rounded-circle img-fluid shadow-1-strong"
+                    alt="Jane Smith"
+                    width="100"
+                    height="100"
+                  />
+                </div>
+                <p className="text-muted mb-0">- Jane Smith</p>
+              </Carousel.Item>
+
+              <Carousel.Item>
+                <p className="lead font-italic mx-4 mx-md-5">
+                  "Quick and reliable. I always use this platform to book tickets for my family."
+                </p>
+                <div className="mt-5 mb-4">
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
+                    className="rounded-circle img-fluid shadow-1-strong"
+                    alt="Chris Lee"
+                    width="100"
+                    height="100"
+                  />
+                </div>
+                <p className="text-muted mb-0">- Chris Lee</p>
+              </Carousel.Item>
+            </Carousel>
+          </Col>
+        </Row>
+      </div>
+       
 
         {/* FAQ Section */}
         <div className="faq-section">

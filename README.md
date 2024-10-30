@@ -2,6 +2,11 @@
     <img  src="https://readme-typing-svg.herokuapp.com/?color=45ffaa&size=40&width=900&height=80&lines=Welcome%20to%20Ticketify"/>
 </p>
 
+## Repository Stats
+| ⭐ Stars | 🍴 Forks | 🐞 Open Issues | 🔔 Open PRs | ✔️ Closed PRs |
+|----------|----------|----------------|-------------|---------------|
+| ![GitHub stars](https://img.shields.io/github/stars/maniyaom/movie-ticket-booking) | ![GitHub forks](https://img.shields.io/github/forks/maniyaom/movie-ticket-booking) | ![GitHub issues](https://img.shields.io/github/issues/maniyaom/movie-ticket-booking) | ![GitHub open PRs](https://img.shields.io/github/issues-pr/maniyaom/movie-ticket-booking) | ![GitHub closed PRs](https://img.shields.io/github/issues-pr-closed/maniyaom/movie-ticket-booking) |
+
 ## Table of Contents
 - [Introduction](#ticketify-event-ticket-booking-application)
 - [Show Your Support!](#show-your-support)

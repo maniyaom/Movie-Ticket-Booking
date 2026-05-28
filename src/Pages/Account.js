@@ -38,7 +38,8 @@ const Account = () => {
                 const userDetails = await firebase.fetchUserDetails(user.uid);
                 const transactionDetails = await firebase.fetchTransactionDetails(user.uid);
                 setUserData(userDetails);
-                setTransactionData(transactionDetails);
+                const allTransactions = [...(transactionDetails.paid || []), ...(transactionDetails.received || [])];
+                setTransactionData(allTransactions);
                 console.log(transactionDetails);
             } else {
                 navigate('/Login');

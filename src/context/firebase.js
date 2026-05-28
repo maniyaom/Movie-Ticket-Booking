@@ -251,6 +251,31 @@ export const FirebaseProvider = (props) => {
     }
   };
 
+  // Fetch ticket details by ticket ID
+  const fetchTicketDetails = async (ticketId) => {
+    try {
+      const snapshot = await get(ref(database, `tickets/${ticketId}`));
+      return snapshot.val();
+    } catch (error) {
+      console.error("Error fetching ticket details:", error);
+      throw error;
+    }
+  };
+
+  // Fetch tickets for a user
+  const fetchUserTickets = async (uid) => {
+    try {
+      const snapshot = await get(ref(database, "tickets"));
+      const ticketsData = snapshot.val();
+      if (!ticketsData) return [];
+      const ticketArray = Object.values(ticketsData);
+      return ticketArray.filter((ticket) => uid === ticket.paidBy);
+    } catch (error) {
+      console.error("Error fetching user tickets:", error);
+      throw error;
+    }
+  };
+
   // Fetch transaction details for a user
   const fetchTransactionDetails = async (uid) => {
     try {
@@ -288,6 +313,8 @@ export const FirebaseProvider = (props) => {
         updateData,
         makePayment,
         fetchTransactionDetails,
+        fetchTicketDetails,
+        fetchUserTickets,
         isLoading,
       }}
     >

@@ -9,6 +9,7 @@ import join_our_community from '../assets/images/join-our-community.jpg'
 import our_mission from '../assets/images/our-mission.jpg'
 import who_we_are from '../assets/images/who-we-are.png'
 import Footer from '../components/Footer'
+import { Row, Col, Carousel } from 'react-bootstrap';
 
 // Sample data for FAQs and Testimonials
 const faqData = [

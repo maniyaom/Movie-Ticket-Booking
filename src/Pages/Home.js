@@ -18,13 +18,6 @@ const Home = () => {
 
   const genres = ["All", "Horror", "Comedy", "Adventure", "Action", "Drama"]; 
 
-  // Redirect to login if user is not authenticated
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      navigate("/Login");
-    }
-  });
-
   // Check for theme preference in local storage
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -72,6 +65,15 @@ const Home = () => {
     fetchMovies();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/Login");
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
   return (
     <div className='dark:bg-slate-900'>
       <div className='pt-[7vh] grid place-items-center'>
@@ -98,7 +100,7 @@ const Home = () => {
           const { movieReleaseDate, movieTitle, movieGenre, movieId } = movie;
           const posterPath = posterPaths[movie.movieId];
           return (
-            <Link to={`/MovieDetails/${movieId}`} key={index} className="mr-10 mb-7">
+            <Link to={`/MovieDetails/${movieId}`} key={movie.movieId} className="mr-10 mb-7">
               <div className="w-[222px]">
                 <div className={`relative placeholder w-[222px] h-[340px] overflow-hidden`}>
                   {!isImageLoaded && (

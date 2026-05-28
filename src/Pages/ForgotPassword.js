@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import loader_icon from "../assets/icons/loader_icon.gif";
 import { useFirebase } from "../context/firebase";
@@ -31,7 +31,9 @@ const ForgotPassword = () => {
     }
   };
 
-  document.title = "Forgot Password";
+  useEffect(() => {
+    document.title = "Forgot Password";
+  }, []);
 
   return (
     <div className="flex justify-center items-center h-screen bg-white">

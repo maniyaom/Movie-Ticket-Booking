@@ -166,16 +166,6 @@ const BookTicket = () => {
                     <span style={{ color: 'black' }}>Selected</span>
                     <div className=' footer-button'></div>
                     <span style={{ color: 'black' }}>Available</span>
-                    <div className='fixed-bottom'>
-                        <div className='footer'>
-                            <div className='not-available-seat footer-button'></div>
-                            <span style={{ color: 'black' }}>Not Available</span>
-                            <div className='your-seat footer-button'></div>
-                            <span style={{ color: 'black' }}>Selected</span>
-                            <div className=' footer-button'></div>
-                            <span style={{ color: 'black' }}>Available</span>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div className={showPopUp ? 'checkout-card' : 'hide-element'}>
